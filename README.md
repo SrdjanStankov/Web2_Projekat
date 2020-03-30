@@ -2,6 +2,10 @@
 
 ## PUSGS – Projekat 2020
 
+Autori:
+- Student 1: Danilo Novaković
+- Student 2: Srđan Stankov
+
 1. Namena sistema
 
 Projektni zadatak predstavlja aplikaciju koja omogućava korisnicima da rezervišu avionske karte za željenu
