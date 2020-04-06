@@ -1,0 +1,31 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Login Form</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form [formGroup]="loginGroup" (ngSubmit)="onSubmit()">
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <div class="input-group">
+        <input [class.is-invalid]="loginGroup.get('email').invalid && loginGroup.get('email').touched" type="email" autocomplete="on" id="email" class="form-control" placeholder="example@mail.com" name="email" formControlName="email" />
+      </div>
+      <div *ngIf="(loginGroup.get('email').invalid && loginGroup.get('email').touched) || loginGroup.get('email').dirty">
+        <small *ngIf="loginGroup.get('email').errors?.required" class="text-danger">Email is required</small>
+        <small *ngIf="loginGroup.get('email').errors?.pattern" class="text-danger">Please provide a valid email address</small>
+      </div>
+      <br />
+      <label for="pass">Password</label>
+      <div class="input-group">
+        <input [class.is-invalid]="loginGroup.get('password').invalid && loginGroup.get('password').touched" type="password" autocomplete="on" id="pass" class="form-control" name="password" formControlName="password">
+      </div>
+      <div *ngIf="(loginGroup.get('password').invalid && loginGroup.get('password').touched) || loginGroup.get('email').dirty">
+        <small *ngIf="loginGroup.get('password').errors?.required" class="text-danger">Password is required</small>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" [disabled]="!loginGroup.valid" class="btn btn-outline-dark">Login</button>
+  </div>
+</form>
