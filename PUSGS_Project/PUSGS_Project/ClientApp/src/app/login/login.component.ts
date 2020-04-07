@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BackendService } from '../services/backend.service';
 
 @Component({
   selector: 'app-login',
@@ -14,12 +15,21 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', [Validators.required, Validators.minLength(3)]),
   });
 
-  constructor(public activeModal: NgbActiveModal) { }
+  reason: string;
+
+  constructor(public activeModal: NgbActiveModal, private backend: BackendService) { }
 
   ngOnInit(): void { }
 
   onSubmit() {
-    alert(this.loginGroup.value.email + ' ' + this.loginGroup.value.password);
+    const loginTuple = this.backend.login(this.loginGroup.get('email').value, this.loginGroup.get('password').value);
+    if (loginTuple[0]) {
+      this.reason = '';
+      this.activeModal.close();
+    }
+    else {
+      this.reason = loginTuple[1];
+    }
   }
 
 }

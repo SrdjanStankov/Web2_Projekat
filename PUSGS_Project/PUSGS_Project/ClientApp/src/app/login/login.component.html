@@ -26,6 +26,7 @@
     </div>
   </div>
   <div class="modal-footer">
+    <small *ngIf="reason != ''" class="text-danger">{{ reason }}</small>
     <button type="submit" [disabled]="!loginGroup.valid" class="btn btn-outline-dark">Login</button>
   </div>
 </form>
