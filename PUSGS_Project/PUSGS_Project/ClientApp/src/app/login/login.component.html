@@ -20,7 +20,7 @@
       <div class="input-group">
         <input [class.is-invalid]="loginGroup.get('password').invalid && loginGroup.get('password').touched" type="password" autocomplete="on" id="pass" class="form-control" name="password" formControlName="password">
       </div>
-      <div *ngIf="(loginGroup.get('password').invalid && loginGroup.get('password').touched) || loginGroup.get('email').dirty">
+      <div *ngIf="(loginGroup.get('password').invalid && loginGroup.get('password').touched) || loginGroup.get('password').dirty">
         <small *ngIf="loginGroup.get('password').errors?.required" class="text-danger">Password is required</small>
       </div>
     </div>
