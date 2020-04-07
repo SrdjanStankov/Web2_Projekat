@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from '../login/login.component';
+import { RegisterComponent } from '../register/register.component';
+import { BackendService } from '../services/backend.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -10,7 +12,7 @@ import { LoginComponent } from '../login/login.component';
 export class NavMenuComponent {
   isExpanded = false;
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal, public backend: BackendService) { }
 
   collapse() {
     this.isExpanded = false;
@@ -22,5 +24,9 @@ export class NavMenuComponent {
 
   openLogin() {
     this.modalService.open(LoginComponent);
+  }
+
+  openRegister() {
+    this.modalService.open(RegisterComponent);
   }
 }
