@@ -1,0 +1,91 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Register Form</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form [formGroup]="registerGroup" (ngSubmit)="onSubmit()">
+  <div class="modal-body">
+    <div class="form-group">
+
+      <label for="email">Email</label>
+      <div class="input-group">
+        <input [class.is-invalid]="registerGroup.get('email').invalid && registerGroup.get('email').touched" type="email" autocomplete="on" id="email" class="form-control" placeholder="example@mail.com" name="email" formControlName="email" />
+      </div>
+      <div *ngIf="(registerGroup.get('email').invalid && registerGroup.get('email').touched) || registerGroup.get('email').dirty">
+        <small *ngIf="registerGroup.get('email').errors?.required" class="text-danger">Email is required</small>
+        <small *ngIf="registerGroup.get('email').errors?.pattern" class="text-danger">Please provide a valid email address</small>
+      </div>
+
+      <br />
+
+      <div formGroupName="passwordGroup">
+        <label for="pass">Password</label>
+        <div class="input-group">
+          <input [class.is-invalid]="password.invalid && password.touched" type="password" autocomplete="on" id="pass" class="form-control" name="password" formControlName="password">
+        </div>
+        <div *ngIf="(password.invalid && password.touched) || password.dirty">
+          <small *ngIf="password.errors?.required" class="text-danger">Password is required</small>
+          <small *ngIf="password.errors?.minlength" class="text-danger">Password must be minimum 3 characters long</small>
+        </div>
+
+        <br />
+
+        <label for="passRep">Repeat password</label>
+        <div class="input-group">
+          <input [class.is-invalid]="(passwordRepeated.invalid && passwordRepeated.touched) || (registerGroup.get('passwordGroup').errors?.passwordsMatch && passwordRepeated.touched)" type="password" autocomplete="on" id="passRep" class="form-control" name="passwordRepeated" formControlName="passwordRepeated">
+        </div>
+        <div *ngIf="(passwordRepeated.invalid && passwordRepeated.touched) || passwordRepeated.dirty">
+          <small *ngIf="passwordRepeated.errors?.required" class="text-danger">Password is required</small>
+          <small *ngIf="passwordRepeated.errors?.minlength" class="text-danger">Password must be minimum 3 characters long</small>
+          <small *ngIf="registerGroup.get('passwordGroup').errors?.passwordsMatch && !passwordRepeated.errors?.required && !passwordRepeated.errors?.minlength" class="text-danger">Password does not match</small>
+        </div>
+      </div>
+
+      <br />
+
+      <label for="name">Name</label>
+      <div class="input-group">
+        <input [class.is-invalid]="registerGroup.get('name').invalid && registerGroup.get('name').touched" type="text" autocomplete="on" id="name" class="form-control" name="name" formControlName="name">
+      </div>
+      <div *ngIf="(registerGroup.get('name').invalid && registerGroup.get('name').touched) || registerGroup.get('name').dirty">
+        <small *ngIf="registerGroup.get('name').errors?.required" class="text-danger">Name is required</small>
+      </div>
+
+      <br />
+
+      <label for="lastName">Last Name</label>
+      <div class="input-group">
+        <input [class.is-invalid]="registerGroup.get('lastName').invalid && registerGroup.get('lastName').touched" type="text" autocomplete="on" id="lastName" class="form-control" name="lastName" formControlName="lastName">
+      </div>
+      <div *ngIf="(registerGroup.get('lastName').invalid && registerGroup.get('lastName').touched) || registerGroup.get('lastName').dirty">
+        <small *ngIf="registerGroup.get('lastName').errors?.required" class="text-danger">LastName is required</small>
+      </div>
+
+      <br />
+
+      <label for="city">City</label>
+      <div class="input-group">
+        <input [class.is-invalid]="registerGroup.get('city').invalid && registerGroup.get('city').touched" type="text" autocomplete="on" id="city" class="form-control" name="city" formControlName="city">
+      </div>
+      <div *ngIf="(registerGroup.get('city').invalid && registerGroup.get('city').touched) || registerGroup.get('city').dirty">
+        <small *ngIf="registerGroup.get('city').errors?.required" class="text-danger">City is required</small>
+      </div>
+
+      <br />
+
+      <label for="phone">Phone</label>
+      <div class="input-group">
+        <input [class.is-invalid]="registerGroup.get('phone').invalid && registerGroup.get('phone').touched" type="tel" autocomplete="on" id="phone" class="form-control" name="phone" formControlName="phone">
+      </div>
+      <div *ngIf="(registerGroup.get('phone').invalid && registerGroup.get('phone').touched) || registerGroup.get('phone').dirty">
+        <small *ngIf="registerGroup.get('phone').errors?.required" class="text-danger">Phone is required</small>
+      </div>
+
+    </div>
+  </div>
+  <div class="modal-footer">
+    <small *ngIf="invalidUser" class="text-danger">User with that email already exist</small>
+    <button type="submit" [disabled]="!registerGroup.valid" class="btn btn-outline-dark">Register</button>
+  </div>
+</form>
