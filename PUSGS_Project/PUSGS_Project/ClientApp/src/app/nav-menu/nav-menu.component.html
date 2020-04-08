@@ -18,7 +18,7 @@
             <a class="nav-link text-dark" [routerLink]="" (click)="openRegister()">Register</a>
           </li>
           <li *ngIf="backend.isLogedIn()" class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="" (click)="['/profile']">Profile</a>
+            <a class="nav-link text-dark" [routerLink]="['/profile']">Profile</a>
           </li>
           <li *ngIf="backend.isLogedIn()" class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/']" (click)="logout()">Log out</a>

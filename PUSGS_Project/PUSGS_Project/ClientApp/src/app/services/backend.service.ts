@@ -51,4 +51,8 @@ export class BackendService {
   logout() {
     this.logedInUser = null;
   }
+
+  getLoggedInUser(): User {
+    return this.logedInUser;
+  }
 }

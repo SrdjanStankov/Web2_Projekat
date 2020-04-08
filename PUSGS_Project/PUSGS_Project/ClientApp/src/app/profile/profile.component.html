@@ -1,0 +1,47 @@
+<div class="container profile-display">
+  <div class="row">
+    <div class="col-md-6">
+      <label>First name</label>
+    </div>
+    <div class="col-md-6">
+      <p>{{user.name}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label>Last name</label>
+    </div>
+    <div class="col-md-6">
+      <p>{{user.lastName}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label>Email</label>
+    </div>
+    <div class="col-md-6">
+      <p>{{user.email}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label>Phone number</label>
+    </div>
+    <div class="col-md-6">
+      <p>{{user.phone}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label>Address</label>
+    </div>
+    <div class="col-md-6">
+      <p>{{user.city}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md">
+      <button *ngIf="!isReadOnly()" class="btn btn-warning">Edit</button>
+    </div>
+  </div>
+</div>
