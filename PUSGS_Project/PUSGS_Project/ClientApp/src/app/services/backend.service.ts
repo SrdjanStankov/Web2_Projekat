@@ -7,8 +7,6 @@ import { User } from "../entities/user";
 export class BackendService {
   registeredUsers: User[] = [];
 
-  private logedInUser: User = null;
-
   constructor() {
     const user = new User(
       "test name",
@@ -25,7 +23,7 @@ export class BackendService {
     for (var i = 0; i < this.registeredUsers.length; i++) {
       if (this.registeredUsers[i].email == email) {
         if (this.registeredUsers[i].password == password) {
-          this.logedInUser = this.registeredUsers[i];
+          localStorage.setItem("currUser", email);
           return [true, ""];
         }
         return [false, "invalid password"];
@@ -45,14 +43,15 @@ export class BackendService {
   }
 
   isLogedIn(): boolean {
-    return this.logedInUser != null;
+    return !!localStorage.getItem("currUser");
   }
 
   logout() {
-    this.logedInUser = null;
+    localStorage.removeItem("currUser");
   }
 
   getLoggedInUser(): User {
-    return this.logedInUser;
+    const email = localStorage.getItem("currUser");
+    return this.registeredUsers.find((user) => user.email === email);
   }
 }
