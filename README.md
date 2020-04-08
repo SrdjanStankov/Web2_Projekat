@@ -4,8 +4,8 @@ This is a school project for Web course in Faculty of Technical Sciences - Unive
 
 Authors:
 
-- Student 1: [Danilo Novaković](https://github.com/DaniloNovakovic)
-- Student 2: [Srđan Stankov](https://github.com/SrdjanStankov)
+- [Student 1](https://github.com/SrdjanStankov/Web2_Projekat/wiki/Student-1): [Danilo Novaković](https://github.com/DaniloNovakovic)
+- [Student 2](https://github.com/SrdjanStankov/Web2_Projekat/wiki/Student-2): [Srđan Stankov](https://github.com/SrdjanStankov)
 
 ## Getting Started
 
