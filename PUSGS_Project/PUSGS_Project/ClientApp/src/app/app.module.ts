@@ -13,6 +13,7 @@ import { FetchDataComponent } from "./fetch-data/fetch-data.component";
 import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
 import { ProfileComponent } from "./profile/profile.component";
+import { RentACarProfileComponent } from './rent-a-car-profile/rent-a-car-profile.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ProfileComponent } from "./profile/profile.component";
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
+    RentACarProfileComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -37,6 +39,7 @@ import { ProfileComponent } from "./profile/profile.component";
       { path: "fetch-data", component: FetchDataComponent },
       { path: "login", component: LoginComponent },
       { path: "profile", component: ProfileComponent },
+      { path: "rent-a-car", component: RentACarProfileComponent},
     ]),
   ],
   providers: [],

@@ -1,0 +1,59 @@
+<div class="container profile-display">
+  <div class="row">
+    <div class="col-md-6">
+      <label>Name</label>
+    </div>
+    <div class="col-md-6">
+      <p>{{rentACar.name}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label>Address</label>
+    </div>
+    <div class="col-md-6">
+      <p>{{rentACar.address}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label>Opis</label>
+    </div>
+    <div class="col-md-6">
+      <p>{{rentACar.description}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label>Cenovnik</label>
+    </div>
+    <div class="col-md-6">
+      <p>TODO</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label>Cars</label>
+    </div>
+    <div class="col-md-6">
+      <div *ngFor="let car of rentACar.cars">
+        <p>{{car}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label>Branches</label>
+    </div>
+    <div class="col-md-6">
+      <div *ngFor="let branch of rentACar.branches">
+        <p>{{branch}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md">
+      <button class="btn btn-warning">Edit</button>
+    </div>
+  </div>
+</div>
