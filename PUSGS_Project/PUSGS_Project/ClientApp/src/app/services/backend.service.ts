@@ -83,7 +83,7 @@ export class BackendService {
       "friend"
     );
     user.friends.push(friend);
-    user.friends.push(user);
+    friend.friends.push(user);
     this.registeredUsers.push(user);
     this.registeredUsers.push(friend);
   }

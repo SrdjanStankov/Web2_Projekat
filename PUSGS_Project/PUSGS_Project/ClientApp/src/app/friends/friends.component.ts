@@ -22,9 +22,25 @@ export class FriendsComponent implements OnInit {
 
   onSubmit(): void {
     const searchText = this.search.toLowerCase();
-    const filtered = this._filterBySearchText(this.allUsers, searchText);
+    let filteredUsers = this._filterBySearchText(this.allUsers, searchText);
+    if (this.friendsOnly) {
+      filteredUsers = this._filterByFriends(
+        filteredUsers,
+        this.backend.getLoggedInUser()
+      );
+    }
+    this.displayedUsers = filteredUsers;
+  }
 
-    this.displayedUsers = filtered;
+  private _filterByFriends(usersToFilter: User[], loggedUser: User): User[] {
+    return usersToFilter.filter((user) => this._isFriend(user, loggedUser));
+  }
+
+  private _isFriend(user: User, loggedUser: User): boolean {
+    return (
+      user.email !== loggedUser.email &&
+      user.friends.some((friend) => friend.email === loggedUser.email)
+    );
   }
 
   private _filterBySearchText(
