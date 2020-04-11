@@ -49,6 +49,9 @@ export class BackendService {
     return this.registeredUsers.find((user) => user.email === email);
   }
 
+  getAllUsers(): User[] {
+    return [...this.registeredUsers];
+  }
   // Init helper methods
   private _create_admin() {
     this.registeredUsers.push(
