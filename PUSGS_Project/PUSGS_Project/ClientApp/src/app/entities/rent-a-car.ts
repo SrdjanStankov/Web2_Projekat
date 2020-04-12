@@ -16,6 +16,10 @@ export class RentACar {
   get Cars() { return this.cars; }
   get Branches() { return this.branches; }
 
+  set Name(val: string) { this.name = val; }
+  set Address(val: string) { this.address = val; }
+  set Description(val: string) { this.description = val; }
+
   constructor(name: string, address: string, description: string, branches: string[], cars: Car[]) {
     this.name = name;
     this.address = address;
@@ -33,7 +37,7 @@ export class RentACar {
   }
 
   public removeCar(index: number): boolean {
-    if (!this.cars[index].isReserved) {
+    if (!this.cars[index].isReserved()) {
       this.cars.splice(index, 1);
       return true;
     }
@@ -51,5 +55,18 @@ export class RentACar {
     });
 
     return (sum / this.ratings.length).toFixed(2);
+  }
+
+  public getBranch(index: number): string {
+    return this.branches[index];
+  }
+
+  public removeBranch(index: number): boolean {
+    this.branches.splice(index, 1);
+    return true;
+  }
+
+  public addBranch(branch: string) {
+    this.branches.push(branch);
   }
 }
