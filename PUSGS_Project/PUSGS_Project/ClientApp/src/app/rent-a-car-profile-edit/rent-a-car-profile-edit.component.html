@@ -1,0 +1,70 @@
+<form [formGroup]="editGroup" (ngSubmit)="onSubmit()">
+
+  <div class="container profile-display">
+    <div class="row">
+      <div class="col-md-3">
+        <label>Name</label>
+      </div>
+      <div class="col-md-3 m-2">
+        <input type="text" formControlName="name" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <label>Address</label>
+      </div>
+      <div class="col-md-3 m-2">
+        <input type="text" formControlName="address"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <label>Opis</label>
+      </div>
+      <div class="col-md-3 m-2">
+        <input type="text" formControlName="description" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <label>Cenovnik</label>
+      </div>
+      <div class="col-md-3 m-2">
+        <p>TODO</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <label>Cars</label>
+      </div>
+      <div class="col-md-6">
+        <div *ngFor="let car of rentACar.Cars; let i = index">
+          <input type="text" value="{{car.Name}}" />
+          <button type="button" class="btn btn-danger m-2 col-md-2" (click)="removeCar(i)">Remove</button>
+        </div>
+        <div>
+          <button type="button" class="btn btn-success" (click)="addCar()">Add car</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <label>Branches</label>
+      </div>
+      <div class="col-md-6">
+        <div *ngFor="let branch of rentACar.Branches; let i = index">
+          <input type="text" class="col-md-4" value="{{branch}}" />
+          <button type="button" class="btn btn-danger m-2 col-md-2" (click)="removeBranch(i)">Remove</button>
+        </div>
+        <div>
+          <button type="button" class="btn btn-success" (click)="addBranch()">Add branch</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md">
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</form>
