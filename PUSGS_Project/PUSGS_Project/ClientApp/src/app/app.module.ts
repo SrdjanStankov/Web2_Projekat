@@ -13,6 +13,8 @@ import { FetchDataComponent } from "./fetch-data/fetch-data.component";
 import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
 import { ProfileComponent } from "./profile/profile.component";
+import { RentACarProfileComponent } from './rent-a-car-profile/rent-a-car-profile.component';
+import { RentACarProfileEditComponent } from './rent-a-car-profile-edit/rent-a-car-profile-edit.component';
 import { FriendsComponent } from "./friends/friends.component";
 
 @NgModule({
@@ -25,6 +27,8 @@ import { FriendsComponent } from "./friends/friends.component";
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
+    RentACarProfileComponent,
+    RentACarProfileEditComponent,
     FriendsComponent,
   ],
   imports: [
@@ -39,6 +43,8 @@ import { FriendsComponent } from "./friends/friends.component";
       { path: "fetch-data", component: FetchDataComponent },
       { path: "login", component: LoginComponent },
       { path: "profile", component: ProfileComponent },
+      { path: "rent-a-car", component: RentACarProfileComponent},
+      { path: "rent-a-car-edit", component: RentACarProfileEditComponent },
       { path: "users", component: FriendsComponent },
     ]),
   ],

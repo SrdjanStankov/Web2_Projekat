@@ -1,14 +1,53 @@
-<h1>Hello, world!</h1>
-<p>Welcome to your new single-page application, built with:</p>
-<ul>
-  <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-  <li><a href='https://angular.io/'>Angular</a> and <a href='http://www.typescriptlang.org/'>TypeScript</a> for client-side code</li>
-  <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-</ul>
-<p>To help you get started, we've also set up:</p>
-<ul>
-  <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-  <li><strong>Angular CLI integration</strong>. In development mode, there's no need to run <code>ng serve</code>. It runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-  <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration automatically invokes <code>ng build</code> to produce minified, ahead-of-time compiled JavaScript files.</li>
-</ul>
-<p>The <code>ClientApp</code> subdirectory is a standard Angular CLI application. If you open a command prompt in that directory, you can run any <code>ng</code> command (e.g., <code>ng test</code>), or use <code>npm</code> to install extra packages into it.</p>
+<div class="d-flex">
+  <ul ngbNav #nav="ngbNav" class="nav-pills col-md-2" orientation="vertical">
+
+    <!-- Prikaz svih aviokompanija -->
+    <li ngbNavItem="top">
+      <a ngbNavLink>Avio kompanije</a>
+      <ng-template ngbNavContent>
+        <div class="card-columns" id="collapsable" [ngbCollapse]="isCollapsed">
+          <div class="card" style="width: 18rem;" *ngFor="">
+            <!-- OVde stavis property od aviokompanija -->
+          </div>
+        </div>
+      </ng-template>
+    </li>
+
+    <!-- Prikaz svih rent-a-car servisa -->
+    <li ngbNavItem="middle">
+      <a ngbNavLink>Rent-a-car kompanije</a>
+      <ng-template ngbNavContent>
+        <div class="card-columns" id="collapsableRAC" [ngbCollapse]="isCollapsedRAC">
+          <div class="card" style="width: 18rem;" *ngFor="let agency of rentACarAgencies">
+
+            <h3 class="card-header">{{agency.Name}}</h3>
+
+            <div class="card-body">
+              <p class="card-text">{{agency.Description}}</p>
+              <div class="card-text">{{agency.Address}}</div>
+              <br />
+              <div ngbDropdown class="d-inline-block">
+                <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>Cars</button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <button ngbDropdownItem *ngFor="let car of agency.Cars">{{car.Name}}</button>
+                </div>
+              </div>
+              <br />
+              <br />
+              <div ngbDropdown class="d-inline-block">
+                <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>Branches</button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <button ngbDropdownItem *ngFor="let branch of agency.Branches">{{branch}}</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-footer">{{agency.getAverageRating()}}</div>
+          </div>
+        </div>
+      </ng-template>
+    </li>
+  </ul>
+
+  <div [ngbNavOutlet]="nav" class="ml-4"></div>
+</div>
