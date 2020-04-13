@@ -5,25 +5,24 @@ export class Car {
   private ratings: number[];
   private reservedFrom: Date = new Date();
   private reservedTo: Date = new Date();
+  private type: string;
 
-  get PassengerNumber() {
-    return this.passengerNumber;
-  }
+  get PassengerNumber() { return this.passengerNumber; }
+  get Name() { return this.name; }
+  get ReservedFrom() { return this.reservedFrom; }
+  get ReservedTo() { return this.reservedTo; }
+  get Type() { return this.type; }
 
-  set PassengerNumber(value: number) {
-    this.passengerNumber = value;
-  }
+  set Type(value: string) { this.type = value; }
+  set ReservedFrom(value: Date) { this.reservedFrom = value; }
+  set ReservedTo(value: Date) { this.reservedTo = value; }
+  set PassengerNumber(value: number) { this.passengerNumber = value; }
+  set Name(value: string) { this.name = value; }
 
-  get Name() {
-    return this.name;
-  }
-
-  set Name(value: string) {
-    this.name = value;
-  }
-
-  constructor(name: string) {
+  constructor(name: string, passengerNumber: number, type: string) {
     this.name = name;
+    this.passengerNumber = passengerNumber;
+    this.type = type;
   }
 
   public addRating(rating: number) {

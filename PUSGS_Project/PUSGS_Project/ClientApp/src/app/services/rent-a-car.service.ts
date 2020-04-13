@@ -21,12 +21,12 @@ export class RentACarService {
         "Test branch 2",
       ],
       [
-        new Car("Test car name 1"),
-        new Car("Test car name 2"),
-        new Car("Test car name 2"),
-        new Car("Test car name 2"),
-        new Car("Test car name 2"),
-        new Car("Test car name 2"),
+        new Car("Test car name 1", 4, "Suv"),
+        new Car("Test car name 2", 2, "Sport"),
+        new Car("Test car name 2", 2, "Suv"),
+        new Car("Test car name 2", 8, "Minivan"),
+        new Car("Test car name 2", 6, "Coupe"),
+        new Car("Test car name 2", 2, "Sport"),
       ]
     );
     agency.addRating(4);
@@ -42,8 +42,8 @@ export class RentACarService {
         "Test branch 2",
       ],
       [
-        new Car("Test car name 1"),
-        new Car("Test car name 2"),
+        new Car("Test car name 1", 2, "Suv"),
+        new Car("Test car name 2", 8, "Minivan"),
       ]
     );
     agency2.addRating(4);
@@ -52,10 +52,10 @@ export class RentACarService {
 
 
     this.agencies.push(agency);
-    this.agencies.push(agency2);
+    this.agencies.push(agency);
     this.agencies.push(agency);
     this.agencies.push(agency2);
-    this.agencies.push(agency);
+    this.agencies.push(agency2);
     this.agencies.push(agency2);
   }
 

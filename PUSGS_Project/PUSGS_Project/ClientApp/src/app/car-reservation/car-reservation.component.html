@@ -1,0 +1,86 @@
+<div *ngIf="step === 1">
+  <table class='table table-striped' aria-labelledby="tableLabel">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Description</th>
+        <th>Car count</th>
+        <th>Branches count</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let agency of agencies">
+        <td>{{agency.Name}}</td>
+        <td>{{agency.Address}}</td>
+        <td>{{agency.Description}}</td>
+        <td>{{agency.Cars.length}}</td>
+        <td>{{agency.Branches.length}}</td>
+        <td><button type="button" class="btn btn-primary" (click)="choosedAgency(agency)">Choose</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="step === 2">
+  <form [formGroup]="editGroup" (ngSubmit)="onSubmit()">
+
+    <div class="input-group" formGroupName="take">
+      <label>Datum preuzimanja</label>
+      <input class="form-control" placeholder="yyyy-mm-dd" (click)="date.toggle()" ngbDatepicker #date="ngbDatepicker" formControlName="date">
+      <label>Lokacija preuzimanja</label>
+      <input class="form-control" type="text" formControlName="location" />
+    </div>
+
+    <div class="input-group" formGroupName="return">
+      <label>Datum vracanja</label>
+      <input class="form-control" placeholder="yyyy-mm-dd" (click)="d.toggle()" ngbDatepicker #d="ngbDatepicker" formControlName="date">
+      <label>Lokacija vracanja</label>
+      <input class="form-control" type="text" formControlName="location" />
+    </div>
+    <label>Tip</label>
+    <input class="form-control" type="text" formControlName="type" />
+    <label>Broj putnika</label>
+    <input class="form-control" type="number" formControlName="number" />
+    <label>Cenovni rang</label>
+    <input class="form-control" type="range" formControlName="costRange" />
+    <input type="submit" class="btn btn-primary" value="Submit" />
+  </form>
+
+  <form class="form-inline">
+    <div class="form-group">
+      <div class="input-group">
+        <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div *ngIf="step === 3">
+  <table class='table table-striped' aria-labelledby="tableLabel">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Passenger number</th>
+        <th>ReservedFrom</th>
+        <th>ReservedTo</th>
+        <th>Type</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let car of foundCars">
+        <td>{{car.Name}}</td>
+        <td>{{car.PassengerNumber}}</td>
+        <td>{{car.ReservedFrom}}</td>
+        <td>{{car.ReservedTo}}</td>
+        <td>{{car.Type}}</td>
+        <td><button type="button" class="btn btn-primary" (click)="reserve(car)">Choose</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

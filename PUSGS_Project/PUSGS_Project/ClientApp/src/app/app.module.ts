@@ -15,6 +15,7 @@ import { RegisterComponent } from "./register/register.component";
 import { ProfileComponent } from "./profile/profile.component";
 import { RentACarProfileComponent } from './rent-a-car-profile/rent-a-car-profile.component';
 import { RentACarProfileEditComponent } from './rent-a-car-profile-edit/rent-a-car-profile-edit.component';
+import { CarReservationComponent } from './car-reservation/car-reservation.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { RentACarProfileEditComponent } from './rent-a-car-profile-edit/rent-a-c
     ProfileComponent,
     RentACarProfileComponent,
     RentACarProfileEditComponent,
+    CarReservationComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -43,6 +45,7 @@ import { RentACarProfileEditComponent } from './rent-a-car-profile-edit/rent-a-c
       { path: "profile", component: ProfileComponent },
       { path: "rent-a-car", component: RentACarProfileComponent},
       { path: "rent-a-car-edit", component: RentACarProfileEditComponent },
+      { path: "car-reservation", component: CarReservationComponent },
     ]),
   ],
   providers: [],
