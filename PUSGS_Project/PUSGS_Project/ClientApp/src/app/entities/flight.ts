@@ -1,11 +1,17 @@
 import { msToTimeString } from "../util/time";
+import { FlightTicket } from "./flight-ticket";
+import { AviationCompany } from "./aviation-company";
 
 export class Flight {
-  private departureTime: Date = new Date();
-  private arrivalTime: Date = new Date();
-  private travelLength: number;
-  private ticketPrice: number;
-  private numberOfChangeovers: number;
+  aviationCompany: AviationCompany;
+  departureTime: Date = new Date();
+  arrivalTime: Date = new Date();
+  travelLength: number;
+  ticketPrice: number;
+  numberOfChangeovers: number;
+  tickets: FlightTicket[];
+  seatAvailability: boolean[];
+  ratings: number[];
 
   // TODO: dodati lokacije presedanja
 

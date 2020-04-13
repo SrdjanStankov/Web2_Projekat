@@ -6,6 +6,7 @@ export class AviationCompany {
   address: Location;
   description: string;
   flights: Flight[];
+  ratings: number[];
 
   /*
   TODO: Dodati:
