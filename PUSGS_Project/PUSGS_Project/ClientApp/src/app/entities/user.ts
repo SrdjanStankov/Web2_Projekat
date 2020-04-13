@@ -1,3 +1,5 @@
+import { FlightTicket } from "./flight-ticket";
+
 export class User {
   name: string;
   lastName: string;
@@ -6,6 +8,7 @@ export class User {
   email: string;
   password: string;
   friends: User[];
+  flightTickets: FlightTicket[];
 
   constructor(
     name: string = "",
