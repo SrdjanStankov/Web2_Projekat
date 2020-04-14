@@ -16,6 +16,7 @@ import { ProfileComponent } from "./profile/profile.component";
 import { RentACarProfileComponent } from './rent-a-car-profile/rent-a-car-profile.component';
 import { RentACarProfileEditComponent } from './rent-a-car-profile-edit/rent-a-car-profile-edit.component';
 import { CarReservationComponent } from './car-reservation/car-reservation.component';
+import { FriendsComponent } from "./friends/friends.component";
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { CarReservationComponent } from './car-reservation/car-reservation.compo
     RentACarProfileComponent,
     RentACarProfileEditComponent,
     CarReservationComponent,
+    FriendsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -46,6 +48,7 @@ import { CarReservationComponent } from './car-reservation/car-reservation.compo
       { path: "rent-a-car", component: RentACarProfileComponent},
       { path: "rent-a-car-edit", component: RentACarProfileEditComponent },
       { path: "car-reservation", component: CarReservationComponent },
+      { path: "users", component: FriendsComponent },
     ]),
   ],
   providers: [],
