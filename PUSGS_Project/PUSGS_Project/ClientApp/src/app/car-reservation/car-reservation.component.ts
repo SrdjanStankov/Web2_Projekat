@@ -3,7 +3,6 @@ import { RentACarService } from '../services/rent-a-car.service';
 import { RentACar } from '../entities/rent-a-car';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Car } from '../entities/car';
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-car-reservation',
@@ -13,6 +12,7 @@ import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 export class CarReservationComponent implements OnInit {
 
   public step: number;
+  public rangeVal = 0;
 
   public agencies: RentACar[];
 
@@ -27,7 +27,7 @@ export class CarReservationComponent implements OnInit {
     }),
     type: new FormControl(''),
     number: new FormControl(''),
-    costRange: new FormControl(''),
+    costRange: new FormControl(0),
   });
 
   private searchAgency: RentACar;
@@ -48,10 +48,13 @@ export class CarReservationComponent implements OnInit {
   onSubmit() {
     this.searchAgency.Cars.forEach((car) => {
       if (!car.isReserved()) {
-        if (car.PassengerNumber === this.editGroup.get('number').value) {
-          if (car.Type === this.editGroup.get('type').value) {
-            // and in cost range
-            this.foundCars.push(car);
+        if (car.PassengerNumber === this.editGroup.get("number").value) {
+          if (car.Type.toLowerCase() === (this.editGroup.get("type").value as string).toLowerCase()) {
+            var ret = this.editGroup.get("return").get("date").value;
+            var take = this.editGroup.get("take").get("date").value
+            if (car.calculateCostForRange(new Date(ret.year, ret.month, ret.day), new Date(take.year, take.month, take.day)) <+ this.editGroup.get("costRange").value) {
+              this.foundCars.push(car);
+            }
           }
         }
       }
@@ -60,6 +63,21 @@ export class CarReservationComponent implements OnInit {
   }
 
   reserve(car: Car) {
-    alert(this.editGroup.get('take').get('date').value);
+    var ret = this.editGroup.get("return").get("date").value;
+    var take = this.editGroup.get("take").get("date").value;
+    car.reserveCar(new Date(take.year, take.month, take.day), new Date(ret.year, ret.month, ret.day));
   }
+
+  calculateCostForRange(car: Car) {
+    var ret = this.editGroup.get("return").get("date").value;
+    var take = this.editGroup.get("take").get("date").value;
+    var gg = new Date(ret.year, ret.month, ret.day);
+    var hh = new Date(take.year, take.month, take.day);
+    return car.calculateCostForRange(gg, hh);
+  }
+
+  valueChanged(e) {
+    this.rangeVal = e;
+  }
+
 }

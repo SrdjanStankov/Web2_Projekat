@@ -43,7 +43,7 @@ export class RentACarProfileEditComponent implements OnInit {
   }
 
   addCar() {
-    this.rentACar.addCar(new Car("name 20", 4, "Suv"));
+    this.rentACar.addCar(new Car("name 20", 4, "Suv", "Brand 1", "Model 1", 2009, 20));
   }
 
   removeBranch(index: number) {
