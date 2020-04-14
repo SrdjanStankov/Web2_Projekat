@@ -21,14 +21,19 @@ export class RentACarService {
         "Test branch 2",
       ],
       [
-        new Car("Test car name 1"),
-        new Car("Test car name 2"),
-        new Car("Test car name 2"),
-        new Car("Test car name 2"),
-        new Car("Test car name 2"),
-        new Car("Test car name 2"),
+        new Car("Test car name 1", 4, "Suv", "Brand 1", "Model 1", 2009, 20),
+        new Car("Test car name 1", 4, "Suv", "Brand 1", "Model 1", 2019, 14),
+        new Car("Test car name 1", 4, "Suv", "Brand 1", "Model 1", 2018, 28),
+        new Car("Test car name 2", 2, "Sport", "Brand 1", "Model 1", 2007, 10),
+        new Car("Test car name 2", 2, "Suv", "Brand 1", "Model 1", 2000, 28),
+        new Car("Test car name 2", 8, "Minivan", "Brand 1", "Model 1", 2001, 37),
+        new Car("Test car name 2", 6, "Coupe", "Brand 1", "Model 1", 2004, 11),
+        new Car("Test car name 2", 2, "Sport", "Brand 1", "Model 1", 2020, 5),
       ]
     );
+    agency.Cars[0].addRating(3);
+    agency.Cars[0].addRating(4);
+    agency.Cars[0].addRating(6);
     agency.addRating(4);
     agency.addRating(3);
     agency.addRating(6);
@@ -42,8 +47,8 @@ export class RentACarService {
         "Test branch 2",
       ],
       [
-        new Car("Test car name 1"),
-        new Car("Test car name 2"),
+        new Car("Test car name 1", 2, "Suv", "Brand 1", "Model 1", 2009, 20),
+        new Car("Test car name 2", 8, "Minivan", "Brand 1", "Model 1", 2009, 20),
       ]
     );
     agency2.addRating(4);
@@ -52,10 +57,10 @@ export class RentACarService {
 
 
     this.agencies.push(agency);
-    this.agencies.push(agency2);
+    this.agencies.push(agency);
     this.agencies.push(agency);
     this.agencies.push(agency2);
-    this.agencies.push(agency);
+    this.agencies.push(agency2);
     this.agencies.push(agency2);
   }
 
