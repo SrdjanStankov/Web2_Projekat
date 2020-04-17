@@ -1,22 +1,33 @@
 <div *ngIf="step === 1">
+  <form #filterForm="ngForm" (ngSubmit)="onFilter()">
+    <div class="form-row">
+      <div class="form-group col">
+        <input type="text" name="search" class="form-control" placeholder="Search..." [(ngModel)]="search">
+      </div>
+      <div class="form-group col-md-2">
+        <input type="submit" class="form-control btn btn-primary" value="Apply filter" />
+      </div>
+    </div>
+  </form>
+
   <table class='table table-striped' aria-labelledby="tableLabel">
     <thead>
       <tr>
         <th>Name</th>
-        <th>Address</th>
-        <th>Description</th>
-        <th>Car count</th>
-        <th>Branches count</th>
+        <th>Branches location</th>
+        <th>Rating</th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let agency of agencies">
+      <tr *ngFor="let agency of displayAgencies">
         <td>{{agency.Name}}</td>
-        <td>{{agency.Address}}</td>
-        <td>{{agency.Description}}</td>
-        <td>{{agency.Cars.length}}</td>
-        <td>{{agency.Branches.length}}</td>
+        <td>
+          <div *ngFor="let branch of agency.Branches">
+            {{branch}}
+          </div>
+        </td>
+        <td>{{agency.getAverageRating()}}</td>
         <td><button type="button" class="btn btn-primary" (click)="choosedAgency(agency)">Choose</button></td>
       </tr>
     </tbody>
