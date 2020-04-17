@@ -90,6 +90,10 @@ export class CarReservationComponent implements OnInit {
       if (agency.Name.toLowerCase().includes(searchText)) {
         return true;
       }
+      if (agency.Address.toLowerCase().includes(searchText)) {
+        return true;
+      }
+      return false;
     })
   }
 
