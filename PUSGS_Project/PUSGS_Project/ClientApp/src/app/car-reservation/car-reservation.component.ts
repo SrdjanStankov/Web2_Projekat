@@ -29,7 +29,7 @@ export class CarReservationComponent implements OnInit {
     }),
     type: new FormControl(''),
     number: new FormControl(''),
-    costRange: new FormControl(0),
+    costRange: new FormControl(2000),
   });
 
   private searchAgency: RentACar;
@@ -38,6 +38,7 @@ export class CarReservationComponent implements OnInit {
     this.allAgencies = service.getAgencies();
     this.displayAgencies = this.allAgencies;
     this.step = 1;
+    this.valueChanged(2000);
   }
 
   ngOnInit(): void {
