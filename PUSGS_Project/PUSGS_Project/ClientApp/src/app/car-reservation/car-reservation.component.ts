@@ -13,8 +13,10 @@ export class CarReservationComponent implements OnInit {
 
   public step: number;
   public rangeVal = 0;
+  public search: string = "";
 
-  public agencies: RentACar[];
+  public allAgencies: RentACar[];
+  public displayAgencies: RentACar[];
 
   public editGroup = new FormGroup({
     take: new FormGroup({
@@ -33,7 +35,8 @@ export class CarReservationComponent implements OnInit {
   private searchAgency: RentACar;
   public foundCars: Car[] = [];
   constructor(private service: RentACarService) {
-    this.agencies = service.getAgencies();
+    this.allAgencies = service.getAgencies();
+    this.displayAgencies = this.allAgencies;
     this.step = 1;
   }
 
@@ -78,6 +81,15 @@ export class CarReservationComponent implements OnInit {
 
   valueChanged(e) {
     this.rangeVal = e;
+  }
+
+  onFilter() {
+    const searchText = this.search.toLowerCase();
+    this.displayAgencies = this.allAgencies.filter((agency) => {
+      if (agency.Name.toLowerCase().includes(searchText)) {
+        return true;
+      }
+    })
   }
 
 }

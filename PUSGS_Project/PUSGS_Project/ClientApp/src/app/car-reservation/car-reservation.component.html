@@ -1,4 +1,15 @@
 <div *ngIf="step === 1">
+  <form #filterForm="ngForm" (ngSubmit)="onFilter()">
+    <div class="form-row">
+      <div class="form-group col">
+        <input type="text" name="search" class="form-control" placeholder="Search..." [(ngModel)]="search">
+      </div>
+      <div class="form-group col-md-2">
+        <input type="submit" class="form-control btn btn-primary" value="Apply filter" />
+      </div>
+    </div>
+  </form>
+
   <table class='table table-striped' aria-labelledby="tableLabel">
     <thead>
       <tr>
@@ -11,7 +22,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let agency of agencies">
+      <tr *ngFor="let agency of displayAgencies">
         <td>{{agency.Name}}</td>
         <td>{{agency.Address}}</td>
         <td>{{agency.Description}}</td>
