@@ -25,7 +25,7 @@ namespace PUSGS_Project
             // Add DbContext using SQL Server Provider
             string connectionString = this.Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(optionsAction: (options) =>
-          options.UseSqlServer(connectionString, b => b.MigrationsAssembly("Persistence")));
+          options.UseSqlServer(connectionString, b => b.MigrationsAssembly("Persistance")));
 
             // TODO: Add services here
 
