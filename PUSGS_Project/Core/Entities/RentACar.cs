@@ -16,14 +16,13 @@ namespace Core.Entities
         [NotMapped]
         public ICollection<string> Branches { get; set; }
 
-        [NotMapped]
-        public ICollection<double> Ratings { get; set; }
+        public ICollection<Rating> Ratings { get; set; }
 
         public RentACar()
         {
             Cars = new HashSet<Car>();
             Branches = new HashSet<string>();
-            Ratings = new List<double>();
+            Ratings = new HashSet<Rating>();
         }
     }
 }

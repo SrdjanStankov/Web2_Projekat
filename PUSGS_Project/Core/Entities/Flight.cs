@@ -19,14 +19,13 @@ namespace Core.Entities
         [NotMapped]
         public ICollection<bool> SeatAvailability { get; set; }
 
-        [NotMapped]
-        public ICollection<double> Ratings { get; set; }
+        public ICollection<Rating> Ratings { get; set; }
 
         public Flight()
         {
             Tickets = new HashSet<FlightTicket>();
             SeatAvailability = new List<bool>();
-            Ratings = new List<double>();
+            Ratings = new HashSet<Rating>();
         }
     }
 }

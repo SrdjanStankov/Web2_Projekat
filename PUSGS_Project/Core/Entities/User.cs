@@ -4,11 +4,6 @@ namespace Core.Entities
 {
     public class User
     {
-        public User()
-        {
-            Friends = new HashSet<User>();
-        }
-
         public string City { get; set; }
         public string Email { get; set; }
         public ICollection<User> Friends { get; set; }
@@ -16,5 +11,10 @@ namespace Core.Entities
         public string Name { get; set; }
         public string Password { get; set; }
         public string Phone { get; set; }
+
+        public User()
+        {
+            Friends = new HashSet<User>();
+        }
     }
 }

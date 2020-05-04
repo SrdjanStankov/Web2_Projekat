@@ -13,13 +13,12 @@ namespace Core.Entities
         public string Description { get; set; }
         public ICollection<Flight> Flights { get; set; }
 
-        [NotMapped]
-        public ICollection<double> Ratings { get; set; }
+        public ICollection<Rating> Ratings { get; set; }
 
         public AviationCompany()
         {
             Flights = new HashSet<Flight>();
-            Ratings = new List<double>();
+            Ratings = new HashSet<Rating>();
         }
     }
 }
