@@ -24,6 +24,7 @@ namespace Core.Entities
 
         public Flight()
         {
+            Tickets = new HashSet<FlightTicket>();
             SeatAvailability = new List<bool>();
             Ratings = new List<double>();
         }

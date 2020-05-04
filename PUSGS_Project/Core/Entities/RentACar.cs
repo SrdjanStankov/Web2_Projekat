@@ -21,6 +21,7 @@ namespace Core.Entities
 
         public RentACar()
         {
+            Cars = new HashSet<Car>();
             Branches = new HashSet<string>();
             Ratings = new List<double>();
         }
