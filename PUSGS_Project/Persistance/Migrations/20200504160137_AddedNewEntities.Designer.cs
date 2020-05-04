@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistance;
 
 namespace Persistance.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200504160137_AddedNewEntities")]
+    partial class AddedNewEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,46 +163,6 @@ namespace Persistance.Migrations
                     b.ToTable("Location");
                 });
 
-            modelBuilder.Entity("Core.Entities.Rating", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long?>("AviationCompanyId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("CarId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("FlightId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("RatingGiverEmail")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<long?>("RentACarId")
-                        .HasColumnType("bigint");
-
-                    b.Property<double>("Value")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AviationCompanyId");
-
-                    b.HasIndex("CarId");
-
-                    b.HasIndex("FlightId");
-
-                    b.HasIndex("RatingGiverEmail");
-
-                    b.HasIndex("RentACarId");
-
-                    b.ToTable("Rating");
-                });
-
             modelBuilder.Entity("Core.Entities.RentACar", b =>
                 {
                     b.Property<long>("Id")
@@ -282,29 +244,6 @@ namespace Persistance.Migrations
                     b.HasOne("Core.Entities.User", "TicketOwner")
                         .WithMany()
                         .HasForeignKey("TicketOwnerEmail");
-                });
-
-            modelBuilder.Entity("Core.Entities.Rating", b =>
-                {
-                    b.HasOne("Core.Entities.AviationCompany", null)
-                        .WithMany("Ratings")
-                        .HasForeignKey("AviationCompanyId");
-
-                    b.HasOne("Core.Entities.Car", null)
-                        .WithMany("Ratings")
-                        .HasForeignKey("CarId");
-
-                    b.HasOne("Core.Entities.Flight", null)
-                        .WithMany("Ratings")
-                        .HasForeignKey("FlightId");
-
-                    b.HasOne("Core.Entities.User", "RatingGiver")
-                        .WithMany()
-                        .HasForeignKey("RatingGiverEmail");
-
-                    b.HasOne("Core.Entities.RentACar", null)
-                        .WithMany("Ratings")
-                        .HasForeignKey("RentACarId");
                 });
 
             modelBuilder.Entity("Core.Entities.User", b =>
