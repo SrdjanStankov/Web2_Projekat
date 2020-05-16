@@ -30,6 +30,7 @@ namespace PUSGS_Project
 
             // TODO: Add services here
             services.AddScoped(typeof(ICarRepository), typeof(CarRepository));
+            services.AddScoped(typeof(IRentACarRepository), typeof(RentACarRepository));
 
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
