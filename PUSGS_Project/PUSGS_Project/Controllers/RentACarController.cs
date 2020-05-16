@@ -19,7 +19,7 @@ namespace PUSGS_Project.Controllers
 
         // GET: api/<controller>
         [HttpGet]
-        public IEnumerable<string> Get() => new string[] { "value1", "value2" };
+        public IEnumerable<RentACar> Get() => repository.GetAll();
 
         // GET api/<controller>/5
         [HttpGet("{id}")]

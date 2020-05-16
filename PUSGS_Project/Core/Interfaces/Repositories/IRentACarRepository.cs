@@ -1,10 +1,13 @@
-﻿using Core.Entities;
+﻿using System.Collections.Generic;
+using Core.Entities;
 
 namespace Core.Interfaces.Repositories
 {
     public interface IRentACarRepository
     {
         RentACar Get(long id);
+
+        IEnumerable<RentACar> GetAll();
 
         void Add(RentACar rentACar);
 

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Core.Entities;
 using Core.Interfaces.Repositories;
 
@@ -22,6 +24,8 @@ namespace Persistance.Repositories
         public void Delete(long id) => throw new NotImplementedException();
 
         public RentACar Get(long id) => context.Find<RentACar>(id);
+
+        public IEnumerable<RentACar> GetAll() => context.Set<RentACar>().AsEnumerable();
 
         public void Update(RentACar rentACar) => throw new NotImplementedException();
     }
