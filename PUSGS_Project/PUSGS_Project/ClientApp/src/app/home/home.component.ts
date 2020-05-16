@@ -13,7 +13,7 @@ export class HomeComponent {
   public isCollapsed: boolean;
 
   constructor(private RACService: RentACarService) {
-    this.rentACarAgencies = RACService.getAgencies();
+    RACService.getAgencies().then(result => this.rentACarAgencies = result);
   }
 
 }

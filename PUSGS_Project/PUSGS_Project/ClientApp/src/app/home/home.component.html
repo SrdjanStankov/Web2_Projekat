@@ -20,16 +20,16 @@
         <div class="card-columns" id="collapsableRAC" [ngbCollapse]="isCollapsedRAC">
           <div class="card" style="width: 18rem;" *ngFor="let agency of rentACarAgencies">
 
-            <h3 class="card-header">{{agency.Name}}</h3>
+            <h3 class="card-header">{{agency.name}}</h3>
 
             <div class="card-body">
-              <p class="card-text">{{agency.Description}}</p>
-              <div class="card-text">{{agency.Address}}</div>
+              <p class="card-text">{{agency.nescription}}</p>
+              <div class="card-text">{{agency.address}}</div>
               <br />
               <div ngbDropdown class="d-inline-block">
                 <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>Cars</button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                  <button ngbDropdownItem *ngFor="let car of agency.Cars">{{car.Name}}</button>
+                  <button ngbDropdownItem *ngFor="let car of agency.Cars">{{car.name}}</button>
                 </div>
               </div>
               <br />
@@ -37,7 +37,7 @@
               <div ngbDropdown class="d-inline-block">
                 <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>Branches</button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                  <button ngbDropdownItem *ngFor="let branch of agency.Branches">{{branch}}</button>
+                  <button ngbDropdownItem *ngFor="let branch of agency.branches">{{branch}}</button>
                 </div>
               </div>
             </div>

@@ -15,12 +15,12 @@ export class RentACarProfileEditComponent implements OnInit {
   public editGroup: FormGroup;
 
   constructor(private service: RentACarService) {
-    this.rentACar = service.getAgency(0);
+    service.getAgency(1).then(result => this.rentACar = result);
 
     this.editGroup = new FormGroup({
-      name: new FormControl(this.rentACar.Name),
-      address: new FormControl(this.rentACar.Address),
-      description: new FormControl(this.rentACar.Description),
+      name: new FormControl(this.rentACar.name),
+      address: new FormControl(this.rentACar.address),
+      description: new FormControl(this.rentACar.description),
     });
   }
 
@@ -31,26 +31,26 @@ export class RentACarProfileEditComponent implements OnInit {
     // check if valid
 
     // set all values
-    this.rentACar.Name = this.editGroup.get("name").value;
-    this.rentACar.Address = this.editGroup.get("address").value;
-    this.rentACar.Description = this.editGroup.get("description").value;
+    this.rentACar.name = this.editGroup.get("name").value;
+    this.rentACar.address = this.editGroup.get("address").value;
+    this.rentACar.description = this.editGroup.get("description").value;
 
     //talk to backend to update values
   }
 
   removeCar(index: number) {
-    this.rentACar.removeCar(index);
+    //this.rentACar.removeCar(index);
   }
 
   addCar() {
-    this.rentACar.addCar(new Car("name 20", 4, "Suv", "Brand 1", "Model 1", 2009, 20));
+    //this.rentACar.addCar(new Car("name 20", 4, "Suv", "Brand 1", "Model 1", 2009, 20));
   }
 
   removeBranch(index: number) {
-    this.rentACar.removeBranch(index);
+    //this.rentACar.removeBranch(index);
   }
 
   addBranch() {
-    this.rentACar.addBranch("name 20");
+    //this.rentACar.addBranch("name 20");
   }
 }

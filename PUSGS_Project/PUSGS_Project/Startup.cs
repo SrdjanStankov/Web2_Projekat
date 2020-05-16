@@ -5,8 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Persistance;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Core.Interfaces.Repositories;
+using Persistance.Repositories;
 
 namespace PUSGS_Project
 {
@@ -28,6 +29,8 @@ namespace PUSGS_Project
           options.UseSqlServer(connectionString, b => b.MigrationsAssembly("Persistance")));
 
             // TODO: Add services here
+            services.AddScoped(typeof(ICarRepository), typeof(CarRepository));
+            services.AddScoped(typeof(IRentACarRepository), typeof(RentACarRepository));
 
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
