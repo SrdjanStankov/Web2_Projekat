@@ -7,19 +7,20 @@ import { HttpClient } from '@angular/common/http';
 })
 export class RentACarService {
 
-  agencies: RentACar[] = [];
+  http: HttpClient;
+  rentACarControllerUri: string;
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<RentACar[]>(baseUrl + 'api/rentacar').subscribe(result => {
-      this.agencies = result;
-    }, error => console.error(error));
+    //http.get<RentACar[]>(baseUrl + 'api/rentacar').subscribe(result => { this.agencies = result; }, error => console.error(error));
+    this.http = http;
+    this.rentACarControllerUri = baseUrl + 'api/rentacar/';
   }
 
-  getAgencies(): RentACar[] {
-    return this.agencies;
+  getAgencies(): Promise<RentACar[]> {
+    return this.http.get<RentACar[]>(this.rentACarControllerUri).toPromise();
   }
 
-  getAgency(id: number): RentACar {
-    return this.agencies[id];
+  getAgency(id: number): Promise<RentACar> {
+    return this.http.get<RentACar>(this.rentACarControllerUri + id).toPromise();
   }
 }

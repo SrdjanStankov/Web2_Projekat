@@ -12,7 +12,7 @@ export class RentACarProfileComponent implements OnInit {
   public rentACar: RentACar;
 
   constructor(private service: RentACarService) {
-    this.rentACar = service.getAgency(0);
+    service.getAgency(1).then(result => this.rentACar = result);
   }
 
   ngOnInit(): void {

@@ -15,7 +15,7 @@ export class RentACarProfileEditComponent implements OnInit {
   public editGroup: FormGroup;
 
   constructor(private service: RentACarService) {
-    this.rentACar = service.getAgency(0);
+    service.getAgency(1).then(result => this.rentACar = result);
 
     this.editGroup = new FormGroup({
       name: new FormControl(this.rentACar.name),

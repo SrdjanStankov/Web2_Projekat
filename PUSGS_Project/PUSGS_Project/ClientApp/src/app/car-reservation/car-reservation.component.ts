@@ -35,7 +35,7 @@ export class CarReservationComponent implements OnInit {
   private searchAgency: RentACar;
   public foundCars: Car[] = [];
   constructor(private service: RentACarService) {
-    this.allAgencies = service.getAgencies();
+    service.getAgencies().then(result => this.allAgencies = result);
     this.displayAgencies = this.allAgencies;
     this.step = 1;
     this.valueChanged(2000);
