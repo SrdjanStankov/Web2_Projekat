@@ -1,13 +1,19 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Inject } from "@angular/core";
 import { User } from "../entities/user";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
   providedIn: "root",
 })
 export class BackendService {
   registeredUsers: User[] = [];
+    http: HttpClient;
+    userControllerUri: string;
 
-  constructor() {
+  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+    this.http = http;
+    this.userControllerUri = baseUrl + 'api/user/';
+
     // Initializing mock data
     this._create_friends();
     this._create_admin();
@@ -26,14 +32,15 @@ export class BackendService {
     return [false, "invalid email"];
   }
 
-  register(user: User): boolean {
-    for (var i = 0; i < this.registeredUsers.length; i++) {
-      if (this.registeredUsers[i].email == user.email) {
-        return false;
-      }
-    }
-    this.registeredUsers.push(user);
-    return true;
+  register(user: User) {
+
+    //for (var i = 0; i < this.registeredUsers.length; i++) {
+    //  if (this.registeredUsers[i].email == user.email) {
+    //    return false;
+    //  }
+    //}
+    return this.http.post<User>(this.userControllerUri + 'Register', user).toPromise();
+    //this.registeredUsers.push(user);
   }
 
   isLogedIn(): boolean {
