@@ -23,6 +23,8 @@ namespace PUSGS_Project
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+
             // Add DbContext using SQL Server Provider
             string connectionString = this.Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(optionsAction: (options) =>
@@ -55,6 +57,13 @@ namespace PUSGS_Project
                 app.UseHsts();
             }
 
+            app.UseCors(options =>
+            {
+                options
+                .WithOrigins("http://localhost:4200")
+                .AllowAnyMethod();
+            });
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())
@@ -79,7 +88,16 @@ namespace PUSGS_Project
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
+                    /*
+                     * Starts back end seperately from the front end (angular)
+                     * To start both:
+                     * 1. In Console (ex. cmd/powershell) navigate to `ClientApp` and run `npm start`
+                     * 2. Start backend
+                     */
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+
+                    // Starts Angular server automatically when you start backend
+                    // spa.UseAngularCliServer(npmScript: "start");
                 }
             });
         }
