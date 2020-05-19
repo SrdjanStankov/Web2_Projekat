@@ -22,14 +22,15 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void { }
 
   onSubmit() {
-    const loginTuple = this.backend.login(this.loginGroup.get('email').value, this.loginGroup.get('password').value);
-    if (loginTuple[0]) {
-      this.reason = '';
+    this.backend.login(this.loginGroup.get('email').value, this.loginGroup.get('password').value).then((res: any) => {
+      localStorage.setItem('token', res.token);
       this.activeModal.close();
-    }
-    else {
-      this.reason = loginTuple[1];
-    }
+
+    }, err => {
+        if (err.status == 400) {
+          this.reason = err.error.message;
+        }
+    });
   }
 
 }

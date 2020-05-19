@@ -37,20 +37,16 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
 
-    if (!this.backend.register(new User(
+    this.backend.register(new User(
       this.registerGroup.get('name').value,
       this.registerGroup.get('lastName').value,
       this.registerGroup.get('city').value,
       this.registerGroup.get('phone').value,
       this.registerGroup.get('email').value,
-      this.password.value))
-    ) {
-      this.invalidUser = true;
-    }
-    else {
-      this.invalidUser = false;
-      this.activeModal.close();
-    }
+      this.password.value)).then(() => {
+        this.invalidUser = false;
+        this.activeModal.close();
+      });
   }
 
 }
