@@ -20,29 +20,11 @@ export class BackendService {
   }
 
   login(email: string, password: string) {
-    //for (var i = 0; i < this.registeredUsers.length; i++) {
-    //  if (this.registeredUsers[i].email == email) {
-    //    if (this.registeredUsers[i].password == password) {
-    //      localStorage.setItem("currUser", email);
-    //      return [true, ""];
-    //    }
-    //    return [false, "invalid password"];
-    //  }
-    //}
-    //return [false, "invalid email"];
-
     return this.http.post(this.userControllerUri + 'Login', { email, password }).toPromise();
   }
 
   register(user: User) {
-
-    //for (var i = 0; i < this.registeredUsers.length; i++) {
-    //  if (this.registeredUsers[i].email == user.email) {
-    //    return false;
-    //  }
-    //}
     return this.http.post<User>(this.userControllerUri + 'Register', user).toPromise();
-    //this.registeredUsers.push(user);
   }
 
   isLogedIn(): boolean {
