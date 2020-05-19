@@ -46,11 +46,11 @@ export class BackendService {
   }
 
   isLogedIn(): boolean {
-    return !!localStorage.getItem("currUser");
+    return !!localStorage.getItem("token");
   }
 
   logout() {
-    localStorage.removeItem("currUser");
+    localStorage.removeItem("token");
   }
 
   getLoggedInUser(): User {
