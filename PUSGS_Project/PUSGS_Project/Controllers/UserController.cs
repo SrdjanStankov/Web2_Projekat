@@ -1,8 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace PUSGS_Project.Controllers
 {
@@ -11,10 +19,12 @@ namespace PUSGS_Project.Controllers
     public class UserController : Controller
     {
         private readonly IUserRepository repository;
+        private readonly ApplicationSettings settings;
 
-        public UserController(IUserRepository userRepository)
+        public UserController(IUserRepository userRepository, IOptions<ApplicationSettings> appSettings)
         {
             repository = userRepository;
+            settings = appSettings.Value;
         }
 
         // GET: api/User
@@ -25,6 +35,7 @@ namespace PUSGS_Project.Controllers
         }
 
         // GET: api/User/5
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("{id}", Name = "Get")]
         public string Get(int id)
         {
@@ -68,6 +79,32 @@ namespace PUSGS_Project.Controllers
             // TODO: make repository async
             repository.Add(user);
             return Ok();
+        }
+
+        [HttpPost]
+        [Route("Login")]
+        public async Task<object> Post([FromBody] LoginModel model)
+        {
+            var user = repository.GetUserByEmail(model.Email);
+            if (user is null || model.Password != user.Password)
+            {
+                return BadRequest(new { message = "Invalid username or password" });
+            }
+
+            var tokenDescriptor = new SecurityTokenDescriptor()
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim("UserID", user.Email)
+                }),
+                Expires = DateTime.UtcNow.AddMinutes(5),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.JWT_Secret)), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+            var token = tokenHandler.WriteToken(securityToken);
+            return Ok(new { token });
         }
     }
 }

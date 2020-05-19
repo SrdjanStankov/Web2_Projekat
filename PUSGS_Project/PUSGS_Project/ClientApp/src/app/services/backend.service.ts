@@ -19,17 +19,19 @@ export class BackendService {
     this._create_admin();
   }
 
-  login(email: string, password: string): [boolean, string] {
-    for (var i = 0; i < this.registeredUsers.length; i++) {
-      if (this.registeredUsers[i].email == email) {
-        if (this.registeredUsers[i].password == password) {
-          localStorage.setItem("currUser", email);
-          return [true, ""];
-        }
-        return [false, "invalid password"];
-      }
-    }
-    return [false, "invalid email"];
+  login(email: string, password: string) {
+    //for (var i = 0; i < this.registeredUsers.length; i++) {
+    //  if (this.registeredUsers[i].email == email) {
+    //    if (this.registeredUsers[i].password == password) {
+    //      localStorage.setItem("currUser", email);
+    //      return [true, ""];
+    //    }
+    //    return [false, "invalid password"];
+    //  }
+    //}
+    //return [false, "invalid email"];
+
+    return this.http.post(this.userControllerUri + 'Login', { email, password }).toPromise();
   }
 
   register(user: User) {

@@ -29,7 +29,7 @@ namespace Persistance.Repositories
 
         public User GetUserByEmail(string email)
         {
-            throw new NotImplementedException();
+            return context.Find<User>(email);
         }
 
         public void Update(User user)
