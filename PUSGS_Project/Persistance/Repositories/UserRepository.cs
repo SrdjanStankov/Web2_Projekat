@@ -1,6 +1,7 @@
 ﻿using Core.Entities;
 using Core.Interfaces.Repositories;
 using System;
+using System.Threading.Tasks;
 
 namespace Persistance.Repositories
 {
@@ -13,16 +14,15 @@ namespace Persistance.Repositories
             context = applicationDbContext;
         }
 
-        public bool Add(User user)
+        public async Task<bool> AddAsync(User user)
         {
-            var u = context.Find<User>(user.Email);
+            var u = await context.FindAsync<User>(user.Email);
             if (u is object)
             {
                 return false;
             }
-            //TODO: make async
-            context.Add(user);
-            context.SaveChanges();
+            await context.AddAsync(user);
+            await context.SaveChangesAsync();
             return true;
         }
 

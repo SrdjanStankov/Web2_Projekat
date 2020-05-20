@@ -1,4 +1,5 @@
-﻿using Core.Entities;
+﻿using System.Threading.Tasks;
+using Core.Entities;
 
 namespace Core.Interfaces.Repositories
 {
@@ -6,7 +7,7 @@ namespace Core.Interfaces.Repositories
     {
         User GetUserByEmail(string email);
 
-        bool Add(User user);
+        Task<bool> AddAsync(User user);
 
         void DeleteUserByEmail(string email);
 
