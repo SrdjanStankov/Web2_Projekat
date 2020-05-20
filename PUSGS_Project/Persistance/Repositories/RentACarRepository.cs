@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces.Repositories;
 
@@ -15,10 +16,16 @@ namespace Persistance.Repositories
             this.context = context;
         }
 
-        public void Add(RentACar rentACar)
+        public async Task<bool> AddAsync(RentACar rentACar)
         {
-            context.Add(rentACar);
-            context.SaveChanges();
+            var r = await context.FindAsync<RentACar>(rentACar.Id);
+            if (r is object)
+            {
+                return false;
+            }
+            await context.AddAsync(rentACar);
+            await context.SaveChangesAsync();
+            return true;
         }
 
         public void Delete(long id) => throw new NotImplementedException();

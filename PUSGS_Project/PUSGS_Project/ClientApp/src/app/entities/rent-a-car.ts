@@ -1,12 +1,12 @@
 import { Car } from "./car";
 
-export interface RentACar {
-  id: number;
-  name: string;
-  address: string;
-  description: string;
+export class RentACar {
+  Id: number;
+  Name: string;
+  Address: string;
+  Description: string;
   // TODO: cenovnik
-  cars: Car[];
-  branches: string[];
-  ratings: number[];
+  Cars: Car[];
+  Branches: string[];
+  Ratings: number[];
 }
