@@ -88,7 +88,7 @@ namespace PUSGS_Project.Controllers
         [Route("Login")]
         public async Task<object> Post([FromBody] LoginModel model)
         {
-            var user = repository.GetUserByEmail(model.Email);
+            var user = await repository.GetUserByEmailAsync(model.Email);
             if (user is null || model.Password != user.Password)
             {
                 return BadRequest(new { message = "Invalid username or password" });

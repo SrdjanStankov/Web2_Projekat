@@ -5,7 +5,7 @@ namespace Core.Interfaces.Repositories
 {
     public interface IUserRepository
     {
-        User GetUserByEmail(string email);
+        Task<User> GetUserByEmailAsync(string email);
 
         Task<bool> AddAsync(User user);
 

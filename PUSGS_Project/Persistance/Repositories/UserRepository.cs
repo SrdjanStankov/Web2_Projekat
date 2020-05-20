@@ -31,9 +31,9 @@ namespace Persistance.Repositories
             throw new NotImplementedException();
         }
 
-        public User GetUserByEmail(string email)
+        public async Task<User> GetUserByEmailAsync(string email)
         {
-            return context.Find<User>(email);
+            return await context.FindAsync<User>(email);
         }
 
         public void Update(User user)
