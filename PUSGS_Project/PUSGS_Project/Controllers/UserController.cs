@@ -107,7 +107,7 @@ namespace PUSGS_Project.Controllers
             var tokenHandler = new JwtSecurityTokenHandler();
             var securityToken = tokenHandler.CreateToken(tokenDescriptor);
             var token = tokenHandler.WriteToken(securityToken);
-            return Ok(new { token });
+            return Ok(new { token, type = user.GetType().Name });
         }
     }
 }

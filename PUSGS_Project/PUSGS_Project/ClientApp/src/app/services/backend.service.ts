@@ -32,7 +32,11 @@ export class BackendService {
   }
 
   logout() {
-    localStorage.removeItem("token");
+    localStorage.clear();
+  }
+
+  getLogedInUserType(): string {
+    return localStorage.getItem("type");
   }
 
   getLoggedInUser(): User {

@@ -24,12 +24,19 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.backend.login(this.loginGroup.get('email').value, this.loginGroup.get('password').value).then((res: any) => {
       localStorage.setItem('token', res.token);
+      if (res.type === "SystemAdministrator") {
+        localStorage.setItem('type', 'SystemAdmin');
+      } else if (res.type === "RentACarAdministrator") {
+        localStorage.setItem('type', 'RentACarAdmin');
+      } else if (res.type === "User") {
+        localStorage.setItem('type', 'User');
+      }
       this.activeModal.close();
 
     }, err => {
-        if (err.status == 400) {
-          this.reason = err.error.message;
-        }
+      if (err.status == 400) {
+        this.reason = err.error.message;
+      }
     });
   }
 
