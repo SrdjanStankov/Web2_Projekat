@@ -45,8 +45,59 @@ namespace PUSGS_Project.Controllers
 
         // POST: api/User
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<object> Post([FromBody] User model)
         {
+            var user = new User();
+            if (model.IsSystemAdmin)
+            {
+                user = new SystemAdministrator()
+                {
+                    City = model.City,
+                    Email = model.Email,
+                    LastName = model.LastName,
+                    Name = model.Name,
+                    Password = model.Password,
+                    Phone = model.Phone,
+                    IsSystemAdmin = model.IsSystemAdmin,
+                    IsRentACarAdmin = false
+                };
+            }
+            else if (model.IsRentACarAdmin)
+            {
+                user = new RentACarAdministrator()
+                {
+                    City = model.City,
+                    Email = model.Email,
+                    LastName = model.LastName,
+                    Name = model.Name,
+                    Password = model.Password,
+                    Phone = model.Phone,
+                    IsRentACarAdmin = model.IsRentACarAdmin,
+                    IsSystemAdmin = false
+                };
+            }
+            else
+            {
+                user = new User()
+                {
+                    City = model.City,
+                    Email = model.Email,
+                    LastName = model.LastName,
+                    Name = model.Name,
+                    Password = model.Password,
+                    Phone = model.Phone,
+                    IsSystemAdmin = false,
+                    IsRentACarAdmin = false
+                };
+            }
+
+            // TODO: validate user
+
+            if (!await repository.AddAsync(user))
+            {
+                return BadRequest(new { message = "Already exist" });
+            }
+            return Ok();
         }
 
         // PUT: api/User/5
@@ -63,7 +114,7 @@ namespace PUSGS_Project.Controllers
 
         [HttpPost]
         [Route("Register")]
-        public async Task<object> Post([FromBody] User model)
+        public async Task<object> PostRegister([FromBody] User model)
         {
             var user = new User()
             {

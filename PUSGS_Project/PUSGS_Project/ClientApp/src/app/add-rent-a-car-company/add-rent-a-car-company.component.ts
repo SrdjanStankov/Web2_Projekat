@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { RentACarService } from '../services/rent-a-car.service';
 import { RentACar } from '../entities/rent-a-car';
+import { RentACarService } from '../services/rent-a-car.service';
 
 @Component({
   selector: 'app-add-rent-a-car-company',

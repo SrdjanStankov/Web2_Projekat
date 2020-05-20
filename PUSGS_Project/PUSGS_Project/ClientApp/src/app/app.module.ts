@@ -19,6 +19,7 @@ import { CarReservationComponent } from './car-reservation/car-reservation.compo
 import { FriendsComponent } from "./friends/friends.component";
 import { RegisterServicesComponent } from './register-services/register-services.component';
 import { AddRentACarCompanyComponent } from './add-rent-a-car-company/add-rent-a-car-company.component';
+import { AddRentACarAdministratorComponent } from './add-rent-a-car-administrator/add-rent-a-car-administrator.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { AddRentACarCompanyComponent } from './add-rent-a-car-company/add-rent-a
     FriendsComponent,
     RegisterServicesComponent,
     AddRentACarCompanyComponent,
+    AddRentACarAdministratorComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),

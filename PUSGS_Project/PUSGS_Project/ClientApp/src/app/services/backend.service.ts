@@ -1,6 +1,7 @@
 import { Injectable, Inject } from "@angular/core";
 import { User } from "../entities/user";
 import { HttpClient } from "@angular/common/http";
+import { RentACarAdmin } from "../entities/RentACarAdmin";
 
 @Injectable({
   providedIn: "root",
@@ -46,6 +47,10 @@ export class BackendService {
 
   getAllUsers(): User[] {
     return [...this.registeredUsers];
+  }
+
+  addRentACarAdmin(admin: RentACarAdmin) {
+    return this.http.post(this.userControllerUri, admin).toPromise();
   }
   // Init helper methods
   private _create_admin() {
