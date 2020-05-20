@@ -6,7 +6,7 @@ namespace Core.Interfaces.Repositories
     {
         User GetUserByEmail(string email);
 
-        void Add(User user);
+        bool Add(User user);
 
         void DeleteUserByEmail(string email);
 

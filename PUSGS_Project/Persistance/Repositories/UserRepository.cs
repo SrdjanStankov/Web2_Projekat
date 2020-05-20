@@ -13,13 +13,17 @@ namespace Persistance.Repositories
             context = applicationDbContext;
         }
 
-        public void Add(User user)
+        public bool Add(User user)
         {
-            // TODO: check if user is already registered
-
+            var u = context.Find<User>(user.Email);
+            if (u is object)
+            {
+                return false;
+            }
             //TODO: make async
             context.Add(user);
             context.SaveChanges();
+            return true;
         }
 
         public void DeleteUserByEmail(string email)

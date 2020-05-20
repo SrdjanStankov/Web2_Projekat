@@ -78,7 +78,10 @@ namespace PUSGS_Project.Controllers
             // TODO: validate user
 
             // TODO: make repository async
-            repository.Add(user);
+            if (!repository.Add(user))
+            {
+                return BadRequest(new { message = "Already registered" });
+            }
             return Ok();
         }
 
