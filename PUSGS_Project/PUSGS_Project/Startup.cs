@@ -29,8 +29,6 @@ namespace PUSGS_Project
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
-
             // Add DbContext using SQL Server Provider
             string connectionString = this.Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(optionsAction: (options) =>
@@ -103,6 +101,7 @@ namespace PUSGS_Project
             {
                 options
                 .WithOrigins("http://localhost:4200")
+                .AllowAnyHeader()
                 .AllowAnyMethod();
             });
 
