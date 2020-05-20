@@ -46,6 +46,10 @@ export class RegisterComponent implements OnInit {
       this.password.value)).then(() => {
         this.invalidUser = false;
         this.activeModal.close();
+      }, err => {
+          if (err.status == 400) {
+            this.invalidUser = true;
+          }
       });
   }
 
