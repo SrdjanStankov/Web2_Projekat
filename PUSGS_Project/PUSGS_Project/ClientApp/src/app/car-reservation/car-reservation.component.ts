@@ -50,7 +50,7 @@ export class CarReservationComponent implements OnInit {
   }
 
   onSubmit() {
-    this.searchAgency.cars.forEach((car) => {
+    this.searchAgency.Cars.forEach((car) => {
       if (!car.isReserved()) {
         if (car.PassengerNumber === this.editGroup.get("number").value) {
           if (car.Type.toLowerCase() === (this.editGroup.get("type").value as string).toLowerCase()) {
@@ -87,10 +87,10 @@ export class CarReservationComponent implements OnInit {
   onFilter() {
     const searchText = this.search.toLowerCase();
     this.displayAgencies = this.allAgencies.filter((agency) => {
-      if (agency.name.toLowerCase().includes(searchText)) {
+      if (agency.Name.toLowerCase().includes(searchText)) {
         return true;
       }
-      if (agency.address.toLowerCase().includes(searchText)) {
+      if (agency.Address.toLowerCase().includes(searchText)) {
         return true;
       }
       return false;
