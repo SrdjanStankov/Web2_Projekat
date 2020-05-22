@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { User } from "../entities/user";
-import { BackendService } from "../services/backend.service";
+import { UserService } from "../services/user.service";
 
 @Component({
   selector: "app-friends",
@@ -10,14 +10,16 @@ import { BackendService } from "../services/backend.service";
 export class FriendsComponent implements OnInit {
   private allUsers: User[]; // cached users
   public displayedUsers: User[];
-  public search: string = "";
-  public friendsOnly: boolean = false;
+  public search = "";
+  public friendsOnly = false;
 
-  constructor(public backend: BackendService) {}
+  constructor(public userService: UserService) { }
 
   ngOnInit(): void {
-    this.allUsers = this.backend.getAllUsers();
-    this.displayedUsers = this.allUsers;
+    this.userService.getAllUsers().then(users => {
+      this.allUsers = users;
+      this.displayedUsers = this.allUsers;
+    });
   }
 
   onSubmit(): void {
@@ -26,20 +28,20 @@ export class FriendsComponent implements OnInit {
     if (this.friendsOnly) {
       filteredUsers = this._filterByFriends(
         filteredUsers,
-        this.backend.getLoggedInUser()
+        this.userService.getLoggedInUserId()
       );
     }
     this.displayedUsers = filteredUsers;
   }
 
-  private _filterByFriends(usersToFilter: User[], loggedUser: User): User[] {
-    return usersToFilter.filter((user) => this._isFriend(user, loggedUser));
+  private _filterByFriends(usersToFilter: User[], loggedUserEmail: string): User[] {
+    return usersToFilter.filter((user) => this._isFriend(user, loggedUserEmail));
   }
 
-  private _isFriend(user: User, loggedUser: User): boolean {
+  private _isFriend(user: User, loggedUserEmail: string): boolean {
     return (
-      user.email !== loggedUser.email &&
-      user.friends.some((friend) => friend.email === loggedUser.email)
+      user.email !== loggedUserEmail &&
+      user.friends.some((friendEmail) => friendEmail === loggedUserEmail)
     );
   }
 
