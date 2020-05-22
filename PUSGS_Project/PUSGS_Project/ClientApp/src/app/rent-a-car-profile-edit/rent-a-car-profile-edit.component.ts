@@ -18,9 +18,9 @@ export class RentACarProfileEditComponent implements OnInit {
     service.getAgency(1).then(result => this.rentACar = result);
 
     this.editGroup = new FormGroup({
-      name: new FormControl(this.rentACar.Name),
-      address: new FormControl(this.rentACar.Address),
-      description: new FormControl(this.rentACar.Description),
+      name: new FormControl(this.rentACar.name),
+      address: new FormControl(this.rentACar.address),
+      description: new FormControl(this.rentACar.description),
     });
   }
 
@@ -31,9 +31,9 @@ export class RentACarProfileEditComponent implements OnInit {
     // check if valid
 
     // set all values
-    this.rentACar.Name = this.editGroup.get("name").value;
-    this.rentACar.Address = this.editGroup.get("address").value;
-    this.rentACar.Description = this.editGroup.get("description").value;
+    this.rentACar.name = this.editGroup.get("name").value;
+    this.rentACar.address = this.editGroup.get("address").value;
+    this.rentACar.description = this.editGroup.get("description").value;
 
     //talk to backend to update values
   }

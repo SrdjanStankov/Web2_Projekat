@@ -11,8 +11,6 @@ namespace Core.Entities
         public string Name { get; set; }
         public string Password { get; set; }
         public string Phone { get; set; }
-        public bool IsSystemAdmin { get; set; }
-        public bool IsRentACarAdmin { get; set; }
 
         public User()
         {

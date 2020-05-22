@@ -10,6 +10,7 @@ export class RentACarService {
   rentACarControllerUri: string;
 
   constructor(http: HttpClient, @Inject("BASE_URL") baseUrl: string) {
+    //http.get<RentACar[]>(baseUrl + 'api/rentacar').subscribe(result => { this.agencies = result; }, error => console.error(error));
     this.http = http;
     this.rentACarControllerUri = baseUrl + "api/rentacar/";
   }
@@ -20,9 +21,5 @@ export class RentACarService {
 
   getAgency(id: number): Promise<RentACar> {
     return this.http.get<RentACar>(this.rentACarControllerUri + id).toPromise();
-  }
-
-  addAgency(agency: RentACar) {
-    return this.http.post<RentACar>(this.rentACarControllerUri, agency).toPromise();
   }
 }

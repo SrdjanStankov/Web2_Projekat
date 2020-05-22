@@ -230,16 +230,6 @@ namespace Persistance.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsRentACarAdmin")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsSystemAdmin")
-                        .HasColumnType("bit");
-
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
@@ -260,22 +250,6 @@ namespace Persistance.Migrations
                     b.HasIndex("UserEmail");
 
                     b.ToTable("User");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
-                });
-
-            modelBuilder.Entity("Core.Entities.RentACarAdministrator", b =>
-                {
-                    b.HasBaseType("Core.Entities.User");
-
-                    b.HasDiscriminator().HasValue("RentACarAdministrator");
-                });
-
-            modelBuilder.Entity("Core.Entities.SystemAdministrator", b =>
-                {
-                    b.HasBaseType("Core.Entities.User");
-
-                    b.HasDiscriminator().HasValue("SystemAdministrator");
                 });
 
             modelBuilder.Entity("Core.Entities.AviationCompany", b =>

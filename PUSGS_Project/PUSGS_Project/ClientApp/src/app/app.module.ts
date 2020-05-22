@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
+import { GoogleLoginProvider } from "angularx-social-login";
 
 import { AppComponent } from "./app.component";
 import { NavMenuComponent } from "./nav-menu/nav-menu.component";
@@ -17,9 +19,17 @@ import { RentACarProfileComponent } from './rent-a-car-profile/rent-a-car-profil
 import { RentACarProfileEditComponent } from './rent-a-car-profile-edit/rent-a-car-profile-edit.component';
 import { CarReservationComponent } from './car-reservation/car-reservation.component';
 import { FriendsComponent } from "./friends/friends.component";
-import { RegisterServicesComponent } from './register-services/register-services.component';
-import { AddRentACarCompanyComponent } from './add-rent-a-car-company/add-rent-a-car-company.component';
-import { AddRentACarAdministratorComponent } from './add-rent-a-car-administrator/add-rent-a-car-administrator.component';
+
+let config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider("Google-OAuth-Client-Id")
+  }
+]);
+
+export function provideConfig() {
+  return config;
+}
 
 @NgModule({
   declarations: [
@@ -35,13 +45,11 @@ import { AddRentACarAdministratorComponent } from './add-rent-a-car-administrato
     RentACarProfileEditComponent,
     CarReservationComponent,
     FriendsComponent,
-    RegisterServicesComponent,
-    AddRentACarCompanyComponent,
-    AddRentACarAdministratorComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
     HttpClientModule,
+    SocialLoginModule,
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
@@ -55,10 +63,13 @@ import { AddRentACarAdministratorComponent } from './add-rent-a-car-administrato
       { path: "rent-a-car-edit", component: RentACarProfileEditComponent },
       { path: "car-reservation", component: CarReservationComponent },
       { path: "users", component: FriendsComponent },
-      { path: "services", component: RegisterServicesComponent },
     ]),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: AuthServiceConfig,
+      useFactory: provideConfig
+    }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

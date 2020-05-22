@@ -38,7 +38,7 @@
         <label>Cars</label>
       </div>
       <div class="col-md-6">
-        <div *ngFor="let car of rentACar.Cars; let i = index">
+        <div *ngFor="let car of rentACar.cars; let i = index">
           <input type="text" value="{{car.Name}}" />
           <button type="button" class="btn btn-danger m-2 col-md-2" (click)="removeCar(i)">Remove</button>
         </div>
@@ -52,7 +52,7 @@
         <label>Branches</label>
       </div>
       <div class="col-md-6">
-        <div *ngFor="let branch of rentACar.Branches; let i = index">
+        <div *ngFor="let branch of rentACar.branches; let i = index">
           <input type="text" class="col-md-4" value="{{branch}}" />
           <button type="button" class="btn btn-danger m-2 col-md-2" (click)="removeBranch(i)">Remove</button>
         </div>
