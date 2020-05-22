@@ -1,8 +1,9 @@
 ﻿using Core.Entities;
 using Core.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Persistance.Repositories
 {
@@ -15,40 +16,34 @@ namespace Persistance.Repositories
             context = applicationDbContext;
         }
 
-        public void MakeFriends(string userId, string friendId)
+        public Task<User> GetUserByEmailAsync(string email)
         {
-            var user = GetUserByEmail(userId);
-            var friend = GetUserByEmail(friendId);
+            return context.User.Include(u => u.Friends).FirstOrDefaultAsync(u => u.Email == email);
+        }
 
-            if (!user.Friends.Any(f => f.Email == friend.Email))
+        public async Task<bool> AddAsync(User user)
+        {
+            if (context.User.Any(u => u.Email == user.Email))
             {
-                user.Friends.Add(friend);
-                friend.Friends.Add(user);
-                context.SaveChanges();
+                return false;
             }
+
+            await context.User.AddAsync(user);
+            await context.SaveChangesAsync();
+
+            return true;
         }
 
-        public void Add(User user)
+        public async Task DeleteUserByEmailAsync(string email)
         {
-            context.Add(user);
-            context.SaveChanges();
-        }
-
-        public void DeleteUserByEmail(string email)
-        {
-            var user = GetUserByEmail(email);
+            var user = await GetUserByEmailAsync(email);
             context.User.Remove(user);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public User GetUserByEmail(string email)
+        public async Task UpdateAsync(User user)
         {
-            return context.User.Include(u => u.Friends).FirstOrDefault(u => u.Email == email);
-        }
-
-        public void Update(User user)
-        {
-            var dbUser = GetUserByEmail(user.Email);
+            var dbUser = await GetUserByEmailAsync(user.Email);
 
             if (!string.IsNullOrWhiteSpace(user.City))
                 dbUser.City = user.City;
@@ -65,7 +60,36 @@ namespace Persistance.Repositories
             if (!string.IsNullOrWhiteSpace(user.Password))
                 dbUser.Password = user.Password;
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
+        }
+
+        public async Task MakeFriendsAsync(string userId, string friendId)
+        {
+            var user = await GetUserByEmailAsync(userId);
+            var friend = await GetUserByEmailAsync(friendId);
+
+            if (!user.Friends.Any(f => f.Email == friend.Email))
+            {
+                user.Friends.Add(friend);
+                friend.Friends.Add(user);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task UnfriendAsync(string userId, string friendId)
+        {
+            var user = await GetUserByEmailAsync(userId);
+            var friend = await GetUserByEmailAsync(friendId);
+
+            user.Friends.Remove(friend);
+            friend.Friends.Remove(user);
+
+            await context.SaveChangesAsync();
+        }
+
+        public Task<List<User>> GetUsersAsync()
+        {
+            return context.User.Include(u => u.Friends).ToListAsync();
         }
     }
 }
