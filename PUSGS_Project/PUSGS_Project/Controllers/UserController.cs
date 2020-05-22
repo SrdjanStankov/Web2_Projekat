@@ -44,7 +44,12 @@ namespace PUSGS_Project.Controllers
         [HttpGet("{id}", Name = "Get")]
         public async Task<object> Get(string id)
         {
-            return "value";
+            var user = await repository.GetUserByEmailAsync(id);
+            if (user == null)
+            {
+                return new NotFoundResult();
+            }
+            return new OkObjectResult(new UserModel(user));
         }
 
         // POST: api/User
