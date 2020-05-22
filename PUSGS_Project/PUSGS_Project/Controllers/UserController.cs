@@ -1,17 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Entities;
+﻿using Core.Entities;
 using Core.Enumerations;
 using Core.Interfaces.Repositories;
+using Core.ViewModels.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace PUSGS_Project.Controllers
 {
@@ -30,40 +32,58 @@ namespace PUSGS_Project.Controllers
 
         // GET: api/User
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<List<UserModel>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var users = await repository.GetUsersAsync();
+            return users.Select(u => new UserModel(u)).ToList();
         }
 
         // GET: api/User/5
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 
-        // POST: api/User
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpGet("{id}", Name = "Get")]
+        public async Task<object> Get(string id)
         {
+            var user = await repository.GetUserByEmailAsync(id);
+            if (user == null)
+            {
+                return new NotFoundResult();
+            }
+            return new OkObjectResult(new UserModel(user));
         }
 
         // PUT: api/User/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public Task Put(string id, [FromBody] User user)
         {
+            user.Email = id;
+            return repository.UpdateAsync(user);
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: api/User/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public Task Delete(string id)
         {
+            return repository.DeleteUserByEmailAsync(id);
+        }
+
+        [HttpPost]
+        [Route("Friend")]
+        public Task MakeFriends([FromBody]FriendRequestModel request)
+        {
+            return repository.MakeFriendsAsync(request.UserId, request.FriendId);
+        }
+
+        [HttpPost]
+        [Route("Unfriend")]
+        public Task Unfriend([FromBody]FriendRequestModel request)
+        {
+            return repository.UnfriendAsync(request.UserId, request.FriendId);
         }
 
         [HttpPost]
         [Route("Register")]
-        public async Task<object> Post([FromBody] User model)
+        public async Task<object> Register([FromBody] User model)
         {
             var user = new User()
             {
@@ -77,16 +97,16 @@ namespace PUSGS_Project.Controllers
 
             // TODO: validate user
 
-            // TODO: make repository async
-            repository.Add(user);
+            await repository.AddAsync(user);
             return Ok();
         }
 
         [HttpPost]
         [Route("Login")]
-        public async Task<object> Post([FromBody] LoginModel model)
+        public async Task<object> Login([FromBody] LoginModel model)
         {
-            var user = repository.GetUserByEmail(model.Email);
+            var user = await repository.GetUserByEmailAsync(model.Email);
+
             if (user is null || model.Password != user.Password)
             {
                 return BadRequest(new { message = "Invalid username or password" });
@@ -104,7 +124,7 @@ namespace PUSGS_Project.Controllers
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-            var token = tokenHandler.WriteToken(securityToken);
+            string token = tokenHandler.WriteToken(securityToken);
             return Ok(new { token });
         }
     }
