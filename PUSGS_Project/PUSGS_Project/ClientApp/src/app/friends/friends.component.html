@@ -29,6 +29,7 @@
       <th>Email</th>
       <th>City</th>
       <th>Phone</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -38,6 +39,12 @@
       <td>{{user.email}}</td>
       <td>{{user.city}}</td>
       <td>{{user.phone}}</td>
+      <td>
+        <div *ngIf="!isCurrentUser(user)">
+          <button *ngIf="isFriendToCurrentUser(user)" (click)="unfriend(user)" class="btn btn-secondary">Unfriend</button>
+          <button *ngIf="!isFriendToCurrentUser(user)" (click)="addFriend(user)" class="btn btn-secondary">Add Friend</button>
+        </div>
+      </td>
     </tr>
   </tbody>
 </table>

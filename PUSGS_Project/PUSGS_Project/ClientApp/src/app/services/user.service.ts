@@ -24,4 +24,10 @@ export class UserService {
     const email = localStorage.getItem(STORAGE_USER_ID_KEY);
     return this.http.get<User>(this.userControllerUri + email).toPromise();
   }
+  addFriend(userId: string, friendId: string) {
+    return this.http.post(this.userControllerUri + "friend", { userId, friendId }).toPromise();
+  }
+  unfriend(userId: string, friendId: string) {
+    return this.http.post(this.userControllerUri + "unfriend", { userId, friendId }).toPromise();
+  }
 }
