@@ -7,7 +7,7 @@ export class User {
   phone: string;
   email: string;
   password: string;
-  friends: User[];
+  friends: string[]; // friend userId's (emails)
   flightTickets: FlightTicket[];
 
   constructor(
