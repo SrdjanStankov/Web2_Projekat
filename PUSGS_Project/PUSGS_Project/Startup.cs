@@ -103,6 +103,9 @@ namespace PUSGS_Project
                 .WithOrigins("http://localhost:4200")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
+                options.WithOrigins("https://accounts.google.com")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
             });
 
             app.UseHttpsRedirection();

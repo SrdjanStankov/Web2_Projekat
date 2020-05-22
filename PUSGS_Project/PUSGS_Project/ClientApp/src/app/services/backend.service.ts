@@ -2,6 +2,7 @@ import { Injectable, Inject } from "@angular/core";
 import { User } from "../entities/user";
 import { HttpClient } from "@angular/common/http";
 import { STORAGE_TOKEN_KEY } from "../constants/storage"
+import { SocialUser } from "angularx-social-login";
 
 @Injectable({
   providedIn: "root",
@@ -17,6 +18,10 @@ export class BackendService {
 
   login(email: string, password: string) {
     return this.http.post(this.userControllerUri + 'Login', { email, password }).toPromise()
+  }
+
+  loginScial(user: SocialUser) {
+    return this.http.post(this.userControllerUri + 'SocialLogin', user).toPromise();
   }
 
   register(user: User) {

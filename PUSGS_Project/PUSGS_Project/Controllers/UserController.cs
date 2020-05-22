@@ -1,16 +1,17 @@
 ﻿using Core.Entities;
 using Core.Enumerations;
 using Core.Interfaces.Repositories;
+using Core.ViewModels.Apis;
 using Core.ViewModels.Users;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -126,6 +127,59 @@ namespace PUSGS_Project.Controllers
             var securityToken = tokenHandler.CreateToken(tokenDescriptor);
             string token = tokenHandler.WriteToken(securityToken);
             return Ok(new { token });
+        }
+
+        [HttpPost]
+        [Route("SocialLogin")]
+        public async Task<object> SocialLogin([FromBody] LoginModel model)
+        {
+            var user = await repository.GetUserByEmailAsync(model.Email);
+
+            if (user is null || model.Password != user.Password)
+            {
+                return BadRequest(new { message = "Invalid username or password" });
+            }
+
+            if (await VerifyTokenAsync(model.IdToken))
+            {
+                var tokenDescriptor = new SecurityTokenDescriptor()
+                {
+                    Expires = DateTime.UtcNow.AddMinutes(5),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.JWT_Secret)), SecurityAlgorithms.HmacSha256Signature)
+                };
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+                var token = tokenHandler.WriteToken(securityToken);
+                return Ok(new { token }); 
+            }
+
+            return BadRequest(new { message = "Error loging in with google" });
+        }
+
+        private async Task<bool> VerifyTokenAsync(string providerToken)
+        {
+            var httpClient = new HttpClient();
+            var requestUri = new Uri($"https://www.googleapis.com/oauth2/v3/tokeninfo?id_token={providerToken}");
+
+            HttpResponseMessage responseMessage;
+
+            try
+            {
+                responseMessage = await httpClient.GetAsync(requestUri);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            if (responseMessage.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                return false;
+            }
+
+            var response = await responseMessage.Content.ReadAsStringAsync();
+            var googleApiTokenInfo = JsonConvert.DeserializeObject<GoogleApiTokenInfo>(response);
+            return true;
         }
     }
 }

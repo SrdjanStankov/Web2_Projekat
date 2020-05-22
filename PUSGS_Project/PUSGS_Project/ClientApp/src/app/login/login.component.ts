@@ -3,6 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BackendService } from '../services/backend.service';
 import { STORAGE_TOKEN_KEY, STORAGE_USER_ID_KEY } from "../constants/storage"
+import { AuthService, GoogleLoginProvider } from 'angularx-social-login';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
 
   reason: string;
 
-  constructor(public activeModal: NgbActiveModal, private backend: BackendService) { }
+  constructor(public activeModal: NgbActiveModal, private backend: BackendService, public oAuth: AuthService) { }
 
   ngOnInit(): void { }
 
@@ -36,4 +37,15 @@ export class LoginComponent implements OnInit {
       }
     });
   }
+
+  loginWithGoogle() {
+    this.oAuth.signIn(GoogleLoginProvider.PROVIDER_ID).
+      then(user => {
+      this.backend.loginScial(user).then((res: any) => {
+        localStorage.setItem(STORAGE_TOKEN_KEY, res.token);
+        localStorage.setItem(STORAGE_USER_ID_KEY, user.email);
+      })
+    })
+  }
+
 }
