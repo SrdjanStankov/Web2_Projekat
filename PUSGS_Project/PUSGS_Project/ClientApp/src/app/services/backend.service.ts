@@ -1,7 +1,7 @@
 import { Injectable, Inject } from "@angular/core";
 import { User } from "../entities/user";
 import { HttpClient } from "@angular/common/http";
-import { STORAGE_TOKEN_KEY, STORAGE_USER_ID_KEY } from "../constants/storage"
+import { STORAGE_TOKEN_KEY } from "../constants/storage"
 
 @Injectable({
   providedIn: "root",
@@ -28,7 +28,6 @@ export class BackendService {
   }
 
   logout() {
-    localStorage.removeItem(STORAGE_USER_ID_KEY);
-    localStorage.removeItem(STORAGE_TOKEN_KEY);
+    localStorage.clear()
   }
 }

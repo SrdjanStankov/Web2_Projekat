@@ -9,6 +9,7 @@ import { UserService } from "../services/user.service";
 })
 export class FriendsComponent implements OnInit {
   private allUsers: User[]; // cached users
+  private currentUserId: string;
   public displayedUsers: User[];
   public search = "";
   public friendsOnly = false;
@@ -16,6 +17,11 @@ export class FriendsComponent implements OnInit {
   constructor(public userService: UserService) { }
 
   ngOnInit(): void {
+    this.currentUserId = this.userService.getLoggedInUserId();
+    this.refresh();
+  }
+
+  refresh() {
     this.userService.getAllUsers().then(users => {
       this.allUsers = users;
       this.displayedUsers = this.allUsers;
@@ -28,10 +34,30 @@ export class FriendsComponent implements OnInit {
     if (this.friendsOnly) {
       filteredUsers = this._filterByFriends(
         filteredUsers,
-        this.userService.getLoggedInUserId()
+        this.currentUserId
       );
     }
     this.displayedUsers = filteredUsers;
+  }
+
+  addFriend(friend: User) {
+    this.userService.addFriend(this.currentUserId, friend.email).then(() => {
+      this.refresh();
+    });
+  }
+
+  unfriend(friend: User) {
+    this.userService.unfriend(this.currentUserId, friend.email).then(() => {
+      this.refresh();
+    });
+  }
+
+  isCurrentUser(user: User): boolean {
+    return this.currentUserId === user.email;
+  }
+
+  isFriendToCurrentUser(potentialFriend: User): boolean {
+    return potentialFriend.friends.some(friendEmail => friendEmail === this.currentUserId);
   }
 
   private _filterByFriends(usersToFilter: User[], loggedUserEmail: string): User[] {
