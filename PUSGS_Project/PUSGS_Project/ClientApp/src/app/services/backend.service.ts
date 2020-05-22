@@ -1,27 +1,22 @@
 import { Injectable, Inject } from "@angular/core";
 import { User } from "../entities/user";
 import { HttpClient } from "@angular/common/http";
-import { RentACarAdmin } from "../entities/RentACarAdmin";
+import { STORAGE_TOKEN_KEY } from "../constants/storage"
 
 @Injectable({
   providedIn: "root",
 })
 export class BackendService {
-  registeredUsers: User[] = [];
-    http: HttpClient;
-    userControllerUri: string;
+  http: HttpClient;
+  userControllerUri: string;
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.http = http;
     this.userControllerUri = baseUrl + 'api/user/';
-
-    // Initializing mock data
-    this._create_friends();
-    this._create_admin();
   }
 
   login(email: string, password: string) {
-    return this.http.post(this.userControllerUri + 'Login', { email, password }).toPromise();
+    return this.http.post(this.userControllerUri + 'Login', { email, password }).toPromise()
   }
 
   register(user: User) {
@@ -29,7 +24,7 @@ export class BackendService {
   }
 
   isLogedIn(): boolean {
-    return !!localStorage.getItem("token");
+    return !!localStorage.getItem(STORAGE_TOKEN_KEY);
   }
 
   logout() {
@@ -40,51 +35,8 @@ export class BackendService {
     return localStorage.getItem("type");
   }
 
-  getLoggedInUser(): User {
-    const email = localStorage.getItem("currUser");
-    return this.registeredUsers.find((user) => user.email === email);
-  }
-
-  getAllUsers(): User[] {
-    return [...this.registeredUsers];
-  }
-
   addRentACarAdmin(admin: RentACarAdmin) {
     return this.http.post(this.userControllerUri, admin).toPromise();
   }
-  // Init helper methods
-  private _create_admin() {
-    this.registeredUsers.push(
-      new User(
-        "admin name",
-        "admin surname",
-        "admin city",
-        "911-192",
-        "admin@gmail.com",
-        "admin"
-      )
-    );
-  }
-  private _create_friends() {
-    const user = new User(
-      "test name",
-      "test surname",
-      "test city",
-      "555-333",
-      "test@gmail.com",
-      "test"
-    );
-    const friend = new User(
-      "friend name",
-      "friend surname",
-      "friend city",
-      "420-69",
-      "friend@gmail.com",
-      "friend"
-    );
-    user.friends.push(friend);
-    friend.friends.push(user);
-    this.registeredUsers.push(user);
-    this.registeredUsers.push(friend);
-  }
+  
 }

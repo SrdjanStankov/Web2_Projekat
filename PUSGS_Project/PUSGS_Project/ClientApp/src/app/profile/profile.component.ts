@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { BackendService } from "../services/backend.service";
 import { User } from "../entities/user";
+import { UserService } from "../services/user.service";
 
 @Component({
   selector: "app-profile",
@@ -10,8 +10,7 @@ import { User } from "../entities/user";
 export class ProfileComponent implements OnInit {
   public user: User;
 
-  constructor(public backend: BackendService) {
-    this.user = backend.getLoggedInUser();
+  constructor(public userService: UserService) {
   }
 
   isReadOnly(): boolean {
@@ -19,5 +18,9 @@ export class ProfileComponent implements OnInit {
     return false;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userService.getLoggedInUser().then(user => {
+      this.user = user;
+    })
+  }
 }

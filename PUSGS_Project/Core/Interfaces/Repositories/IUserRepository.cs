@@ -1,16 +1,24 @@
 ﻿using System.Threading.Tasks;
 using Core.Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Core.Interfaces.Repositories
 {
     public interface IUserRepository
     {
-        Task<User> GetUserByEmailAsync(string email);
-
         Task<bool> AddAsync(User user);
 
-        void DeleteUserByEmail(string email);
+        Task DeleteUserByEmailAsync(string email);
 
-        void Update(User user);
+        Task<User> GetUserByEmailAsync(string email);
+
+        Task<List<User>> GetUsersAsync();
+
+        Task MakeFriendsAsync(string userId, string friendId);
+
+        Task UnfriendAsync(string userId, string friendId);
+
+        Task UpdateAsync(User user);
     }
 }

@@ -1,17 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Entities;
+﻿using Core.Entities;
 using Core.Enumerations;
 using Core.Interfaces.Repositories;
+using Core.ViewModels.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace PUSGS_Project.Controllers
 {
@@ -30,15 +32,17 @@ namespace PUSGS_Project.Controllers
 
         // GET: api/User
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<List<UserModel>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var users = await repository.GetUsersAsync();
+            return users.Select(u => new UserModel(u)).ToList();
         }
 
         // GET: api/User/5
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public async Task<object> Get(string id)
         {
             return "value";
         }
@@ -102,19 +106,36 @@ namespace PUSGS_Project.Controllers
 
         // PUT: api/User/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public Task Put(string id, [FromBody] User user)
         {
+            user.Email = id;
+            return repository.UpdateAsync(user);
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: api/User/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public Task Delete(string id)
         {
+            return repository.DeleteUserByEmailAsync(id);
+        }
+
+        [HttpPost]
+        [Route("Friend")]
+        public Task MakeFriends([FromBody]FriendRequestModel request)
+        {
+            return repository.MakeFriendsAsync(request.UserId, request.FriendId);
+        }
+
+        [HttpPost]
+        [Route("Unfriend")]
+        public Task Unfriend([FromBody]FriendRequestModel request)
+        {
+            return repository.UnfriendAsync(request.UserId, request.FriendId);
         }
 
         [HttpPost]
         [Route("Register")]
-        public async Task<object> PostRegister([FromBody] User model)
+        public async Task<object> Register([FromBody] User model)
         {
             var user = new User()
             {
@@ -137,9 +158,10 @@ namespace PUSGS_Project.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public async Task<object> Post([FromBody] LoginModel model)
+        public async Task<object> Login([FromBody] LoginModel model)
         {
             var user = await repository.GetUserByEmailAsync(model.Email);
+
             if (user is null || model.Password != user.Password)
             {
                 return BadRequest(new { message = "Invalid username or password" });
