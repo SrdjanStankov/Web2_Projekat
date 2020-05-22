@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Core.Entities;
 
 namespace Core.Interfaces.Repositories
@@ -9,7 +10,7 @@ namespace Core.Interfaces.Repositories
 
         IEnumerable<RentACar> GetAll();
 
-        void Add(RentACar rentACar);
+        Task<bool> AddAsync(RentACar rentACar);
 
         void Delete(long id);
 
