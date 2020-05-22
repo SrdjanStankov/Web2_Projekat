@@ -16,6 +16,11 @@ namespace Persistance.Repositories
             context = applicationDbContext;
         }
 
+        public Task<List<User>> GetUsersAsync()
+        {
+            return context.User.Include(u => u.Friends).ToListAsync();
+        }
+
         public Task<User> GetUserByEmailAsync(string email)
         {
             return context.User.Include(u => u.Friends).FirstOrDefaultAsync(u => u.Email == email);
@@ -23,7 +28,7 @@ namespace Persistance.Repositories
 
         public async Task<bool> AddAsync(User user)
         {
-            if (context.User.Any(u => u.Email == user.Email))
+            if (await context.User.AnyAsync(u => u.Email == user.Email))
             {
                 return false;
             }
@@ -85,11 +90,6 @@ namespace Persistance.Repositories
             friend.Friends.Remove(user);
 
             await context.SaveChangesAsync();
-        }
-
-        public Task<List<User>> GetUsersAsync()
-        {
-            return context.User.Include(u => u.Friends).ToListAsync();
         }
     }
 }

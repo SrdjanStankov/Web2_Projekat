@@ -1,6 +1,7 @@
 ﻿using Core.Entities;
 using Core.Enumerations;
 using Core.Interfaces.Repositories;
+using Core.ViewModels.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,17 +32,24 @@ namespace PUSGS_Project.Controllers
 
         // GET: api/User
         [HttpGet]
-        public Task<List<User>> Get()
+        public async Task<List<UserModel>> Get()
         {
-            return repository.GetUsersAsync();
+            var users = await repository.GetUsersAsync();
+            return users.Select(u => new UserModel(u)).ToList();
         }
 
         // GET: api/User/5
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
         [HttpGet("{id}", Name = "Get")]
-        public Task<User> Get(string id)
+        public async Task<object> Get(string id)
         {
-            return repository.GetUserByEmailAsync(id);
+            var user = await repository.GetUserByEmailAsync(id);
+            if (user == null)
+            {
+                return new NotFoundResult();
+            }
+            return new OkObjectResult(new UserModel(user));
         }
 
         // PUT: api/User/5
@@ -56,6 +65,20 @@ namespace PUSGS_Project.Controllers
         public Task Delete(string id)
         {
             return repository.DeleteUserByEmailAsync(id);
+        }
+
+        [HttpPost]
+        [Route("Friend")]
+        public Task MakeFriends([FromBody]FriendRequestModel request)
+        {
+            return repository.MakeFriendsAsync(request.UserId, request.FriendId);
+        }
+
+        [HttpPost]
+        [Route("Unfriend")]
+        public Task Unfriend([FromBody]FriendRequestModel request)
+        {
+            return repository.UnfriendAsync(request.UserId, request.FriendId);
         }
 
         [HttpPost]
