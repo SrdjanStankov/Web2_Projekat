@@ -2,6 +2,7 @@ import { Injectable, Inject } from "@angular/core";
 import { User } from "../entities/user";
 import { HttpClient } from "@angular/common/http";
 import { STORAGE_TOKEN_KEY } from "../constants/storage"
+import { RentACarAdmin } from "../entities/RentACarAdmin";
 
 @Injectable({
   providedIn: "root",
