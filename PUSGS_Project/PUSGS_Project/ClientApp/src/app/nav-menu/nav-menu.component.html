@@ -35,9 +35,6 @@
           <li *ngIf="backend.isLogedIn()" class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/car-reservation']">Car reservation</a>
           </li>
-          <li *ngIf="backend.getLogedInUserType() == 'SystemAdmin'" class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/services']">Services</a>
-          </li>
         </ul>
       </div>
     </div>

@@ -2,7 +2,6 @@ import { Injectable, Inject } from "@angular/core";
 import { User } from "../entities/user";
 import { HttpClient } from "@angular/common/http";
 import { STORAGE_TOKEN_KEY } from "../constants/storage"
-import { RentACarAdmin } from "../entities/RentACarAdmin";
 
 @Injectable({
   providedIn: "root",
@@ -29,15 +28,6 @@ export class BackendService {
   }
 
   logout() {
-    localStorage.clear();
+    localStorage.clear()
   }
-
-  getLogedInUserType(): string {
-    return localStorage.getItem("type");
-  }
-
-  addRentACarAdmin(admin: RentACarAdmin) {
-    return this.http.post(this.userControllerUri, admin).toPromise();
-  }
-  
 }

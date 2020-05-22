@@ -27,14 +27,7 @@ export class LoginComponent implements OnInit {
 
     this.backend.login(email, password).then((res: any) => {
       localStorage.setItem(STORAGE_TOKEN_KEY, res.token);
-        localStorage.setItem(STORAGE_USER_ID_KEY, email);
-        if (res.type === "SystemAdministrator") {
-            localStorage.setItem('type', 'SystemAdmin');
-        } else if (res.type === "RentACarAdministrator") {
-            localStorage.setItem('type', 'RentACarAdmin');
-        } else if (res.type === "User") {
-            localStorage.setItem('type', 'User');
-        }
+      localStorage.setItem(STORAGE_USER_ID_KEY, email);
 
       this.activeModal.close();
     }, err => {
