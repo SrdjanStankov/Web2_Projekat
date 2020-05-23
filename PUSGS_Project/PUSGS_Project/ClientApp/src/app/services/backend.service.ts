@@ -35,4 +35,8 @@ export class BackendService {
   logout() {
     localStorage.clear()
   }
+
+  confirmEmail(email: string) {
+    return this.http.put(this.userControllerUri + "ConfirmEmail", email).toPromise();
+  }
 }
