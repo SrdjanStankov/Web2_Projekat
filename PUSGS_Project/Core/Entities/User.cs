@@ -11,6 +11,7 @@ namespace Core.Entities
         public string Name { get; set; }
         public string Password { get; set; }
         public string Phone { get; set; }
+        public bool IsVerified { get; set; }
 
         public User()
         {

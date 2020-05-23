@@ -20,6 +20,7 @@ import { RentACarProfileEditComponent } from './rent-a-car-profile-edit/rent-a-c
 import { CarReservationComponent } from './car-reservation/car-reservation.component';
 import { FriendsComponent } from "./friends/friends.component";
 import { CLIENT_ID } from "./constants/storage";
+import { MailConfirmationComponent } from './mail-confirmation/mail-confirmation.component';
 
 let config = new AuthServiceConfig([
   {
@@ -46,6 +47,7 @@ export function provideConfig() {
     RentACarProfileEditComponent,
     CarReservationComponent,
     FriendsComponent,
+    MailConfirmationComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -64,6 +66,7 @@ export function provideConfig() {
       { path: "rent-a-car-edit", component: RentACarProfileEditComponent },
       { path: "car-reservation", component: CarReservationComponent },
       { path: "users", component: FriendsComponent },
+      { path: "ConfirmEmail/:email", component: MailConfirmationComponent },
     ]),
   ],
   providers: [

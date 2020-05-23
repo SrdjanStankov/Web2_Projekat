@@ -11,7 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,12 +56,12 @@ namespace PUSGS_Project.Controllers
         }
 
         // PUT: api/User/5
-        [HttpPut("{id}")]
-        public Task Put(string id, [FromBody] User user)
-        {
-            user.Email = id;
-            return repository.UpdateAsync(user);
-        }
+        //[HttpPut("{id}")]
+        //public Task Put(string id, [FromBody] User user)
+        //{
+        //    user.Email = id;
+        //    return repository.UpdateAsync(user);
+        //}
 
         // DELETE: api/User/5
         [HttpDelete("{id}")]
@@ -99,6 +101,7 @@ namespace PUSGS_Project.Controllers
             // TODO: validate user
 
             await repository.AddAsync(user);
+            await SendConfirmationEmailAsync(user.Email);
             return Ok();
         }
 
@@ -111,6 +114,11 @@ namespace PUSGS_Project.Controllers
             if (user is null || model.Password != user.Password)
             {
                 return BadRequest(new { message = "Invalid username or password" });
+            }
+
+            if (!user.IsVerified)
+            {
+                return BadRequest(new { message = "Email not verified" });
             }
 
             var tokenDescriptor = new SecurityTokenDescriptor()
@@ -139,7 +147,7 @@ namespace PUSGS_Project.Controllers
                 var user = await repository.GetUserByEmailAsync(tokenVerification.apiTokenInfo.email);
                 if (user is null)
                 {
-                    await repository.AddAsync(new User() { Email = tokenVerification.apiTokenInfo.email, Name = model.FirstName, LastName = model.LastName });
+                    await repository.AddAsync(new User() { Email = tokenVerification.apiTokenInfo.email, Name = model.FirstName, LastName = model.LastName, IsVerified = true });
                 }
 
                 var tokenDescriptor = new SecurityTokenDescriptor()
@@ -154,6 +162,21 @@ namespace PUSGS_Project.Controllers
             }
 
             return BadRequest(new { message = "Error loging in with google" });
+        }
+
+        [HttpPut("{id}")]
+        [Route("ConfirmEmail")]
+        public async Task<object> ConfirmEmailAsync()
+        {
+            var email = Request.Headers["Referer"].ToString().Split('/').LastOrDefault();
+            var user = await repository.GetUserByEmailAsync(email);
+            if (user is null)
+            {
+                return BadRequest(new { message = "Error processing email" });
+            }
+            user.IsVerified = true;
+            await repository.UpdateAsync(user);
+            return Ok();
         }
 
         private async Task<(bool isVaild, GoogleApiTokenInfo apiTokenInfo)> VerifyTokenAsync(string providerToken)
@@ -172,7 +195,7 @@ namespace PUSGS_Project.Controllers
                 return (false, null);
             }
 
-            if (responseMessage.StatusCode != System.Net.HttpStatusCode.OK)
+            if (responseMessage.StatusCode != HttpStatusCode.OK)
             {
                 return (false, null);
             }
@@ -180,6 +203,25 @@ namespace PUSGS_Project.Controllers
             var response = await responseMessage.Content.ReadAsStringAsync();
             var googleApiTokenInfo = JsonConvert.DeserializeObject<GoogleApiTokenInfo>(response);
             return (true, googleApiTokenInfo);
+        }
+
+        private async Task SendConfirmationEmailAsync(string email)
+        {
+            var client = new SmtpClient("smtp.gmail.com", 25);
+            client.EnableSsl = true;
+            client.Credentials = new NetworkCredential(@"srki.miki@gmail.com", "twshdabuaclmjkfw");
+            using (var message = new MailMessage())
+            {
+                message.To.Add("srki.miki@gmail.com");
+                //message.To.Add(email);
+                message.From = new MailAddress(@"noreply@gmail.com");
+                message.Subject = "Email verification";
+                message.Body = $"<a href=\"http://localhost:4200/ConfirmEmail/{email}\">Confirm Email</a>";
+                message.IsBodyHtml = true;
+                message.Priority = MailPriority.High;
+
+                await client.SendMailAsync(message);
+            }
         }
     }
 }
