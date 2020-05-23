@@ -11,13 +11,15 @@ export class User {
   flightTickets: FlightTicket[];
 
   constructor(
-    name: string = "",
-    lastName: string = "",
-    city: string = "",
-    phone: string = "",
-    email: string = "",
-    password: string = "",
-    friends = []
+    {
+      name = "",
+      lastName = "",
+      city = "",
+      phone = "",
+      email = "",
+      password = "",
+      friends = []
+    } = {}
   ) {
     this.name = name;
     this.email = email;
@@ -25,6 +27,6 @@ export class User {
     this.city = city;
     this.phone = phone;
     this.password = password;
-    this.friends = [];
+    this.friends = friends;
   }
 }

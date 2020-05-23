@@ -41,8 +41,64 @@
   </div>
   <div class="row" *ngIf="!isReadOnly()">
     <div class="col-md">
-      <button class="btn btn-warning">Edit</button>
+      <button class="btn btn-warning" (click)="open(content)">Edit</button>
       <button class="btn btn-danger" (click)="onDelete()">Delete</button>
     </div>
   </div>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="formGroup">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <div class="input-group">
+          <input [class.is-invalid]="formGroup.get('name').invalid && formGroup.get('name').touched" type="text" autocomplete="on" id="name" class="form-control" name="name" formControlName="name">
+        </div>
+        <div *ngIf="(formGroup.get('name').invalid && formGroup.get('name').touched) || formGroup.get('name').dirty">
+          <small *ngIf="formGroup.get('name').errors?.required" class="text-danger">Name is required</small>
+        </div>
+
+        <br />
+
+        <label for="lastName">Last Name</label>
+        <div class="input-group">
+          <input [class.is-invalid]="formGroup.get('lastName').invalid && formGroup.get('lastName').touched" type="text" autocomplete="on" id="lastName" class="form-control" name="lastName" formControlName="lastName">
+        </div>
+        <div *ngIf="(formGroup.get('lastName').invalid && formGroup.get('lastName').touched) || formGroup.get('lastName').dirty">
+          <small *ngIf="formGroup.get('lastName').errors?.required" class="text-danger">LastName is required</small>
+        </div>
+
+        <br />
+
+        <label for="city">City</label>
+        <div class="input-group">
+          <input [class.is-invalid]="formGroup.get('city').invalid && formGroup.get('city').touched" type="text" autocomplete="on" id="city" class="form-control" name="city" formControlName="city">
+        </div>
+        <div *ngIf="(formGroup.get('city').invalid && formGroup.get('city').touched) || formGroup.get('city').dirty">
+          <small *ngIf="formGroup.get('city').errors?.required" class="text-danger">City is required</small>
+        </div>
+
+        <br />
+
+        <label for="phone">Phone</label>
+        <div class="input-group">
+          <input [class.is-invalid]="formGroup.get('phone').invalid && formGroup.get('phone').touched" type="tel" autocomplete="on" id="phone" class="form-control" name="phone" formControlName="phone">
+        </div>
+        <div *ngIf="(formGroup.get('phone').invalid && formGroup.get('phone').touched) || formGroup.get('phone').dirty">
+          <small *ngIf="formGroup.get('phone').errors?.required" class="text-danger">Phone is required</small>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" [disabled]="formGroup.invalid" class="btn btn-outline-dark" (click)="modal.close('Save click')">Submit</button>
+  </div>
+</ng-template>

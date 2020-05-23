@@ -33,4 +33,7 @@ export class UserService {
   deleteUser(userId) {
     return this.http.delete(this.userControllerUri + userId).toPromise();
   }
+  updateUser(user: User) {
+    return this.http.put(this.userControllerUri + user.email, user).toPromise();
+  }
 }

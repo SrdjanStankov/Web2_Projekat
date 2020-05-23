@@ -10,7 +10,6 @@ import { User } from '../entities/user';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-
   registerGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]),
     passwordGroup: new FormGroup({
@@ -36,19 +35,18 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-
-    this.backend.register(new User(
-      this.registerGroup.get('name').value,
-      this.registerGroup.get('lastName').value,
-      this.registerGroup.get('city').value,
-      this.registerGroup.get('phone').value,
-      this.registerGroup.get('email').value,
-      this.password.value)).then(() => {
-        this.invalidUser = false;
-        this.activeModal.close();
-      });
+    this.backend.register(new User({
+      name: this.registerGroup.get('name').value,
+      lastName: this.registerGroup.get('lastName').value,
+      city: this.registerGroup.get('city').value,
+      phone: this.registerGroup.get('phone').value,
+      email: this.registerGroup.get('email').value,
+      password: this.password.value
+    })).then(() => {
+      this.invalidUser = false;
+      this.activeModal.close();
+    });
   }
-
 }
 
 export function passwordMatchValidator(passwordControll: FormGroup) {
