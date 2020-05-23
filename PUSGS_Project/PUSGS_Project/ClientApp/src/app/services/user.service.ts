@@ -30,4 +30,10 @@ export class UserService {
   unfriend(userId: string, friendId: string) {
     return this.http.post(this.userControllerUri + "unfriend", { userId, friendId }).toPromise();
   }
+  deleteUser(userId) {
+    return this.http.delete(this.userControllerUri + userId).toPromise();
+  }
+  updateUser(user: User) {
+    return this.http.put(this.userControllerUri + user.email, user).toPromise();
+  }
 }
