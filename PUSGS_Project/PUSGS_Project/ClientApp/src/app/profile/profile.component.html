@@ -1,4 +1,4 @@
-<div class="container profile-display">
+<div class="container profile-display" *ngIf="!!user">
   <div class="row">
     <div class="col-md-6">
       <label>First name</label>
@@ -39,9 +39,10 @@
       <p>{{user.city}}</p>
     </div>
   </div>
-  <div class="row">
+  <div class="row" *ngIf="!isReadOnly()">
     <div class="col-md">
-      <button *ngIf="!isReadOnly()" class="btn btn-warning">Edit</button>
+      <button class="btn btn-warning">Edit</button>
+      <button class="btn btn-danger" (click)="onDelete()">Delete</button>
     </div>
   </div>
 </div>

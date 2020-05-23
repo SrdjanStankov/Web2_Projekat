@@ -3,6 +3,7 @@ import { User } from "../entities/user";
 import { HttpClient } from "@angular/common/http";
 import { STORAGE_TOKEN_KEY } from "../constants/storage"
 import { SocialUser } from "angularx-social-login";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: "root",
@@ -11,7 +12,7 @@ export class BackendService {
   http: HttpClient;
   userControllerUri: string;
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private router: Router) {
     this.http = http;
     this.userControllerUri = baseUrl + 'api/user/';
   }
@@ -34,5 +35,6 @@ export class BackendService {
 
   logout() {
     localStorage.clear()
+    this.router.navigate([""]);
   }
 }
