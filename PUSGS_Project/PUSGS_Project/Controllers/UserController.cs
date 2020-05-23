@@ -133,15 +133,15 @@ namespace PUSGS_Project.Controllers
         [Route("SocialLogin")]
         public async Task<object> SocialLogin([FromBody] LoginModel model)
         {
-            var user = await repository.GetUserByEmailAsync(model.Email);
-
-            if (user is null || model.Password != user.Password)
+            var tokenVerification = await VerifyTokenAsync(model.IdToken);
+            if (tokenVerification.isVaild)
             {
-                return BadRequest(new { message = "Invalid username or password" });
-            }
+                var user = await repository.GetUserByEmailAsync(tokenVerification.apiTokenInfo.email);
+                if (user is null)
+                {
+                    await repository.AddAsync(new User() { Email = tokenVerification.apiTokenInfo.email, Name = model.FirstName, LastName = model.LastName });
+                }
 
-            if (await VerifyTokenAsync(model.IdToken))
-            {
                 var tokenDescriptor = new SecurityTokenDescriptor()
                 {
                     Expires = DateTime.UtcNow.AddMinutes(5),
@@ -156,7 +156,7 @@ namespace PUSGS_Project.Controllers
             return BadRequest(new { message = "Error loging in with google" });
         }
 
-        private async Task<bool> VerifyTokenAsync(string providerToken)
+        private async Task<(bool isVaild, GoogleApiTokenInfo apiTokenInfo)> VerifyTokenAsync(string providerToken)
         {
             var httpClient = new HttpClient();
             var requestUri = new Uri($"https://www.googleapis.com/oauth2/v3/tokeninfo?id_token={providerToken}");
@@ -169,17 +169,17 @@ namespace PUSGS_Project.Controllers
             }
             catch (Exception)
             {
-                return false;
+                return (false, null);
             }
 
             if (responseMessage.StatusCode != System.Net.HttpStatusCode.OK)
             {
-                return false;
+                return (false, null);
             }
 
             var response = await responseMessage.Content.ReadAsStringAsync();
             var googleApiTokenInfo = JsonConvert.DeserializeObject<GoogleApiTokenInfo>(response);
-            return true;
+            return (true, googleApiTokenInfo);
         }
     }
 }
