@@ -44,6 +44,11 @@ export class LoginComponent implements OnInit {
       this.backend.loginScial(user).then((res: any) => {
         localStorage.setItem(STORAGE_TOKEN_KEY, res.token);
         localStorage.setItem(STORAGE_USER_ID_KEY, user.email);
+        this.activeModal.close();
+      }, err => {
+          if (err.status === 400) {
+            this.reason = err.error.message;
+          }
       })
     })
   }

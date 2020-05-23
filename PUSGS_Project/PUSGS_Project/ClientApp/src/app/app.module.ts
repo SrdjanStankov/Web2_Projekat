@@ -19,11 +19,12 @@ import { RentACarProfileComponent } from './rent-a-car-profile/rent-a-car-profil
 import { RentACarProfileEditComponent } from './rent-a-car-profile-edit/rent-a-car-profile-edit.component';
 import { CarReservationComponent } from './car-reservation/car-reservation.component';
 import { FriendsComponent } from "./friends/friends.component";
+import { CLIENT_ID } from "./constants/storage";
 
 let config = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider("Google-OAuth-Client-Id")
+    provider: new GoogleLoginProvider(CLIENT_ID)
   }
 ]);
 
