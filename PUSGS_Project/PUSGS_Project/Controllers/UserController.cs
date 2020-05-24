@@ -56,12 +56,12 @@ namespace PUSGS_Project.Controllers
         }
 
         // PUT: api/User/5
-        //[HttpPut("{id}")]
-        //public Task Put(string id, [FromBody] User user)
-        //{
-        //    user.Email = id;
-        //    return repository.UpdateAsync(user);
-        //}
+        [HttpPut("{id}")]
+        public Task Put(string id, [FromBody] User user)
+        {
+            user.Email = id;
+            return repository.UpdateAsync(user);
+        }
 
         // DELETE: api/User/5
         [HttpDelete("{id}")]
@@ -164,12 +164,11 @@ namespace PUSGS_Project.Controllers
             return BadRequest(new { message = "Error loging in with google" });
         }
 
-        [HttpPut("{id}")]
+        [HttpPost]
         [Route("ConfirmEmail")]
-        public async Task<object> ConfirmEmailAsync()
+        public async Task<object> ConfirmEmailAsync(LoginModel model)
         {
-            var email = Request.Headers["Referer"].ToString().Split('/').LastOrDefault();
-            var user = await repository.GetUserByEmailAsync(email);
+            var user = await repository.GetUserByEmailAsync(model.Email);
             if (user is null)
             {
                 return BadRequest(new { message = "Error processing email" });
