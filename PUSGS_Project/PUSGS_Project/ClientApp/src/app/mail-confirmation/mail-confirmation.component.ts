@@ -14,6 +14,7 @@ export class MailConfirmationComponent implements OnInit {
 
   constructor(private backend: BackendService, private route: ActivatedRoute, private router: Router) {
     route.params.subscribe(params => { this.email = params['email']; });
+    console.log(this.email);
     this.result = "default";
   }
 

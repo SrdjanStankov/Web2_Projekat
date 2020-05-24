@@ -39,6 +39,6 @@ export class BackendService {
   }
 
   confirmEmail(email: string) {
-    return this.http.put(this.userControllerUri + "ConfirmEmail", email).toPromise();
+    return this.http.post<string>(this.userControllerUri + "ConfirmEmail", { email }).toPromise();
   }
 }
