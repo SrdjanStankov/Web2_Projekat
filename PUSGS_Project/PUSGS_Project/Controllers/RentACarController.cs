@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -27,8 +28,22 @@ namespace PUSGS_Project.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task<object> Post([FromBody]RentACar model)
         {
+            var rentacar = new RentACar()
+            {
+                Address = model.Address,
+                Description = model.Description,
+                Name = model.Name
+            };
+
+            // TODO: validate RentACar
+
+            if (!await repository.AddAsync(rentacar))
+            {
+                return BadRequest(new { message = "Already exist" });
+            }
+            return Ok();
         }
 
         // PUT api/<controller>/5

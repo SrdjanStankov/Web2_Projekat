@@ -21,6 +21,9 @@ import { CarReservationComponent } from './car-reservation/car-reservation.compo
 import { FriendsComponent } from "./friends/friends.component";
 import { CLIENT_ID } from "./constants/storage";
 import { MailConfirmationComponent } from './mail-confirmation/mail-confirmation.component';
+import { AddRentACarAdministratorComponent } from './add-rent-a-car-administrator/add-rent-a-car-administrator.component';
+import { AddRentACarCompanyComponent } from './add-rent-a-car-company/add-rent-a-car-company.component';
+import { RegisterServicesComponent } from './register-services/register-services.component';
 
 let config = new AuthServiceConfig([
   {
@@ -48,6 +51,9 @@ export function provideConfig() {
     CarReservationComponent,
     FriendsComponent,
     MailConfirmationComponent,
+    AddRentACarAdministratorComponent,
+    AddRentACarCompanyComponent,
+    RegisterServicesComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -67,6 +73,7 @@ export function provideConfig() {
       { path: "car-reservation", component: CarReservationComponent },
       { path: "users", component: FriendsComponent },
       { path: "ConfirmEmail/:email", component: MailConfirmationComponent },
+      { path: "services", component: RegisterServicesComponent },
     ]),
   ],
   providers: [

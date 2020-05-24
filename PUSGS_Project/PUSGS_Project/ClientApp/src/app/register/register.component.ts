@@ -11,15 +11,15 @@ import { User } from '../entities/user';
 })
 export class RegisterComponent implements OnInit {
   registerGroup = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]),
+    email: new FormControl(null, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]),
     passwordGroup: new FormGroup({
-      password: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      passwordRepeated: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      password: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+      passwordRepeated: new FormControl(null, [Validators.required, Validators.minLength(3)]),
     }, { validators: passwordMatchValidator }),
-    name: new FormControl('', Validators.required),
-    lastName: new FormControl('', Validators.required),
-    city: new FormControl('', Validators.required),
-    phone: new FormControl('', Validators.required),
+    name: new FormControl(null, Validators.required),
+    lastName: new FormControl(null, Validators.required),
+    city: new FormControl(null, Validators.required),
+    phone: new FormControl(null, Validators.required),
   });
 
   invalidUser: boolean;
@@ -45,6 +45,10 @@ export class RegisterComponent implements OnInit {
     })).then(() => {
       this.invalidUser = false;
       this.activeModal.close();
+    }, err => {
+      if (err.status == 400) {
+        this.invalidUser = true;
+      }
     });
   }
 }

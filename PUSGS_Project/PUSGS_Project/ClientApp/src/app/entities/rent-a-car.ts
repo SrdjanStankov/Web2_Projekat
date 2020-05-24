@@ -1,6 +1,6 @@
 import { Car } from "./car";
 
-export interface RentACar {
+export class RentACar {
   id: number;
   name: string;
   address: string;

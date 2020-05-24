@@ -22,4 +22,8 @@ export class RentACarService {
   getAgency(id: number): Promise<RentACar> {
     return this.http.get<RentACar>(this.rentACarControllerUri + id).toPromise();
   }
+
+  addAgency(agency: RentACar) {
+    return this.http.post<RentACar>(this.rentACarControllerUri, agency).toPromise();
+  }
 }
