@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RentACar } from '../entities/rent-a-car';
 import { RentACarService } from '../services/rent-a-car.service';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Car } from '../entities/car';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-rent-a-car-profile-edit',
@@ -11,17 +11,25 @@ import { Car } from '../entities/car';
 })
 export class RentACarProfileEditComponent implements OnInit {
 
-  public rentACar: RentACar;
-  public editGroup: FormGroup;
+  rentACar: RentACar = new RentACar();
+  editGroup: FormGroup = new FormGroup({
+    name: new FormControl(null),
+    address: new FormControl(null),
+    description: new FormControl(null),
+  });
+  id: number;
 
-  constructor(private service: RentACarService) {
-    service.getAgency(1).then(result => this.rentACar = result);
-
-    this.editGroup = new FormGroup({
-      name: new FormControl(this.rentACar.name),
-      address: new FormControl(this.rentACar.address),
-      description: new FormControl(this.rentACar.description),
+  constructor(private service: RentACarService, private route: ActivatedRoute) {
+    route.params.subscribe(params => { this.id = params['id']; });
+    service.getAgency(this.id).then(result => {
+      this.rentACar = result;
+      this.editGroup.setValue({
+        name: this.rentACar.name,
+        address: this.rentACar.address,
+        description: this.rentACar.description,
+      });
     });
+
   }
 
   ngOnInit(): void {

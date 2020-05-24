@@ -42,7 +42,14 @@
               </div>
             </div>
 
-            <div class="card-footer">{{agency.getAverageRating()}}</div>
+            <div class="card-footer">
+              <div>
+                Test 1<!--{{agency.getAverageRating()}}-->
+              </div>
+              <div>
+                <button *ngIf="backend.getLogedInUserType() == 'RentACarAdmin'" class="btn btn-warning" (click)="details(agency.id)">Details</button>
+              </div>
+            </div>
           </div>
         </div>
       </ng-template>
