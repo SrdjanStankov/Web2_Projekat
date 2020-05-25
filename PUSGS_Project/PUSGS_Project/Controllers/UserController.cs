@@ -88,19 +88,56 @@ namespace PUSGS_Project.Controllers
         [Route("Register")]
         public async Task<object> Register([FromBody] User model)
         {
-            var user = new User()
+            User user;
+            if (model.IsSystemAdmin)
             {
-                City = model.City,
-                Email = model.Email,
-                LastName = model.LastName,
-                Name = model.Name,
-                Password = model.Password,
-                Phone = model.Phone
-            };
+                user = new SystemAdministrator()
+                {
+                    City = model.City,
+                    Email = model.Email,
+                    LastName = model.LastName,
+                    Name = model.Name,
+                    Password = model.Password,
+                    Phone = model.Phone,
+                    IsSystemAdmin = model.IsSystemAdmin,
+                    IsRentACarAdmin = false
+                };
+            }
+            else if (model.IsRentACarAdmin)
+            {
+                user = new RentACarAdministrator()
+                {
+                    City = model.City,
+                    Email = model.Email,
+                    LastName = model.LastName,
+                    Name = model.Name,
+                    Password = model.Password,
+                    Phone = model.Phone,
+                    IsRentACarAdmin = model.IsRentACarAdmin,
+                    IsSystemAdmin = false
+                };
+            }
+            else
+            {
+                user = new User()
+                {
+                    City = model.City,
+                    Email = model.Email,
+                    LastName = model.LastName,
+                    Name = model.Name,
+                    Password = model.Password,
+                    Phone = model.Phone,
+                    IsSystemAdmin = false,
+                    IsRentACarAdmin = false
+                };
+            }
 
             // TODO: validate user
 
-            await repository.AddAsync(user);
+            if (!await repository.AddAsync(user))
+            {
+                return BadRequest(new { message = "Already exist" });
+            }
             await SendConfirmationEmailAsync(user.Email);
             return Ok();
         }
@@ -133,8 +170,8 @@ namespace PUSGS_Project.Controllers
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-            string token = tokenHandler.WriteToken(securityToken);
-            return Ok(new { token });
+            var token = tokenHandler.WriteToken(securityToken);
+            return Ok(new { token, type = user.GetType().Name });
         }
 
         [HttpPost]
@@ -158,7 +195,7 @@ namespace PUSGS_Project.Controllers
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var securityToken = tokenHandler.CreateToken(tokenDescriptor);
                 var token = tokenHandler.WriteToken(securityToken);
-                return Ok(new { token }); 
+                return Ok(new { token, type = typeof(User).Name }); 
             }
 
             return BadRequest(new { message = "Error loging in with google" });

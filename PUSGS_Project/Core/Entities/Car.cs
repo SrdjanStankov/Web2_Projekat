@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Core.Entities
 {
@@ -20,12 +18,11 @@ namespace Core.Entities
         public string Brand { get; set; }
         public string Model { get; set; }
         public double CostPerDay { get; set; }
+        public int BuildDate { get; set; }
 
         public Car()
         {
             Ratings = new HashSet<Rating>();
         }
-
-        // TODO: BuildDate?
     }
 }

@@ -1,15 +1,16 @@
-﻿using Core.Entities;
+﻿using System.Threading.Tasks;
+using Core.Entities;
 
 namespace Core.Interfaces.Repositories
 {
     public interface ICarRepository
     {
-        Car Get(long id);
+        Task<Car> GetAsync(long id);
 
-        void Add(Car car);
+        Task<bool> AddAsync(Car car);
 
-        void Delete(long id);
+        Task DeleteAsync(long id);
 
-        void Update(Car car);
+        Task UpdateAsync(Car car);
     }
 }

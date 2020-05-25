@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RentACar } from '../entities/rent-a-car';
 import { RentACarService } from '../services/rent-a-car.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-rent-a-car-profile',
@@ -9,13 +10,19 @@ import { RentACarService } from '../services/rent-a-car.service';
 })
 export class RentACarProfileComponent implements OnInit {
 
-  public rentACar: RentACar;
+  rentACar: RentACar = new RentACar();
+  id: number;
 
-  constructor(private service: RentACarService) {
-    service.getAgency(1).then(result => this.rentACar = result);
+  constructor(private service: RentACarService, private route: ActivatedRoute, private router: Router) {
+    route.params.subscribe(params => { this.id = params['id']; });
+    service.getAgency(this.id).then(result => this.rentACar = result);
   }
 
   ngOnInit(): void {
+  }
+
+  edit(id: number) {
+    this.router.navigateByUrl("rent-a-car-edit/" + id);
   }
 
 }

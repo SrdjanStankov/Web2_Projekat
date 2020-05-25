@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces.Repositories;
+using Core.ViewModels.RentACar;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -27,8 +29,30 @@ namespace PUSGS_Project.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task<object> Post([FromBody]RentACar model)
         {
+            var rentacar = new RentACar()
+            {
+                Address = model.Address,
+                Description = model.Description,
+                Name = model.Name
+            };
+
+            // TODO: validate RentACar
+
+            if (!await repository.AddAsync(rentacar))
+            {
+                return BadRequest(new { message = "Already exist" });
+            }
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("AddCar")]
+        public async Task<object> AddCar([FromBody] CarModel model)
+        {
+            await repository.AddCarToAgencyAsync(model.CarId, model.RentACarId);
+            return Ok();
         }
 
         // PUT api/<controller>/5

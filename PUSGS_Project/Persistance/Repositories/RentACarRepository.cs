@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Persistance.Repositories
 {
@@ -15,17 +17,32 @@ namespace Persistance.Repositories
             this.context = context;
         }
 
-        public void Add(RentACar rentACar)
+        public async Task<bool> AddAsync(RentACar rentACar)
         {
-            context.Add(rentACar);
-            context.SaveChanges();
+            var r = await context.FindAsync<RentACar>(rentACar.Id);
+            if (r is object)
+            {
+                return false;
+            }
+            await context.AddAsync(rentACar);
+            await context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task AddCarToAgencyAsync(long carId, long rentACarId)
+        {
+            var car = await context.FindAsync<Car>(carId);
+            var rentACar = await context.FindAsync<RentACar>(rentACarId);
+
+            rentACar.Cars.Add(car);
+            await context.SaveChangesAsync();
         }
 
         public void Delete(long id) => throw new NotImplementedException();
 
-        public RentACar Get(long id) => context.Find<RentACar>(id);
+        public RentACar Get(long id) => context.RentACar.Include(r => r.Cars).FirstOrDefault(r => r.Id == id);
 
-        public IEnumerable<RentACar> GetAll() => context.Set<RentACar>().AsEnumerable();
+        public IEnumerable<RentACar> GetAll() => context.RentACar.Include(r => r.Cars).AsEnumerable();
 
         public void Update(RentACar rentACar) => throw new NotImplementedException();
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces.Repositories;
 
@@ -13,16 +14,34 @@ namespace Persistance.Repositories
             this.context = context;
         }
 
-        public void Add(Car car)
+        public async Task<bool> AddAsync(Car car)
         {
-            context.Add(car);
-            context.SaveChanges();
+            var c = await context.FindAsync<Car>(car.Id);
+            if (c is object)
+            {
+                return false;
+            }
+            await context.AddAsync(car);
+            await context.SaveChangesAsync();
+            return true;
         }
 
-        public void Delete(long id) => throw new NotImplementedException();
+        public async Task DeleteAsync(long id)
+        {
+            var car = await context.Car.FindAsync(id);
+            context.Car.Remove(car);
+            await context.SaveChangesAsync();
+        }
 
-        public Car Get(long id) => context.Find<Car>(id);
+        public async Task<Car> GetAsync(long id)
+        {
+            return await context.FindAsync<Car>(id);
+        }
 
-        public void Update(Car car) => throw new NotImplementedException();
+        public async Task UpdateAsync(Car car)
+        {
+            context.Update(car);
+            await context.SaveChangesAsync();
+        }
     }
 }

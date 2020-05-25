@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -23,24 +24,34 @@ namespace PUSGS_Project.Controllers
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public Car Get(long id) => repository.Get(id);
+        public async Task<Car> GetAsync(long id)
+        {
+            return await repository.GetAsync(id);
+        }
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task<object> PostAsync([FromBody] Car model)
         {
+            if (!await repository.AddAsync(model))
+            {
+                return BadRequest(new { message = "Already exist" });
+            }
+            return Ok(model);
         }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public async Task Put(int id, [FromBody] Car value)
         {
+            await repository.UpdateAsync(value);
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
+            await repository.DeleteAsync(id);
         }
     }
 }

@@ -4,6 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { STORAGE_TOKEN_KEY } from "../constants/storage"
 import { SocialUser } from "angularx-social-login";
 import { Router } from "@angular/router";
+import { RentACarAdmin } from "../entities/RentACarAdmin";
 
 @Injectable({
   providedIn: "root",
@@ -34,8 +35,16 @@ export class BackendService {
   }
 
   logout() {
-    localStorage.clear()
+    localStorage.clear();
     this.router.navigate([""]);
+  }
+
+  getLogedInUserType(): string {
+    return localStorage.getItem("type");
+  }
+
+  addRentACarAdmin(admin: RentACarAdmin) {
+    return this.http.post(this.userControllerUri + "Register", admin).toPromise();
   }
 
   confirmEmail(email: string) {
