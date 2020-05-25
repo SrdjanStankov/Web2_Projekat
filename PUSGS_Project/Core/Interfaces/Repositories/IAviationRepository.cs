@@ -10,7 +10,7 @@ namespace Core.Interfaces.Repositories
 
         Task RemoveAsync(long id);
 
-        Task<IEnumerable<AviationCompany>> GetAllAsync();
+        Task<List<AviationCompany>> GetAllAsync();
 
         Task<AviationCompany> GetByIdAsync(long id);
 

@@ -29,6 +29,9 @@ namespace Core.ViewModels.Aviation
 
         public FlightModel(Flight flight)
         {
+            if (flight == null)
+                return;
+
             Id = flight.Id;
             AviationCompanyId = flight.AviationCompanyId;
             DepartureTime = flight.DepartureTime;
