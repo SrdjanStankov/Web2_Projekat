@@ -18,4 +18,12 @@ export class CarService {
   addCar(car: Car): Promise<Car> {
     return this.http.post<Car>(this.carControllerUri, car).toPromise();
   }
+
+  getCar(id: number): Promise<Car> {
+    return this.http.get<Car>(this.carControllerUri + id).toPromise();
+  }
+
+  updateCar(car: Car) {
+    return this.http.put<Car>(this.carControllerUri + car.id, car).toPromise();
+  }
 }

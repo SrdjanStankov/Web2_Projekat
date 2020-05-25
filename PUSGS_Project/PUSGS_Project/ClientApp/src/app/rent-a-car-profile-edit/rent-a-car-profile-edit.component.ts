@@ -29,13 +29,23 @@ export class RentACarProfileEditComponent implements OnInit {
     model: new FormControl('', Validators.required),
     buildDate: new FormControl(0, Validators.required),
     costPerDay: new FormControl(0, Validators.required),
-  })
+  });
 
-  id: number;
+  formGroupEditCar = new FormGroup({
+    name: new FormControl('', Validators.required),
+    passengerNumber: new FormControl(0, Validators.required),
+    type: new FormControl('', Validators.required),
+    brand: new FormControl('', Validators.required),
+    model: new FormControl('', Validators.required),
+    buildDate: new FormControl(0, Validators.required),
+    costPerDay: new FormControl(0, Validators.required),
+  });
+
+  agencyId: number;
 
   constructor(private rentACarService: RentACarService, private route: ActivatedRoute, private modalService: NgbModal, private carService: CarService) {
-    route.params.subscribe(params => { this.id = params['id']; });
-    rentACarService.getAgency(this.id).then(result => {
+    route.params.subscribe(params => { this.agencyId = params['id']; });
+    rentACarService.getAgency(this.agencyId).then(result => {
       this.rentACar = result;
       this.editGroup.setValue({
         name: this.rentACar.name,
@@ -64,11 +74,40 @@ export class RentACarProfileEditComponent implements OnInit {
     //this.rentACar.removeCar(index);
   }
 
-  addCar(content) {
-    //this.setGroup(this.user);
+  editCar(id: number, content) {
+    this.carService.getCar(id).then((car: Car) => {
+      this.formGroupEditCar.setValue({
+        name: car.name,
+        passengerNumber: car.passengerNumber,
+        type: car.type,
+        brand: car.brand,
+        model: car.model,
+        buildDate: car.buildDate,
+        costPerDay: car.costPerDay
+      });
+    });
 
+    this.modalService.open(content, { ariaLabelledBy: 'modal-edit-car' }).result.then(result => {
+      const car = new Car(
+        this.formGroupEditCar.get("name").value,
+        this.formGroupEditCar.get("passengerNumber").value,
+        this.formGroupEditCar.get("type").value,
+        this.formGroupEditCar.get("brand").value,
+        this.formGroupEditCar.get("model").value,
+        this.formGroupEditCar.get("buildDate").value,
+        this.formGroupEditCar.get("costPerDay").value,
+      );
+      car.id = id;
+      this.carService.updateCar(car).then(() => {
+        this.rentACarService.getAgency(this.agencyId).then(result => {
+          this.rentACar = result;
+        });
+      });
+    }, err => { });
+  }
+
+  addCar(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-add-car' }).result.then((result) => {
-      // TODO: service add car
       const car = new Car(
         this.formGroup.get("name").value,
         this.formGroup.get("passengerNumber").value,
@@ -79,11 +118,9 @@ export class RentACarProfileEditComponent implements OnInit {
         this.formGroup.get("costPerDay").value,
       );
       this.carService.addCar(car).then(result => {
-        this.rentACarService.addCarToAgency(result.id, parseInt(this.id.toString()));
+        this.rentACarService.addCarToAgency(result.id, parseInt(this.agencyId.toString()));
       })
-    }, (reason) => {
-      //console.log(`Dismissed ${this.getDismissReason(reason)}`);
-    });
+    }, (reason) => { });
   }
 
   removeBranch(index: number) {

@@ -28,8 +28,15 @@ namespace Persistance.Repositories
 
         public void Delete(long id) => throw new NotImplementedException();
 
-        public Car Get(long id) => context.Find<Car>(id);
+        public async Task<Car> GetAsync(long id)
+        {
+            return await context.FindAsync<Car>(id);
+        }
 
-        public void Update(Car car) => throw new NotImplementedException();
+        public async Task UpdateAsync(Car car)
+        {
+            context.Update(car);
+            await context.SaveChangesAsync();
+        }
     }
 }

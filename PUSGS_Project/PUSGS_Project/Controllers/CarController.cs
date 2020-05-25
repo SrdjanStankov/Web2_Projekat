@@ -24,7 +24,10 @@ namespace PUSGS_Project.Controllers
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public Car Get(long id) => repository.Get(id);
+        public async Task<Car> GetAsync(long id)
+        {
+            return await repository.GetAsync(id);
+        }
 
         // POST api/<controller>
         [HttpPost]
@@ -39,8 +42,9 @@ namespace PUSGS_Project.Controllers
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public async Task Put(int id, [FromBody] Car value)
         {
+            await repository.UpdateAsync(value);
         }
 
         // DELETE api/<controller>/5

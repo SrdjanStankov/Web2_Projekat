@@ -14,7 +14,7 @@
         <label>Address</label>
       </div>
       <div class="col-md-3 m-2">
-        <input type="text" formControlName="address"/>
+        <input type="text" formControlName="address" />
       </div>
     </div>
     <div class="row">
@@ -39,14 +39,16 @@
       </div>
       <div class="col-md-6">
         <div *ngFor="let car of rentACar.cars; let i = index">
-          <input type="text" value="{{car.Name}}" />
-          <button type="button" class="btn btn-danger m-2 col-md-2" (click)="removeCar(i)">Remove</button>
+          <label class="col-md-3 m-2">{{car.name}}</label>
+          <button type="button" class="btn btn-warning m-2 col-md-2" (click)="editCar(car.id, contentEditCar)">Edit</button>
+          <button type="button" class="btn btn-danger m-2 col-md-2" (click)="removeCar(car.id)">Remove</button>
         </div>
         <div>
           <button type="button" class="btn btn-success" (click)="addCar(content)">Add car</button>
         </div>
       </div>
     </div>
+    <br />
     <div class="row">
       <div class="col-md-3">
         <label>Branches</label>
@@ -153,5 +155,92 @@
   </div>
   <div class="modal-footer">
     <button type="button" [disabled]="formGroup.invalid" class="btn btn-outline-dark" (click)="modal.close('Save click')">Submit</button>
+  </div>
+</ng-template>
+
+<ng-template #contentEditCar let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-edit-car">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="formGroupEditCar">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <div class="input-group">
+          <input [class.is-invalid]="formGroupEditCar.get('name').invalid && formGroupEditCar.get('name').touched" type="text" autocomplete="on" id="name" class="form-control" name="name" formControlName="name">
+        </div>
+        <div *ngIf="(formGroupEditCar.get('name').invalid && formGroupEditCar.get('name').touched) || formGroupEditCar.get('name').dirty">
+          <small *ngIf="formGroupEditCar.get('name').errors?.required" class="text-danger">Name is required</small>
+        </div>
+
+        <br />
+
+        <label for="passengerNumber">Number of passengers</label>
+        <div class="input-group">
+          <input [class.is-invalid]="formGroupEditCar.get('passengerNumber').invalid && formGroupEditCar.get('passengerNumber').touched" type="number" autocomplete="on" id="passengerNumber" class="form-control" name="passengerNumber" formControlName="passengerNumber">
+        </div>
+        <div *ngIf="(formGroupEditCar.get('passengerNumber').invalid && formGroupEditCar.get('passengerNumber').touched) || formGroupEditCar.get('passengerNumber').dirty">
+          <small *ngIf="formGroupEditCar.get('passengerNumber').errors?.required" class="text-danger">Number of passenger is required</small>
+        </div>
+
+        <br />
+
+        <label for="type">Type</label>
+        <div class="input-group">
+          <input [class.is-invalid]="formGroupEditCar.get('type').invalid && formGroupEditCar.get('type').touched" type="text" autocomplete="on" id="type" class="form-control" name="type" formControlName="type">
+        </div>
+        <div *ngIf="(formGroupEditCar.get('type').invalid && formGroupEditCar.get('type').touched) || formGroupEditCar.get('type').dirty">
+          <small *ngIf="formGroupEditCar.get('type').errors?.required" class="text-danger">Type is required</small>
+        </div>
+
+        <br />
+
+        <label for="brand">Brand</label>
+        <div class="input-group">
+          <input [class.is-invalid]="formGroupEditCar.get('brand').invalid && formGroupEditCar.get('brand').touched" type="text" autocomplete="on" id="brand" class="form-control" name="brand" formControlName="brand">
+        </div>
+        <div *ngIf="(formGroupEditCar.get('brand').invalid && formGroupEditCar.get('brand').touched) || formGroupEditCar.get('brand').dirty">
+          <small *ngIf="formGroupEditCar.get('brand').errors?.required" class="text-danger">Brand is required</small>
+        </div>
+
+        <br />
+
+        <label for="model">Model</label>
+        <div class="input-group">
+          <input [class.is-invalid]="formGroupEditCar.get('model').invalid && formGroupEditCar.get('model').touched" type="text" autocomplete="on" id="model" class="form-control" name="model" formControlName="model">
+        </div>
+        <div *ngIf="(formGroupEditCar.get('model').invalid && formGroupEditCar.get('model').touched) || formGroupEditCar.get('model').dirty">
+          <small *ngIf="formGroupEditCar.get('model').errors?.required" class="text-danger">Model is required</small>
+        </div>
+
+        <br />
+
+        <label for="buildDate">Year built</label>
+        <div class="input-group">
+          <input [class.is-invalid]="formGroupEditCar.get('buildDate').invalid && formGroupEditCar.get('buildDate').touched" type="number" autocomplete="on" id="buildDate" class="form-control" name="buildDate" formControlName="buildDate">
+        </div>
+        <div *ngIf="(formGroupEditCar.get('buildDate').invalid && formGroupEditCar.get('buildDate').touched) || formGroupEditCar.get('buildDate').dirty">
+          <small *ngIf="formGroupEditCar.get('buildDate').errors?.required" class="text-danger">Year built is required</small>
+        </div>
+
+        <br />
+
+        <label for="costPerDay">Cost per day</label>
+        <div class="input-group">
+          <input [class.is-invalid]="formGroupEditCar.get('costPerDay').invalid && formGroupEditCar.get('costPerDay').touched" type="number" autocomplete="on" id="costPerDay" class="form-control" name="costPerDay" formControlName="costPerDay">
+        </div>
+        <div *ngIf="(formGroupEditCar.get('costPerDay').invalid && formGroupEditCar.get('costPerDay').touched) || formGroupEditCar.get('costPerDay').dirty">
+          <small *ngIf="formGroupEditCar.get('costPerDay').errors?.required" class="text-danger">Cost per day is required</small>
+        </div>
+
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" [disabled]="formGroupEditCar.invalid" class="btn btn-outline-dark" (click)="modal.close('Save click')">Submit</button>
   </div>
 </ng-template>

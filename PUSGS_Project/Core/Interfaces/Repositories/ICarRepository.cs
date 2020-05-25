@@ -5,12 +5,12 @@ namespace Core.Interfaces.Repositories
 {
     public interface ICarRepository
     {
-        Car Get(long id);
+        Task<Car> GetAsync(long id);
 
         Task<bool> AddAsync(Car car);
 
         void Delete(long id);
 
-        void Update(Car car);
+        Task UpdateAsync(Car car);
     }
 }
