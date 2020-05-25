@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { RentACar } from '../entities/rent-a-car';
 import { RentACarService } from '../services/rent-a-car.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Car } from '../entities/car';
+import { CarService } from '../services/car.service';
 
 @Component({
   selector: 'app-rent-a-car-profile-edit',
@@ -17,11 +20,22 @@ export class RentACarProfileEditComponent implements OnInit {
     address: new FormControl(null),
     description: new FormControl(null),
   });
+
+  formGroup = new FormGroup({
+    name: new FormControl('', Validators.required),
+    passengerNumber: new FormControl(0, Validators.required),
+    type: new FormControl('', Validators.required),
+    brand: new FormControl('', Validators.required),
+    model: new FormControl('', Validators.required),
+    buildDate: new FormControl(0, Validators.required),
+    costPerDay: new FormControl(0, Validators.required),
+  })
+
   id: number;
 
-  constructor(private service: RentACarService, private route: ActivatedRoute) {
+  constructor(private rentACarService: RentACarService, private route: ActivatedRoute, private modalService: NgbModal, private carService: CarService) {
     route.params.subscribe(params => { this.id = params['id']; });
-    service.getAgency(this.id).then(result => {
+    rentACarService.getAgency(this.id).then(result => {
       this.rentACar = result;
       this.editGroup.setValue({
         name: this.rentACar.name,
@@ -50,8 +64,26 @@ export class RentACarProfileEditComponent implements OnInit {
     //this.rentACar.removeCar(index);
   }
 
-  addCar() {
-    //this.rentACar.addCar(new Car("name 20", 4, "Suv", "Brand 1", "Model 1", 2009, 20));
+  addCar(content) {
+    //this.setGroup(this.user);
+
+    this.modalService.open(content, { ariaLabelledBy: 'modal-add-car' }).result.then((result) => {
+      // TODO: service add car
+      const car = new Car(
+        this.formGroup.get("name").value,
+        this.formGroup.get("passengerNumber").value,
+        this.formGroup.get("type").value,
+        this.formGroup.get("brand").value,
+        this.formGroup.get("model").value,
+        this.formGroup.get("buildDate").value,
+        this.formGroup.get("costPerDay").value,
+      );
+      this.carService.addCar(car).then(result => {
+        this.rentACarService.addCarToAgency(result.id, parseInt(this.id.toString()));
+      })
+    }, (reason) => {
+      //console.log(`Dismissed ${this.getDismissReason(reason)}`);
+    });
   }
 
   removeBranch(index: number) {

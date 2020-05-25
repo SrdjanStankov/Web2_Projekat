@@ -1,4 +1,5 @@
-﻿using Core.Entities;
+﻿using System.Threading.Tasks;
+using Core.Entities;
 
 namespace Core.Interfaces.Repositories
 {
@@ -6,7 +7,7 @@ namespace Core.Interfaces.Repositories
     {
         Car Get(long id);
 
-        void Add(Car car);
+        Task<bool> AddAsync(Car car);
 
         void Delete(long id);
 

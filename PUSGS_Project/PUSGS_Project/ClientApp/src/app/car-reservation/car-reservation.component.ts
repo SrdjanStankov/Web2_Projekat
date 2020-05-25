@@ -52,8 +52,8 @@ export class CarReservationComponent implements OnInit {
   onSubmit() {
     this.searchAgency.cars.forEach((car) => {
       if (!car.isReserved()) {
-        if (car.PassengerNumber === this.editGroup.get("number").value) {
-          if (car.Type.toLowerCase() === (this.editGroup.get("type").value as string).toLowerCase()) {
+        if (car.passengerNumber === this.editGroup.get("number").value) {
+          if (car.type.toLowerCase() === (this.editGroup.get("type").value as string).toLowerCase()) {
             var ret = this.editGroup.get("return").get("date").value;
             var take = this.editGroup.get("take").get("date").value
             if (car.calculateCostForRange(new Date(ret.year, ret.month, ret.day), new Date(take.year, take.month, take.day)) <+ this.editGroup.get("costRange").value) {

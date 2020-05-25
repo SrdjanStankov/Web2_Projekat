@@ -15,5 +15,7 @@ namespace Core.Interfaces.Repositories
         void Delete(long id);
 
         void Update(RentACar rentACar);
+        
+        Task AddCarToAgencyAsync(long carId, long rentACarId);
     }
 }

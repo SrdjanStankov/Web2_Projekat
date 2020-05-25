@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces.Repositories;
+using Core.ViewModels.RentACar;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -43,6 +44,14 @@ namespace PUSGS_Project.Controllers
             {
                 return BadRequest(new { message = "Already exist" });
             }
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("AddCar")]
+        public async Task<object> AddCar([FromBody] CarModel model)
+        {
+            await repository.AddCarToAgencyAsync(model.CarId, model.RentACarId);
             return Ok();
         }
 

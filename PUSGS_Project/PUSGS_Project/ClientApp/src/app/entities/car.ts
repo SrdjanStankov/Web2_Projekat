@@ -1,33 +1,16 @@
 export class Car {
 
-  private name: string;
-  private passengerNumber: number;
-  private ratings: number[] = [];
-  private reservedFrom: Date;
-  private reservedTo: Date;
-  private type: string;
-  private brand: string;
-  private model: string;
-  private buildDate: number;
-  private costPerDay: number;
-
-  get PassengerNumber() { return this.passengerNumber; }
-  get Name() { return this.name; }
-  get ReservedFrom() { return this.reservedFrom; }
-  get ReservedTo() { return this.reservedTo; }
-  get Type() { return this.type; }
-  get Brand() { return this.brand; }
-  get Model() { return this.model; }
-  get BuildDate() { return this.buildDate; }
-
-  set Type(value: string) { this.type = value; }
-  set ReservedFrom(value: Date) { this.reservedFrom = value; }
-  set ReservedTo(value: Date) { this.reservedTo = value; }
-  set PassengerNumber(value: number) { this.passengerNumber = value; }
-  set Name(value: string) { this.name = value; }
-  set Brand(value: string) { this.brand = value; }
-  set Model(value: string) { this.model = value; }
-  set BuildDate(value: number) { this.buildDate = value; }
+  id: number;
+  name: string;
+  passengerNumber: number;
+  ratings: number[] = [];
+  reservedFrom: Date;
+  reservedTo: Date;
+  type: string;
+  brand: string;
+  model: string;
+  buildDate: number;
+  costPerDay: number;
 
   constructor(name: string, passengerNumber: number, type: string, brand: string, model:string, buildDate: number, costPerDay: number) {
     this.name = name;

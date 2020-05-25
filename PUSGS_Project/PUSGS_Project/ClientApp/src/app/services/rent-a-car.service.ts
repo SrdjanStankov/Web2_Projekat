@@ -1,11 +1,13 @@
 import { Injectable, Inject } from "@angular/core";
 import { RentACar } from "../entities/rent-a-car";
 import { HttpClient } from "@angular/common/http";
+import { Car } from "../entities/car";
 
 @Injectable({
   providedIn: "root",
 })
 export class RentACarService {
+  
   http: HttpClient;
   rentACarControllerUri: string;
 
@@ -26,4 +28,9 @@ export class RentACarService {
   addAgency(agency: RentACar) {
     return this.http.post<RentACar>(this.rentACarControllerUri, agency).toPromise();
   }
+
+  addCarToAgency(carId: number, id: number) {
+    return this.http.post<Car>(this.rentACarControllerUri + "AddCar", { carId: carId, rentACarId: id }).toPromise();
+  }
+
 }

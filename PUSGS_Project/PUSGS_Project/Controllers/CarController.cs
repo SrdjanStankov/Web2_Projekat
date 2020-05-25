@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -27,8 +28,13 @@ namespace PUSGS_Project.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task<object> PostAsync([FromBody] Car model)
         {
+            if (!await repository.AddAsync(model))
+            {
+                return BadRequest(new { message = "Already exist" });
+            }
+            return Ok(model);
         }
 
         // PUT api/<controller>/5
