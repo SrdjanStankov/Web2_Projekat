@@ -15,6 +15,9 @@ namespace Core.Entities
         public double TicketPrice { get; set; }
         public int NumberOfChangeovers { get; set; }
 
+        public Location From { get; set; }
+        public Location To { get; set; }
+
         public ICollection<FlightTicket> Tickets { get; set; }
         public ICollection<FlightSeat> Seats { get; set; }
         public ICollection<Rating> Ratings { get; set; }

@@ -16,6 +16,9 @@ namespace Core.ViewModels.Aviation
         public double TicketPrice { get; set; }
         public int NumberOfChangeovers { get; set; }
 
+        public LocationModel From { get; set; }
+        public LocationModel To { get; set; }
+
         public ICollection<FlightTicketModel> Tickets { get; set; }
         public ICollection<FlightSeatModel> Seats { get; set; }
         public ICollection<RatingModel> Ratings { get; set; }
@@ -33,6 +36,9 @@ namespace Core.ViewModels.Aviation
             TravelLength = flight.TravelLength;
             TicketPrice = flight.TicketPrice;
             NumberOfChangeovers = flight.NumberOfChangeovers;
+
+            From = new LocationModel(flight.From);
+            To = new LocationModel(flight.To);
 
             Tickets = flight.Tickets.Select(t => new FlightTicketModel(t)).ToList();
             Seats = flight.Seats.Select(s => AviationMapper.MapSeat(s, flight.Tickets)).ToList();
