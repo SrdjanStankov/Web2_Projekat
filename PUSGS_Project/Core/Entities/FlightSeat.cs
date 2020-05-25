@@ -7,7 +7,7 @@
         public long FlightId { get; set; }
         public Flight Flight { get; set; }
 
-        public long? ReservedById { get; set; }
-        public FlightTicket ReservedBy { get; set; }
+        // Wanted to add optional FlightTicket ReservedBy but EF Core wouldn't let me because of
+        // "multiple cascade paths", so I will just use application logic to check if FlightSeat is taken...
     }
 }
