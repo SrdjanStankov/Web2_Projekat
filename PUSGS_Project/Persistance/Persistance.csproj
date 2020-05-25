@@ -9,6 +9,24 @@
     <Compile Remove="Migrations\20200521164335_addedDbSet.Designer.cs" />
     <Compile Remove="Migrations\20200521164833_addedDbSet.cs" />
     <Compile Remove="Migrations\20200521164833_addedDbSet.Designer.cs" />
+    <Compile Remove="Migrations\20200525104301_AddFlightSeatRefferenceInFlightTicket.cs" />
+    <Compile Remove="Migrations\20200525104301_AddFlightSeatRefferenceInFlightTicket.Designer.cs" />
+    <Compile Remove="Migrations\20200525104557_AddFlightSeatRefferenceInFlightTicket.cs" />
+    <Compile Remove="Migrations\20200525104557_AddFlightSeatRefferenceInFlightTicket.Designer.cs" />
+    <Compile Remove="Migrations\20200525105107_AddFlightSeatRefferenceInFlightTicket.cs" />
+    <Compile Remove="Migrations\20200525105107_AddFlightSeatRefferenceInFlightTicket.Designer.cs" />
+    <Compile Remove="Migrations\20200525105357_AddFlightSeatRefferenceInFlightTicket.cs" />
+    <Compile Remove="Migrations\20200525105357_AddFlightSeatRefferenceInFlightTicket.Designer.cs" />
+    <Compile Remove="Migrations\20200525110851_AddFlightSeatRefferenceInFlightTicket.cs" />
+    <Compile Remove="Migrations\20200525110851_AddFlightSeatRefferenceInFlightTicket.Designer.cs" />
+    <Compile Remove="Migrations\20200525111041_AddFlightSeatRefferenceInFlightTicket.cs" />
+    <Compile Remove="Migrations\20200525111041_AddFlightSeatRefferenceInFlightTicket.Designer.cs" />
+    <Compile Remove="Migrations\20200525111249_AddFlightSeatRefferenceInFlightTicket.cs" />
+    <Compile Remove="Migrations\20200525111249_AddFlightSeatRefferenceInFlightTicket.Designer.cs" />
+    <Compile Remove="Migrations\20200525111422_AddFlightSeatRefferenceInFlightTicket.cs" />
+    <Compile Remove="Migrations\20200525111422_AddFlightSeatRefferenceInFlightTicket.Designer.cs" />
+    <Compile Remove="Migrations\20200525111614_AddFlightSeatRefferenceInFlightTicket.cs" />
+    <Compile Remove="Migrations\20200525111614_AddFlightSeatRefferenceInFlightTicket.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

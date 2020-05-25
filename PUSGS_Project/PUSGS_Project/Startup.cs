@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using Microsoft.AspNetCore.Identity;
+using Core.Interfaces.Services;
+using Core.Services;
 
 namespace PUSGS_Project
 {
@@ -39,7 +41,9 @@ namespace PUSGS_Project
             services.AddScoped(typeof(ICarRepository), typeof(CarRepository));
             services.AddScoped(typeof(IRentACarRepository), typeof(RentACarRepository));
             services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
+            services.AddScoped<IAviationRepository, AviationRepository>();
 
+            services.AddScoped<IAviationService, AviationService>();
 
             services.Configure<IdentityOptions>(options =>
             {

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistance;
 
 namespace Persistance.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200525122557_AddCityNameToLocation")]
+    partial class AddCityNameToLocation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,17 +101,11 @@ namespace Persistance.Migrations
                     b.Property<DateTime?>("DepartureTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("FromId")
-                        .HasColumnType("bigint");
-
                     b.Property<int>("NumberOfChangeovers")
                         .HasColumnType("int");
 
                     b.Property<double>("TicketPrice")
                         .HasColumnType("float");
-
-                    b.Property<long?>("ToId")
-                        .HasColumnType("bigint");
 
                     b.Property<double>("TravelLength")
                         .HasColumnType("float");
@@ -117,10 +113,6 @@ namespace Persistance.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AviationCompanyId");
-
-                    b.HasIndex("FromId");
-
-                    b.HasIndex("ToId");
 
                     b.ToTable("Flight");
                 });
@@ -265,16 +257,6 @@ namespace Persistance.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsRentACarAdmin")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsSystemAdmin")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsVerified")
                         .HasColumnType("bit");
 
@@ -298,22 +280,6 @@ namespace Persistance.Migrations
                     b.HasIndex("UserEmail");
 
                     b.ToTable("User");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
-                });
-
-            modelBuilder.Entity("Core.Entities.RentACarAdministrator", b =>
-                {
-                    b.HasBaseType("Core.Entities.User");
-
-                    b.HasDiscriminator().HasValue("RentACarAdministrator");
-                });
-
-            modelBuilder.Entity("Core.Entities.SystemAdministrator", b =>
-                {
-                    b.HasBaseType("Core.Entities.User");
-
-                    b.HasDiscriminator().HasValue("SystemAdministrator");
                 });
 
             modelBuilder.Entity("Core.Entities.AviationCompany", b =>
@@ -337,14 +303,6 @@ namespace Persistance.Migrations
                         .HasForeignKey("AviationCompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Core.Entities.Location", "From")
-                        .WithMany()
-                        .HasForeignKey("FromId");
-
-                    b.HasOne("Core.Entities.Location", "To")
-                        .WithMany()
-                        .HasForeignKey("ToId");
                 });
 
             modelBuilder.Entity("Core.Entities.FlightSeat", b =>
