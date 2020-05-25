@@ -14,6 +14,9 @@ namespace Core.ViewModels.Aviation
 
         public RatingModel(Rating rating)
         {
+            if (rating == null)
+                return;
+
             Id = rating.Id;
             Value = rating.Value;
             RatingGiverId = rating.RatingGiver?.Email;

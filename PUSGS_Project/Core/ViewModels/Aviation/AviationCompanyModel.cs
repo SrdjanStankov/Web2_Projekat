@@ -20,6 +20,9 @@ namespace Core.ViewModels.Aviation
 
         public AviationCompanyModel(AviationCompany aviation)
         {
+            if (aviation == null)
+                return;
+
             Id = aviation.Id;
             Name = aviation.Name;
             Description = aviation.Description;

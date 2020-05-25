@@ -20,6 +20,9 @@ namespace Core.ViewModels.Aviation
 
         public FlightTicketModel(FlightTicket ticket)
         {
+            if (ticket == null)
+                return;
+
             Id = ticket.Id;
             TicketOwnerId = ticket.TicketOwnerId;
             FlightId = ticket.FlightId;

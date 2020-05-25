@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Core.ViewModels.Aviation
 {
@@ -15,6 +16,9 @@ namespace Core.ViewModels.Aviation
 
         public LocationModel(Location location)
         {
+            if (location == null)
+                return;
+
             Id = location.Id;
             X = location.X;
             Y = location.Y;

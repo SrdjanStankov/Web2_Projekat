@@ -16,6 +16,9 @@ namespace Core.ViewModels.Aviation
 
         public FlightSeatModel(FlightSeat seat)
         {
+            if (seat == null)
+                return;
+
             Id = seat.Id;
             FlightId = seat.FlightId;
         }
