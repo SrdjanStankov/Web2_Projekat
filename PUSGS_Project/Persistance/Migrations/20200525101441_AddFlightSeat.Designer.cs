@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistance;
 
 namespace Persistance.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200525101441_AddFlightSeat")]
+    partial class AddFlightSeat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,17 +101,11 @@ namespace Persistance.Migrations
                     b.Property<DateTime?>("DepartureTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("FromId")
-                        .HasColumnType("bigint");
-
                     b.Property<int>("NumberOfChangeovers")
                         .HasColumnType("int");
 
                     b.Property<double>("TicketPrice")
                         .HasColumnType("float");
-
-                    b.Property<long?>("ToId")
-                        .HasColumnType("bigint");
 
                     b.Property<double>("TravelLength")
                         .HasColumnType("float");
@@ -117,10 +113,6 @@ namespace Persistance.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AviationCompanyId");
-
-                    b.HasIndex("FromId");
-
-                    b.HasIndex("ToId");
 
                     b.ToTable("Flight");
                 });
@@ -135,9 +127,14 @@ namespace Persistance.Migrations
                     b.Property<long>("FlightId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("ReservedById")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FlightId");
+
+                    b.HasIndex("ReservedById");
 
                     b.ToTable("FlightSeats");
                 });
@@ -149,26 +146,21 @@ namespace Persistance.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AirplaneSeat")
+                        .HasColumnType("int");
+
                     b.Property<double>("Discount")
                         .HasColumnType("float");
 
                     b.Property<long>("FlightId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("FlightSeatId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("TicketOwnerEmail")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<long>("TicketOwnerId")
-                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FlightId");
-
-                    b.HasIndex("FlightSeatId");
 
                     b.HasIndex("TicketOwnerEmail");
 
@@ -181,9 +173,6 @@ namespace Persistance.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CityName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("X")
                         .HasColumnType("float");
@@ -311,14 +300,6 @@ namespace Persistance.Migrations
                         .HasForeignKey("AviationCompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Core.Entities.Location", "From")
-                        .WithMany()
-                        .HasForeignKey("FromId");
-
-                    b.HasOne("Core.Entities.Location", "To")
-                        .WithMany()
-                        .HasForeignKey("ToId");
                 });
 
             modelBuilder.Entity("Core.Entities.FlightSeat", b =>
@@ -328,6 +309,10 @@ namespace Persistance.Migrations
                         .HasForeignKey("FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Core.Entities.FlightTicket", "ReservedBy")
+                        .WithMany()
+                        .HasForeignKey("ReservedById");
                 });
 
             modelBuilder.Entity("Core.Entities.FlightTicket", b =>
@@ -337,10 +322,6 @@ namespace Persistance.Migrations
                         .HasForeignKey("FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Core.Entities.FlightSeat", "FlightSeat")
-                        .WithMany()
-                        .HasForeignKey("FlightSeatId");
 
                     b.HasOne("Core.Entities.User", "TicketOwner")
                         .WithMany()

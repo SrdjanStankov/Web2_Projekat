@@ -17,6 +17,7 @@ namespace Persistance
         public DbSet<User> User { get; set; }
         public DbSet<Car> Car { get; set; }
         public DbSet<Flight> Flight { get; set; }
+        public DbSet<FlightSeat> FlightSeats { get; set; }
         public DbSet<FlightTicket> FlightTicket { get; set; }
         public DbSet<Location> Location { get; set; }
         public DbSet<Rating> Rating { get; set; }
