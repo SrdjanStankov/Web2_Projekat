@@ -9,7 +9,7 @@ namespace Core.Interfaces.Services
     {
         Task<List<AviationCompanyModel>> GetAllCompaniesAsync();
 
-        Task<AviationCompanyModel> GetCompanyByIdAsync(int id);
+        Task<AviationCompanyModel> GetCompanyByIdAsync(long id);
 
         Task<long> AddAviationCompanyAsync(AddOrUpdateAviationCompanyRequestModel model);
 
