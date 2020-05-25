@@ -71,7 +71,9 @@ export class RentACarProfileEditComponent implements OnInit {
   }
 
   removeCar(index: number) {
-    //this.rentACar.removeCar(index);
+    this.carService.removeCar(index).then(() => {
+      this.refreshAgency();
+    })
   }
 
   editCar(id: number, content) {
@@ -99,11 +101,15 @@ export class RentACarProfileEditComponent implements OnInit {
       );
       car.id = id;
       this.carService.updateCar(car).then(() => {
-        this.rentACarService.getAgency(this.agencyId).then(result => {
-          this.rentACar = result;
-        });
+        this.refreshAgency();
       });
     }, err => { });
+  }
+
+  private refreshAgency() {
+    this.rentACarService.getAgency(this.agencyId).then(result => {
+      this.rentACar = result;
+    });
   }
 
   addCar(content) {
@@ -118,7 +124,9 @@ export class RentACarProfileEditComponent implements OnInit {
         this.formGroup.get("costPerDay").value,
       );
       this.carService.addCar(car).then(result => {
-        this.rentACarService.addCarToAgency(result.id, parseInt(this.agencyId.toString()));
+        this.rentACarService.addCarToAgency(result.id, parseInt(this.agencyId.toString())).then(() => {
+          this.refreshAgency();
+        })
       })
     }, (reason) => { });
   }

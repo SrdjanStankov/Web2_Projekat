@@ -9,7 +9,7 @@ namespace Core.Interfaces.Repositories
 
         Task<bool> AddAsync(Car car);
 
-        void Delete(long id);
+        Task DeleteAsync(long id);
 
         Task UpdateAsync(Car car);
     }

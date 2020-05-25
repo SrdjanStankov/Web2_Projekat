@@ -26,4 +26,8 @@ export class CarService {
   updateCar(car: Car) {
     return this.http.put<Car>(this.carControllerUri + car.id, car).toPromise();
   }
+
+  removeCar(index: number) {
+    return this.http.delete<Car>(this.carControllerUri + index).toPromise();
+  }
 }

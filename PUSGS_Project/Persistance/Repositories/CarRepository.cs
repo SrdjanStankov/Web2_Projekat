@@ -26,7 +26,12 @@ namespace Persistance.Repositories
             return true;
         }
 
-        public void Delete(long id) => throw new NotImplementedException();
+        public async Task DeleteAsync(long id)
+        {
+            var car = await context.Car.FindAsync(id);
+            context.Car.Remove(car);
+            await context.SaveChangesAsync();
+        }
 
         public async Task<Car> GetAsync(long id)
         {

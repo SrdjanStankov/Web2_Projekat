@@ -49,8 +49,9 @@ namespace PUSGS_Project.Controllers
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
+            await repository.DeleteAsync(id);
         }
     }
 }
