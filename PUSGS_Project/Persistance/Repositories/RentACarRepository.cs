@@ -40,9 +40,9 @@ namespace Persistance.Repositories
 
         public void Delete(long id) => throw new NotImplementedException();
 
-        public RentACar Get(long id) => context.RentACar.Include(r => r.Cars).FirstOrDefault(r => r.Id == id);
+        public RentACar Get(long id) => context.RentACar.Include(r => r.Cars).Include(r => r.Branches).FirstOrDefault(r => r.Id == id);
 
-        public IEnumerable<RentACar> GetAll() => context.RentACar.Include(r => r.Cars).AsEnumerable();
+        public IEnumerable<RentACar> GetAll() => context.RentACar.Include(r => r.Cars).Include(r => r.Branches).AsEnumerable();
 
         public void Update(RentACar rentACar) => throw new NotImplementedException();
     }
