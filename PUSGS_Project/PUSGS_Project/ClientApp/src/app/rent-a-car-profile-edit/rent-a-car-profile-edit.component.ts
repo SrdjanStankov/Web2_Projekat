@@ -6,6 +6,9 @@ import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Car } from '../entities/car';
 import { CarService } from '../services/car.service';
+import { Branch } from '../entities/branch';
+import { BranchService } from '../services/branch.service';
+import { parse } from 'querystring';
 
 @Component({
   selector: 'app-rent-a-car-profile-edit',
@@ -41,9 +44,14 @@ export class RentACarProfileEditComponent implements OnInit {
     costPerDay: new FormControl(0, Validators.required),
   });
 
+  formGroupAddBranch = new FormGroup({
+    name: new FormControl('', Validators.required),
+    address: new FormControl('', Validators.required),
+  });
+
   agencyId: number;
 
-  constructor(private rentACarService: RentACarService, private route: ActivatedRoute, private modalService: NgbModal, private carService: CarService) {
+  constructor(private rentACarService: RentACarService, private route: ActivatedRoute, private modalService: NgbModal, private carService: CarService, private branchService: BranchService) {
     route.params.subscribe(params => { this.agencyId = params['id']; });
     rentACarService.getAgency(this.agencyId).then(result => {
       this.rentACar = result;
@@ -132,10 +140,22 @@ export class RentACarProfileEditComponent implements OnInit {
   }
 
   removeBranch(index: number) {
-    //this.rentACar.removeBranch(index);
+    this.branchService.removeBranch(index).then(() => {
+      this.refreshAgency();
+    });
   }
 
-  addBranch() {
-    //this.rentACar.addBranch("name 20");
+  addBranch(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-add-branch' }).result.then(result => {
+      const branch = new Branch();
+      branch.name = this.formGroupAddBranch.get('name').value;
+      branch.address = this.formGroupAddBranch.get('address').value;
+      // branch service
+      this.branchService.addBranch(branch).then(result => {
+        this.rentACarService.AddBranchToAgency(result.id, parseInt(this.agencyId.toString())).then(() => {
+          this.refreshAgency();
+        })
+      })
+    }, reason => { });
   }
 }

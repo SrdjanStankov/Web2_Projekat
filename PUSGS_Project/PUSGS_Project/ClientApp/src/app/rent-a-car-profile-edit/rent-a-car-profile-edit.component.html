@@ -38,7 +38,7 @@
         <label>Cars</label>
       </div>
       <div class="col-md-6">
-        <div *ngFor="let car of rentACar.cars; let i = index">
+        <div *ngFor="let car of rentACar.cars">
           <label class="col-md-3 m-2">{{car.name}}</label>
           <button type="button" class="btn btn-warning m-2 col-md-2" (click)="editCar(car.id, contentEditCar)">Edit</button>
           <button type="button" class="btn btn-danger m-2 col-md-2" (click)="removeCar(car.id)">Remove</button>
@@ -54,12 +54,12 @@
         <label>Branches</label>
       </div>
       <div class="col-md-6">
-        <div *ngFor="let branch of rentACar.branches; let i = index">
-          <input type="text" class="col-md-4" value="{{branch}}" />
-          <button type="button" class="btn btn-danger m-2 col-md-2" (click)="removeBranch(i)">Remove</button>
+        <div *ngFor="let branch of rentACar.branches">
+          <label class="col-md-4">{{branch.name}}</label>
+          <button type="button" class="btn btn-danger m-2 col-md-2" (click)="removeBranch(branch.id)">Remove</button>
         </div>
         <div>
-          <button type="button" class="btn btn-success" (click)="addBranch()">Add branch</button>
+          <button type="button" class="btn btn-success" (click)="addBranch(contentAddBranch)">Add branch</button>
         </div>
       </div>
     </div>
@@ -242,5 +242,42 @@
   </div>
   <div class="modal-footer">
     <button type="button" [disabled]="formGroupEditCar.invalid" class="btn btn-outline-dark" (click)="modal.close('Save click')">Submit</button>
+  </div>
+</ng-template>
+
+<ng-template #contentAddBranch let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-add-branch">Add branch</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="formGroupAddBranch">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <div class="input-group">
+          <input [class.is-invalid]="formGroupAddBranch.get('name').invalid && formGroupAddBranch.get('name').touched" type="text" autocomplete="on" id="name" class="form-control" name="name" formControlName="name">
+        </div>
+        <div *ngIf="(formGroupAddBranch.get('name').invalid && formGroupAddBranch.get('name').touched) || formGroupAddBranch.get('name').dirty">
+          <small *ngIf="formGroupAddBranch.get('name').errors?.required" class="text-danger">Name is required</small>
+        </div>
+
+        <br />
+
+        <label for="name">Address</label>
+        <div class="input-group">
+          <input [class.is-invalid]="formGroupAddBranch.get('address').invalid && formGroupAddBranch.get('address').touched" type="text" autocomplete="on" id="address" class="form-control" name="address" formControlName="address">
+        </div>
+        <div *ngIf="(formGroupAddBranch.get('address').invalid && formGroupAddBranch.get('address').touched) || formGroupAddBranch.get('address').dirty">
+          <small *ngIf="formGroupAddBranch.get('address').errors?.required" class="text-danger">Name is required</small>
+        </div>
+
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" [disabled]="formGroupAddBranch.invalid" class="btn btn-outline-dark" (click)="modal.close('Save click')">Submit</button>
   </div>
 </ng-template>

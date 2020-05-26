@@ -1,4 +1,5 @@
 import { Car } from "./car";
+import { Branch } from "./branch";
 
 export class RentACar {
   id: number;
@@ -7,6 +8,6 @@ export class RentACar {
   description: string;
   // TODO: cenovnik
   cars: Car[];
-  branches: string[];
+  branches: Branch[];
   ratings: number[];
 }
