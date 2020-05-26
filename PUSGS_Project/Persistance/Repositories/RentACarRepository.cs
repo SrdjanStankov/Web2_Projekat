@@ -47,12 +47,21 @@ namespace Persistance.Repositories
             await context.SaveChangesAsync();
         }
 
-        public void Delete(long id) => throw new NotImplementedException();
+        public async Task Delete(long id)
+        {
+            var agency = await context.RentACar.FindAsync(id);
+            context.RentACar.Remove(agency);
+            await context.SaveChangesAsync();
+        }
 
         public RentACar Get(long id) => context.RentACar.Include(r => r.Cars).Include(r => r.Branches).FirstOrDefault(r => r.Id == id);
 
         public IEnumerable<RentACar> GetAll() => context.RentACar.Include(r => r.Cars).Include(r => r.Branches).AsEnumerable();
 
-        public void Update(RentACar rentACar) => throw new NotImplementedException();
+        public async Task UpdateAsync(RentACar rentACar)
+        {
+            context.Update(rentACar);
+            await context.SaveChangesAsync();
+        }
     }
 }

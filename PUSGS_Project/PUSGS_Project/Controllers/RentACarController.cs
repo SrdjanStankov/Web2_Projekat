@@ -65,8 +65,10 @@ namespace PUSGS_Project.Controllers
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public async Task<object> Put(int id, [FromBody]RentACar model)
         {
+            await repository.UpdateAsync(model);
+            return Ok();
         }
 
         // DELETE api/<controller>/5

@@ -8,7 +8,7 @@ import { Branch } from "../entities/branch";
   providedIn: "root",
 })
 export class RentACarService {
-  
+
   http: HttpClient;
   rentACarControllerUri: string;
 
@@ -34,8 +34,13 @@ export class RentACarService {
     return this.http.post<Car>(this.rentACarControllerUri + "AddCar", { carId: carId, rentACarId: id }).toPromise();
   }
 
-  AddBranchToAgency(branchId: number, id: number) {
+  addBranchToAgency(branchId: number, id: number) {
     return this.http.post<Branch>(this.rentACarControllerUri + "AddBranch", { branchId: branchId, rentACarId: id }).toPromise();
+  }
+
+  updateAgency(agency: RentACar) {
+    agency.id = parseInt(agency.id.toString());
+    return this.http.put<RentACar>(this.rentACarControllerUri + agency.id, agency).toPromise();
   }
 
 }

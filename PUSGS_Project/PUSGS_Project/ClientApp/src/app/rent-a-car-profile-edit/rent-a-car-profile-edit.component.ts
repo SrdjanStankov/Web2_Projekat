@@ -8,7 +8,6 @@ import { Car } from '../entities/car';
 import { CarService } from '../services/car.service';
 import { Branch } from '../entities/branch';
 import { BranchService } from '../services/branch.service';
-import { parse } from 'querystring';
 
 @Component({
   selector: 'app-rent-a-car-profile-edit',
@@ -19,9 +18,9 @@ export class RentACarProfileEditComponent implements OnInit {
 
   rentACar: RentACar = new RentACar();
   editGroup: FormGroup = new FormGroup({
-    name: new FormControl(null),
-    address: new FormControl(null),
-    description: new FormControl(null),
+    name: new FormControl('', Validators.required),
+    address: new FormControl('', Validators.required),
+    description: new FormControl('', Validators.required),
   });
 
   formGroup = new FormGroup({
@@ -56,9 +55,9 @@ export class RentACarProfileEditComponent implements OnInit {
     rentACarService.getAgency(this.agencyId).then(result => {
       this.rentACar = result;
       this.editGroup.setValue({
-        name: this.rentACar.name,
-        address: this.rentACar.address,
-        description: this.rentACar.description,
+        name: result.name,
+        address: result.address,
+        description: result.description,
       });
     });
 
@@ -68,14 +67,14 @@ export class RentACarProfileEditComponent implements OnInit {
   }
 
   onSubmit() {
-    // check if valid
-
-    // set all values
+    this.rentACar.id = this.agencyId;
     this.rentACar.name = this.editGroup.get("name").value;
     this.rentACar.address = this.editGroup.get("address").value;
     this.rentACar.description = this.editGroup.get("description").value;
 
-    //talk to backend to update values
+    this.rentACarService.updateAgency(this.rentACar).then(() => {
+      this.refreshAgency();
+    });
   }
 
   removeCar(index: number) {
@@ -152,7 +151,7 @@ export class RentACarProfileEditComponent implements OnInit {
       branch.address = this.formGroupAddBranch.get('address').value;
       // branch service
       this.branchService.addBranch(branch).then(result => {
-        this.rentACarService.AddBranchToAgency(result.id, parseInt(this.agencyId.toString())).then(() => {
+        this.rentACarService.addBranchToAgency(result.id, parseInt(this.agencyId.toString())).then(() => {
           this.refreshAgency();
         })
       })

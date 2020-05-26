@@ -1,28 +1,36 @@
 <form [formGroup]="editGroup" (ngSubmit)="onSubmit()">
-
   <div class="container profile-display">
     <div class="row">
       <div class="col-md-3">
-        <label>Name</label>
+        <label for="name">Name</label>
       </div>
       <div class="col-md-3 m-2">
-        <input type="text" formControlName="name" />
+        <input type="text" [class.is-invalid]="editGroup.get('name').invalid && editGroup.get('name').touched" id="name" class="form-control" formControlName="name" />
+        <div *ngIf="(editGroup.get('name').invalid && editGroup.get('name').touched) || editGroup.get('name').dirty">
+          <small *ngIf="editGroup.get('name').errors?.required" class="text-danger">Name is required</small>
+        </div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-3">
-        <label>Address</label>
+        <label for="address">Address</label>
       </div>
       <div class="col-md-3 m-2">
-        <input type="text" formControlName="address" />
+        <input type="text" [class.is-invalid]="editGroup.get('address').invalid && editGroup.get('address').touched" id="address" class="form-control" formControlName="address" />
+        <div *ngIf="(editGroup.get('address').invalid && editGroup.get('address').touched) || editGroup.get('address').dirty">
+          <small *ngIf="editGroup.get('address').errors?.required" class="text-danger">Address is required</small>
+        </div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-3">
-        <label>Opis</label>
+        <label for="description">Opis</label>
       </div>
       <div class="col-md-3 m-2">
-        <input type="text" formControlName="description" />
+        <input type="text" [class.is-invalid]="editGroup.get('description').invalid && editGroup.get('description').touched" id="description" class="form-control" formControlName="description" />
+        <div *ngIf="(editGroup.get('description').invalid && editGroup.get('description').touched) || editGroup.get('description').dirty">
+          <small *ngIf="editGroup.get('description').errors?.required" class="text-danger">Address is required</small>
+        </div>
       </div>
     </div>
     <div class="row">
@@ -65,7 +73,7 @@
     </div>
     <div class="row">
       <div class="col-md">
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" [disabled]="editGroup.invalid" class="btn btn-primary" (click)="onSubmit()">Save</button>
       </div>
     </div>
   </div>

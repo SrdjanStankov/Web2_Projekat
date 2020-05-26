@@ -12,9 +12,9 @@ namespace Core.Interfaces.Repositories
 
         Task<bool> AddAsync(RentACar rentACar);
 
-        void Delete(long id);
+        Task Delete(long id);
 
-        void Update(RentACar rentACar);
+        Task UpdateAsync(RentACar rentACar);
         
         Task AddCarToAgencyAsync(long carId, long rentACarId);
 
