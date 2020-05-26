@@ -55,6 +55,14 @@ namespace PUSGS_Project.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        [Route("AddBranch")]
+        public async Task<object> AddBranch([FromBody] BranchModel model)
+        {
+            await repository.AddBranchToAgencyAsync(model.BranchId, model.RentACarId);
+            return Ok();
+        }
+
         // PUT api/<controller>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)

@@ -38,6 +38,15 @@ namespace Persistance.Repositories
             await context.SaveChangesAsync();
         }
 
+        public async Task AddBranchToAgencyAsync(long branchId, long rentACarId)
+        {
+            var branch = await context.Branches.FindAsync(branchId);
+            var rentACar = await context.RentACar.FindAsync(rentACarId);
+
+            rentACar.Branches.Add(branch);
+            await context.SaveChangesAsync();
+        }
+
         public void Delete(long id) => throw new NotImplementedException();
 
         public RentACar Get(long id) => context.RentACar.Include(r => r.Cars).Include(r => r.Branches).FirstOrDefault(r => r.Id == id);

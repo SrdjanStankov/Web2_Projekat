@@ -17,5 +17,7 @@ namespace Core.Interfaces.Repositories
         void Update(RentACar rentACar);
         
         Task AddCarToAgencyAsync(long carId, long rentACarId);
+
+        Task AddBranchToAgencyAsync(long branchId, long rentACarId);
     }
 }

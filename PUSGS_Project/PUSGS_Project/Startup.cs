@@ -38,10 +38,11 @@ namespace PUSGS_Project
 
             // TODO: Add services here
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
-            services.AddScoped(typeof(ICarRepository), typeof(CarRepository));
-            services.AddScoped(typeof(IRentACarRepository), typeof(RentACarRepository));
-            services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
+            services.AddScoped<ICarRepository, CarRepository>();
+            services.AddScoped<IRentACarRepository, RentACarRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAviationRepository, AviationRepository>();
+            services.AddScoped<IBranchRepository, BranchRepository>();
 
             services.AddScoped<IAviationService, AviationService>();
 
