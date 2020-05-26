@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Core.Entities
 {
@@ -12,16 +9,14 @@ namespace Core.Entities
         public string Address { get; set; }
         public string Description { get; set; }
         public ICollection<Car> Cars { get; set; }
-
-        [NotMapped]
-        public ICollection<string> Branches { get; set; }
+        public ICollection<Branch> Branches { get; set; }
 
         public ICollection<Rating> Ratings { get; set; }
 
         public RentACar()
         {
             Cars = new HashSet<Car>();
-            Branches = new HashSet<string>();
+            Branches = new HashSet<Branch>();
             Ratings = new HashSet<Rating>();
         }
     }

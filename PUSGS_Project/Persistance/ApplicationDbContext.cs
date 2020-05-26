@@ -23,5 +23,6 @@ namespace Persistance
         public DbSet<Rating> Rating { get; set; }
         public DbSet<RentACar> RentACar { get; set; }
         public DbSet<AviationCompany> AviationCompany { get; set; }
+        public DbSet<Branch> Branches { get; set; }
     }
 }
