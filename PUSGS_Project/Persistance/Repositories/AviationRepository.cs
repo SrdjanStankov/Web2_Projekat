@@ -29,6 +29,7 @@ namespace Persistance.Repositories
         public Task<List<AviationCompany>> GetAllAsync()
         {
             return context.AviationCompany
+                .Include(c => c.Address)
                 .Include(c => c.Flights)
                 .Include(c => c.Ratings)
                 .ToListAsync();
@@ -37,6 +38,7 @@ namespace Persistance.Repositories
         public Task<AviationCompany> GetByIdAsync(long id)
         {
             return context.AviationCompany
+                .Include(c => c.Address)
                 .Include(c => c.Flights).ThenInclude(f => f.From)
                 .Include(c => c.Flights).ThenInclude(f => f.To)
                 .Include(c => c.Flights).ThenInclude(f => f.Ratings)
@@ -53,17 +55,34 @@ namespace Persistance.Repositories
         public async Task UpdateAsync(AviationCompany company)
         {
             var entity = await GetByIdAsync(company.Id);
-            entity.Name = company.Name;
-            entity.Description = company.Description;
 
-            if (company.Address != null)
-            {
-                entity.Address.CityName = company.Address.CityName;
-                entity.Address.X = company.Address.X;
-                entity.Address.Y = company.Address.Y;
-            }
+            if (!string.IsNullOrWhiteSpace(company.Name))
+                entity.Name = company.Name;
+
+            if (!string.IsNullOrWhiteSpace(company.Description))
+                entity.Description = company.Description;
+
+            AddOrUpdateAddress(entity, company.Address);
 
             await context.SaveChangesAsync();
+        }
+
+        private static void AddOrUpdateAddress(AviationCompany entity, Location address)
+        {
+            if (address == null)
+                return;
+
+            if (entity.Address == null)
+            {
+                entity.Address = address;
+                return;
+            }
+
+            if (!string.IsNullOrWhiteSpace(address.CityName))
+                entity.Address.CityName = address.CityName;
+
+            entity.Address.X = address.X;
+            entity.Address.Y = address.Y;
         }
     }
 }

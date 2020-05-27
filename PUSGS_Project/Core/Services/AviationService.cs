@@ -27,9 +27,10 @@ namespace Core.Services
 
         private static AviationCompany MapToCompany(AddOrUpdateAviationCompanyRequestModel model)
         {
-            var address = new Location(model.Address?.CityName, model.Address?.X, model.Address?.Y);
+            var address = new Location(model.CityName, model.X, model.Y);
             return new AviationCompany
             {
+                Id = model.Id ?? 0,
                 Address = address,
                 Description = model.Description,
                 Name = model.Name

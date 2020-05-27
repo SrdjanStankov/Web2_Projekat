@@ -48,6 +48,7 @@ namespace PUSGS_Project.Controllers
         [HttpPut("{id}")]
         public Task Put(long id, [FromBody]AddOrUpdateAviationCompanyRequestModel model)
         {
+            model.Id = id;
             return _aviationService.UpdateAviationCompanyAsync(model);
         }
 
