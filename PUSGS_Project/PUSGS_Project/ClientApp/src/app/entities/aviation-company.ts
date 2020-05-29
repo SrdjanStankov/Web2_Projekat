@@ -6,7 +6,7 @@ export class AviationCompany {
   id: number;
   name: string;
   description: string;
-  address: Location;
+  address: Location = new Location();
   flights: Flight[];
   ratings: Rating[];
 
