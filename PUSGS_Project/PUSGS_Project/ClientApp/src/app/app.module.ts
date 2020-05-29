@@ -24,6 +24,7 @@ import { MailConfirmationComponent } from './mail-confirmation/mail-confirmation
 import { AddRentACarAdministratorComponent } from './add-rent-a-car-administrator/add-rent-a-car-administrator.component';
 import { AddRentACarCompanyComponent } from './add-rent-a-car-company/add-rent-a-car-company.component';
 import { RegisterServicesComponent } from './register-services/register-services.component';
+import { AddAviationCompanyComponent } from "./add-aviation-company/add-aviation-company.component";
 
 let config = new AuthServiceConfig([
   {
@@ -53,6 +54,7 @@ export function provideConfig() {
     MailConfirmationComponent,
     AddRentACarAdministratorComponent,
     AddRentACarCompanyComponent,
+    AddAviationCompanyComponent,
     RegisterServicesComponent,
   ],
   imports: [
@@ -68,7 +70,7 @@ export function provideConfig() {
       { path: "fetch-data", component: FetchDataComponent },
       { path: "login", component: LoginComponent },
       { path: "profile", component: ProfileComponent },
-      { path: "rent-a-car/:id", component: RentACarProfileComponent},
+      { path: "rent-a-car/:id", component: RentACarProfileComponent },
       { path: "rent-a-car-edit/:id", component: RentACarProfileEditComponent },
       { path: "car-reservation", component: CarReservationComponent },
       { path: "users", component: FriendsComponent },
@@ -83,4 +85,4 @@ export function provideConfig() {
     }],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

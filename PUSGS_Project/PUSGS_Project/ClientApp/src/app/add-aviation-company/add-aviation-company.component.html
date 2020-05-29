@@ -1,0 +1,57 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Aviation Form</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form [formGroup]="aviationGroup" (ngSubmit)="onSubmit()">
+  <div class="modal-body">
+    <div class="form-group">
+
+      <label for="name">Name</label>
+      <div class="input-group">
+        <input [class.is-invalid]="aviationGroup.get('name').invalid && aviationGroup.get('name').touched" type="text" autocomplete="on" id="name" class="form-control" placeholder="name" name="name" formControlName="name" />
+      </div>
+      <div *ngIf="(aviationGroup.get('name').invalid && aviationGroup.get('name').touched) || aviationGroup.get('name').dirty">
+        <small *ngIf="aviationGroup.get('name').errors?.required" class="text-danger">Name is required</small>
+      </div>
+      <br />
+
+      <label for="description">Description</label>
+      <div class="input-group">
+        <input [class.is-invalid]="aviationGroup.get('description').invalid && aviationGroup.get('description').touched" type="text" autocomplete="on" id="description" class="form-control" placeholder="description" name="description" formControlName="description">
+      </div>
+      <div *ngIf="(aviationGroup.get('description').invalid && aviationGroup.get('description').touched) || aviationGroup.get('description').dirty">
+        <small *ngIf="aviationGroup.get('description').errors?.required" class="text-danger">Description is required</small>
+      </div>
+
+      <label for="cityName">City Name</label>
+      <div class="input-group">
+        <input [class.is-invalid]="aviationGroup.get('cityName').invalid && aviationGroup.get('cityName').touched" type="text" autocomplete="on" id="cityName" class="form-control" placeholder="cityName" name="cityName" formControlName="cityName">
+      </div>
+      <div *ngIf="(aviationGroup.get('cityName').invalid && aviationGroup.get('cityName').touched) || aviationGroup.get('cityName').dirty">
+        <small *ngIf="aviationGroup.get('cityName').errors?.required" class="text-danger">City Name is required</small>
+      </div>
+
+      <label for="x">Latitude</label>
+      <div class="input-group">
+        <input [class.is-invalid]="aviationGroup.get('x').invalid && aviationGroup.get('x').touched" type="number" id="x" class="form-control" placeholder="x" name="x" formControlName="x">
+      </div>
+      <div *ngIf="(aviationGroup.get('x').invalid && aviationGroup.get('x').touched) || aviationGroup.get('x').dirty">
+        <small *ngIf="aviationGroup.get('x').errors?.required" class="text-danger">Latitude is required</small>
+      </div>
+
+      <label for="y">Longitude</label>
+      <div class="input-group">
+        <input [class.is-invalid]="aviationGroup.get('y').invalid && aviationGroup.get('y').touched" type="number" id="y" class="form-control" placeholder="y" name="y" formControlName="y">
+      </div>
+      <div *ngIf="(aviationGroup.get('y').invalid && aviationGroup.get('y').touched) || aviationGroup.get('y').dirty">
+        <small *ngIf="aviationGroup.get('y').errors?.required" class="text-danger">Longitude is required</small>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <small *ngIf="reason != ''" class="text-danger">{{ reason }}</small>
+    <button type="submit" [disabled]="!aviationGroup.valid" class="btn btn-outline-dark">Add</button>
+  </div>
+</form>
