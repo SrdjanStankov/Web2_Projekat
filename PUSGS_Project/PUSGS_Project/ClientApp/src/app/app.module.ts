@@ -24,6 +24,8 @@ import { MailConfirmationComponent } from './mail-confirmation/mail-confirmation
 import { AddRentACarAdministratorComponent } from './add-rent-a-car-administrator/add-rent-a-car-administrator.component';
 import { AddRentACarCompanyComponent } from './add-rent-a-car-company/add-rent-a-car-company.component';
 import { RegisterServicesComponent } from './register-services/register-services.component';
+import { AddAviationCompanyComponent } from "./add-aviation-company/add-aviation-company.component";
+import { AviationProfileComponent } from './aviation-profile/aviation-profile.component';
 
 let config = new AuthServiceConfig([
   {
@@ -53,7 +55,9 @@ export function provideConfig() {
     MailConfirmationComponent,
     AddRentACarAdministratorComponent,
     AddRentACarCompanyComponent,
+    AddAviationCompanyComponent,
     RegisterServicesComponent,
+    AviationProfileComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -68,7 +72,8 @@ export function provideConfig() {
       { path: "fetch-data", component: FetchDataComponent },
       { path: "login", component: LoginComponent },
       { path: "profile", component: ProfileComponent },
-      { path: "rent-a-car/:id", component: RentACarProfileComponent},
+      { path: "aviation/:id", component: AviationProfileComponent },
+      { path: "rent-a-car/:id", component: RentACarProfileComponent },
       { path: "rent-a-car-edit/:id", component: RentACarProfileEditComponent },
       { path: "car-reservation", component: CarReservationComponent },
       { path: "users", component: FriendsComponent },
@@ -83,4 +88,4 @@ export function provideConfig() {
     }],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

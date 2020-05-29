@@ -1,0 +1,47 @@
+<div class="container profile-display" *ngIf="!!company">
+  <div class="row">
+    <div class="col-md-6">
+      <label>Name</label>
+    </div>
+    <div class="col-md-6">
+      <p>{{company.name}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label>Description</label>
+    </div>
+    <div class="col-md-6">
+      <p>{{company.description}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label>Latitude, Longitude:</label>
+    </div>
+    <div class="col-md-6">
+      <p>{{company.address.x}}, {{company.address.y}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label>City</label>
+    </div>
+    <div class="col-md-6">
+      <p>{{company.address.cityName}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label>TODO</label>
+    </div>
+    <div class="col-md-6">
+      <p>Rating and Flights display</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md">
+      <button class="btn btn-warning" disabled>Edit</button>
+    </div>
+  </div>
+</div>

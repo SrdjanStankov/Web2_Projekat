@@ -6,8 +6,19 @@
       <a ngbNavLink>Avio kompanije</a>
       <ng-template ngbNavContent>
         <div class="card-columns" id="collapsable" [ngbCollapse]="isCollapsed">
-          <div class="card" style="width: 18rem;" *ngFor="">
-            <!-- OVde stavis property od aviokompanija -->
+          <div class="card" style="width: 18rem;" *ngFor="let company of aviationCompanies">
+            <h3 class="card-header">{{company.name}}</h3>
+
+            <div class="card-body">
+              <p class="card-text">{{company.description}}</p>
+              <p class="card-text">City: {{company.address.cityName}}</p>
+              <p *ngIf="!!company.averageRating" class="card-text">Average rating: {{company.averageRating}}</p>
+              <br />
+            </div>
+
+            <div class="card-footer">
+              <button class="btn btn-primary" (click)="aviationDetails(company.id)">Details</button>
+            </div>
           </div>
         </div>
       </ng-template>
@@ -23,7 +34,7 @@
             <h3 class="card-header">{{agency.name}}</h3>
 
             <div class="card-body">
-              <p class="card-text">{{agency.nescription}}</p>
+              <p class="card-text">{{agency.description}}</p>
               <div class="card-text">{{agency.address}}</div>
               <br />
               <div ngbDropdown class="d-inline-block">
@@ -44,7 +55,7 @@
 
             <div class="card-footer">
               <div>
-                Test 1<!--{{agency.getAverageRating()}}-->
+                  Test 1<!--{{agency.getAverageRating()}}-->
               </div>
               <div>
                 <button *ngIf="backend.getLogedInUserType() == 'RentACarAdmin'" class="btn btn-warning" (click)="details(agency.id)">Details</button>
