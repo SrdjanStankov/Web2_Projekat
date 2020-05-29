@@ -24,4 +24,7 @@ export class HomeComponent {
   details(id: number) {
     this.router.navigateByUrl("rent-a-car/" + id);
   }
+  aviationDetails(id: number) {
+    this.router.navigateByUrl("aviation/" + id);
+  }
 }
