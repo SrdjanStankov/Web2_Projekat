@@ -1,18 +1,16 @@
 import { Location } from "./location";
 import { Flight } from "./flight";
+import { Rating } from "./rating";
 
 export class AviationCompany {
+  id: number;
   name: string;
-  address: Location;
   description: string;
+  address: Location;
   flights: Flight[];
-  ratings: number[];
+  ratings: Rating[];
 
-  /*
-  TODO: Dodati:
-   - destinacije na kojima posluje
-   - spisak karaka sa popustima za brzu rezervaciju
-   - konfiguraciju segmenata i mesta u avionima
-   - cenovnik i informacije o ptrljagu
-  */
+  get averageRating(): number {
+    return 5;
+  }
 }
