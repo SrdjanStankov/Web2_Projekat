@@ -19,5 +19,7 @@ namespace Core.Interfaces.Repositories
         Task AddCarToAgencyAsync(long carId, long rentACarId);
 
         Task AddBranchToAgencyAsync(long branchId, long rentACarId);
+
+        double GetAverageRating(long id);
     }
 }

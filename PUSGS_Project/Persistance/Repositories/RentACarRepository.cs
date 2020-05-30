@@ -54,14 +54,20 @@ namespace Persistance.Repositories
             await context.SaveChangesAsync();
         }
 
-        public RentACar Get(long id) => context.RentACar.Include(r => r.Cars).Include(r => r.Branches).FirstOrDefault(r => r.Id == id);
+        public RentACar Get(long id) => context.RentACar.Include(r => r.Cars).Include(r => r.Branches).Include(r => r.Ratings).FirstOrDefault(r => r.Id == id);
 
-        public IEnumerable<RentACar> GetAll() => context.RentACar.Include(r => r.Cars).Include(r => r.Branches).AsEnumerable();
+        public IEnumerable<RentACar> GetAll() => context.RentACar.Include(r => r.Cars).Include(r => r.Branches).Include(r => r.Ratings).AsEnumerable().ToList();
 
         public async Task UpdateAsync(RentACar rentACar)
         {
             context.Update(rentACar);
             await context.SaveChangesAsync();
+        }
+
+        public double GetAverageRating(long id)
+        {
+            var agencies = Get(id);
+            return agencies.Ratings.DefaultIfEmpty(new Rating()).Average(rating => rating.Value);
         }
     }
 }

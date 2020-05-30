@@ -55,7 +55,7 @@
 
             <div class="card-footer">
               <div>
-                  Test 1<!--{{agency.getAverageRating()}}-->
+                {{agency.averageRating}}
               </div>
               <div>
                 <button *ngIf="backend.getLogedInUserType() == 'RentACarAdmin'" class="btn btn-warning" (click)="details(agency.id)">Details</button>

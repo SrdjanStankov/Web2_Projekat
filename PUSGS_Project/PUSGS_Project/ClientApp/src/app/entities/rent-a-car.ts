@@ -10,4 +10,5 @@ export class RentACar {
   cars: Car[];
   branches: Branch[];
   ratings: number[];
+  averageRating: number;
 }

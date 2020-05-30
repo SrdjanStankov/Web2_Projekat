@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces.Repositories;
@@ -21,11 +22,28 @@ namespace PUSGS_Project.Controllers
 
         // GET: api/<controller>
         [HttpGet]
-        public IEnumerable<RentACar> Get() => repository.GetAll();
+        public IEnumerable<RentACarModel> Get()
+        {
+            var agencies = repository.GetAll();
+            var agenciesModel = new HashSet<RentACarModel>(agencies.Count());
+            foreach (var item in agencies)
+            {
+                var temp = new RentACarModel(item);
+                temp.AverageRating = repository.GetAverageRating(item.Id);
+                agenciesModel.Add(temp);
+            }
+            return agenciesModel;
+        }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public RentACar Get(int id) => repository.Get(id);
+        public RentACarModel Get(int id)
+        {
+            var rentACar = repository.Get(id);
+            RentACarModel rentACarModel = new RentACarModel(rentACar);
+            rentACarModel.AverageRating = repository.GetAverageRating(id);
+            return rentACarModel;
+        }
 
         // POST api/<controller>
         [HttpPost]
