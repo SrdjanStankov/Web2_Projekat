@@ -6,6 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Car } from '../entities/car';
 import { CarService } from '../services/car.service';
+import { Branch } from '../entities/branch';
+import { BranchService } from '../services/branch.service';
 
 @Component({
   selector: 'app-rent-a-car-profile-edit',
@@ -16,9 +18,9 @@ export class RentACarProfileEditComponent implements OnInit {
 
   rentACar: RentACar = new RentACar();
   editGroup: FormGroup = new FormGroup({
-    name: new FormControl(null),
-    address: new FormControl(null),
-    description: new FormControl(null),
+    name: new FormControl('', Validators.required),
+    address: new FormControl('', Validators.required),
+    description: new FormControl('', Validators.required),
   });
 
   formGroup = new FormGroup({
@@ -41,16 +43,21 @@ export class RentACarProfileEditComponent implements OnInit {
     costPerDay: new FormControl(0, Validators.required),
   });
 
+  formGroupAddBranch = new FormGroup({
+    name: new FormControl('', Validators.required),
+    address: new FormControl('', Validators.required),
+  });
+
   agencyId: number;
 
-  constructor(private rentACarService: RentACarService, private route: ActivatedRoute, private modalService: NgbModal, private carService: CarService) {
+  constructor(private rentACarService: RentACarService, private route: ActivatedRoute, private modalService: NgbModal, private carService: CarService, private branchService: BranchService) {
     route.params.subscribe(params => { this.agencyId = params['id']; });
     rentACarService.getAgency(this.agencyId).then(result => {
       this.rentACar = result;
       this.editGroup.setValue({
-        name: this.rentACar.name,
-        address: this.rentACar.address,
-        description: this.rentACar.description,
+        name: result.name,
+        address: result.address,
+        description: result.description,
       });
     });
 
@@ -60,14 +67,14 @@ export class RentACarProfileEditComponent implements OnInit {
   }
 
   onSubmit() {
-    // check if valid
-
-    // set all values
+    this.rentACar.id = this.agencyId;
     this.rentACar.name = this.editGroup.get("name").value;
     this.rentACar.address = this.editGroup.get("address").value;
     this.rentACar.description = this.editGroup.get("description").value;
 
-    //talk to backend to update values
+    this.rentACarService.updateAgency(this.rentACar).then(() => {
+      this.refreshAgency();
+    });
   }
 
   removeCar(index: number) {
@@ -132,10 +139,22 @@ export class RentACarProfileEditComponent implements OnInit {
   }
 
   removeBranch(index: number) {
-    //this.rentACar.removeBranch(index);
+    this.branchService.removeBranch(index).then(() => {
+      this.refreshAgency();
+    });
   }
 
-  addBranch() {
-    //this.rentACar.addBranch("name 20");
+  addBranch(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-add-branch' }).result.then(result => {
+      const branch = new Branch();
+      branch.name = this.formGroupAddBranch.get('name').value;
+      branch.address = this.formGroupAddBranch.get('address').value;
+      // branch service
+      this.branchService.addBranch(branch).then(result => {
+        this.rentACarService.addBranchToAgency(result.id, parseInt(this.agencyId.toString())).then(() => {
+          this.refreshAgency();
+        })
+      })
+    }, reason => { });
   }
 }

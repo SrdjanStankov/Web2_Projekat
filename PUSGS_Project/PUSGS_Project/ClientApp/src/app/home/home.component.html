@@ -48,14 +48,14 @@
               <div ngbDropdown class="d-inline-block">
                 <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>Branches</button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                  <button ngbDropdownItem *ngFor="let branch of agency.branches">{{branch}}</button>
+                  <button ngbDropdownItem *ngFor="let branch of agency.branches">{{branch.name}}</button>
                 </div>
               </div>
             </div>
 
             <div class="card-footer">
               <div>
-                  Test 1<!--{{agency.getAverageRating()}}-->
+                {{agency.averageRating}}
               </div>
               <div>
                 <button *ngIf="backend.getLogedInUserType() == 'RentACarAdmin'" class="btn btn-warning" (click)="details(agency.id)">Details</button>

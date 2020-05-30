@@ -38,12 +38,36 @@ namespace Persistance.Repositories
             await context.SaveChangesAsync();
         }
 
-        public void Delete(long id) => throw new NotImplementedException();
+        public async Task AddBranchToAgencyAsync(long branchId, long rentACarId)
+        {
+            var branch = await context.Branches.FindAsync(branchId);
+            var rentACar = await context.RentACar.FindAsync(rentACarId);
 
-        public RentACar Get(long id) => context.RentACar.Include(r => r.Cars).FirstOrDefault(r => r.Id == id);
+            rentACar.Branches.Add(branch);
+            await context.SaveChangesAsync();
+        }
 
-        public IEnumerable<RentACar> GetAll() => context.RentACar.Include(r => r.Cars).AsEnumerable();
+        public async Task Delete(long id)
+        {
+            var agency = await context.RentACar.FindAsync(id);
+            context.RentACar.Remove(agency);
+            await context.SaveChangesAsync();
+        }
 
-        public void Update(RentACar rentACar) => throw new NotImplementedException();
+        public async Task<RentACar> GetAsync(long id) => await context.RentACar.Include(r => r.Cars).Include(r => r.Branches).Include(r => r.Ratings).FirstOrDefaultAsync(r => r.Id == id);
+
+        public async Task<IEnumerable<RentACar>> GetAllAsync() => await context.RentACar.Include(r => r.Cars).Include(r => r.Branches).Include(r => r.Ratings).ToListAsync();
+
+        public async Task UpdateAsync(RentACar rentACar)
+        {
+            context.Update(rentACar);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task<double> GetAverageRatingAsync(long id)
+        {
+            var agencies = await GetAsync(id);
+            return agencies.Ratings.DefaultIfEmpty(new Rating()).Average(rating => rating.Value);
+        }
     }
 }
