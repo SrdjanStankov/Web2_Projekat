@@ -42,9 +42,11 @@ namespace PUSGS_Project
             services.AddScoped<IRentACarRepository, RentACarRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAviationRepository, AviationRepository>();
+            services.AddScoped<IFlightRepository, FlightRepository>();
             services.AddScoped<IBranchRepository, BranchRepository>();
 
             services.AddScoped<IAviationService, AviationService>();
+            services.AddScoped<IFlightService, FlightService>();
 
             services.Configure<IdentityOptions>(options =>
             {

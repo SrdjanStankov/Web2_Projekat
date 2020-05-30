@@ -23,5 +23,10 @@ namespace Core.ViewModels.Aviation
             Y = location.Y;
             CityName = location.CityName;
         }
+
+        public Location ToLocation()
+        {
+            return new Location { Id = Id, X = X, Y = Y, CityName = CityName };
+        }
     }
 }
