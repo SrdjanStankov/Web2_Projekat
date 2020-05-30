@@ -26,6 +26,8 @@ import { AddRentACarCompanyComponent } from './add-rent-a-car-company/add-rent-a
 import { RegisterServicesComponent } from './register-services/register-services.component';
 import { AddAviationCompanyComponent } from "./add-aviation-company/add-aviation-company.component";
 import { AviationProfileComponent } from './aviation-profile/aviation-profile.component';
+import { AuthInterceptor } from "./auth/auth.interceptor";
+import { AuthGuard } from "./auth/auth.guard";
 
 let config = new AuthServiceConfig([
   {
@@ -78,14 +80,20 @@ export function provideConfig() {
       { path: "car-reservation", component: CarReservationComponent },
       { path: "users", component: FriendsComponent },
       { path: "ConfirmEmail/:email", component: MailConfirmationComponent },
-      { path: "services", component: RegisterServicesComponent },
+      { path: "services", component: RegisterServicesComponent, canActivate:[AuthGuard] },
     ]),
   ],
   providers: [
     {
       provide: AuthServiceConfig,
       useFactory: provideConfig
-    }],
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

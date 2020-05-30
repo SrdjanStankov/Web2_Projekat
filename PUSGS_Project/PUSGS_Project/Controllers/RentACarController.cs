@@ -2,8 +2,11 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Entities;
+using Core.Enumerations;
 using Core.Interfaces.Repositories;
 using Core.ViewModels.RentACar;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -14,10 +17,12 @@ namespace PUSGS_Project.Controllers
     public class RentACarController : Controller
     {
         private readonly IRentACarRepository repository;
+        private readonly IUserRepository userRepository;
 
-        public RentACarController(IRentACarRepository repository)
+        public RentACarController(IRentACarRepository repository, IUserRepository userRepository)
         {
             this.repository = repository;
+            this.userRepository = userRepository;
         }
 
         // GET: api/<controller>
@@ -54,22 +59,33 @@ namespace PUSGS_Project.Controllers
 
         // POST api/<controller>
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<object> Post([FromBody]RentACar model)
         {
-            var rentacar = new RentACar()
-            {
-                Address = model.Address,
-                Description = model.Description,
-                Name = model.Name
-            };
+            var userEmail = User.Claims.FirstOrDefault(item => item.Type == AppConsts.CLAIM_TOKEN_KEY)?.Value;
+            var user = await userRepository.GetUserByEmailAsync(userEmail);
 
-            // TODO: validate RentACar
-
-            if (!await repository.AddAsync(rentacar))
+            if (user is SystemAdministrator)
             {
-                return BadRequest(new { message = "Already exist" });
+                var rentacar = new RentACar()
+                {
+                    Address = model.Address,
+                    Description = model.Description,
+                    Name = model.Name
+                };
+
+                // TODO: validate RentACar
+
+                if (!await repository.AddAsync(rentacar))
+                {
+                    return BadRequest(new { message = "Already exist" });
+                }
+                return Ok();
             }
-            return Ok();
+            else
+            {
+                return Forbid();
+            }
         }
 
         [HttpPost]
