@@ -6,9 +6,9 @@ namespace Core.Interfaces.Repositories
 {
     public interface IRentACarRepository
     {
-        RentACar Get(long id);
+        Task<RentACar> GetAsync(long id);
 
-        IEnumerable<RentACar> GetAll();
+        Task<IEnumerable<RentACar>> GetAllAsync();
 
         Task<bool> AddAsync(RentACar rentACar);
 
@@ -20,6 +20,6 @@ namespace Core.Interfaces.Repositories
 
         Task AddBranchToAgencyAsync(long branchId, long rentACarId);
 
-        double GetAverageRating(long id);
+        Task<double> GetAverageRatingAsync(long id);
     }
 }

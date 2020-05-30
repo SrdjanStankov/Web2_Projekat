@@ -22,26 +22,33 @@ namespace PUSGS_Project.Controllers
 
         // GET: api/<controller>
         [HttpGet]
-        public IEnumerable<RentACarModel> Get()
+        public async Task<IEnumerable<RentACarModel>> GetAsync()
         {
-            var agencies = repository.GetAll();
-            var agenciesModel = new HashSet<RentACarModel>(agencies.Count());
-            foreach (var item in agencies)
+            var hashSet = new HashSet<RentACarModel>();
+
+            foreach (var item in (await repository.GetAllAsync()).Select(async s =>
             {
-                var temp = new RentACarModel(item);
-                temp.AverageRating = repository.GetAverageRating(item.Id);
-                agenciesModel.Add(temp);
+                return new RentACarModel(s)
+                {
+                    AverageRating = await repository.GetAverageRatingAsync(s.Id)
+                };
+            }))
+            {
+                hashSet.Add(await item);
             }
-            return agenciesModel;
+
+            return hashSet;
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public RentACarModel Get(int id)
+        public async Task<RentACarModel> GetAsync(int id)
         {
-            var rentACar = repository.Get(id);
-            RentACarModel rentACarModel = new RentACarModel(rentACar);
-            rentACarModel.AverageRating = repository.GetAverageRating(id);
+            var rentACar = await repository.GetAsync(id);
+            var rentACarModel = new RentACarModel(rentACar)
+            {
+                AverageRating = await repository.GetAverageRatingAsync(id)
+            };
             return rentACarModel;
         }
 

@@ -54,9 +54,9 @@ namespace Persistance.Repositories
             await context.SaveChangesAsync();
         }
 
-        public RentACar Get(long id) => context.RentACar.Include(r => r.Cars).Include(r => r.Branches).Include(r => r.Ratings).FirstOrDefault(r => r.Id == id);
+        public async Task<RentACar> GetAsync(long id) => await context.RentACar.Include(r => r.Cars).Include(r => r.Branches).Include(r => r.Ratings).FirstOrDefaultAsync(r => r.Id == id);
 
-        public IEnumerable<RentACar> GetAll() => context.RentACar.Include(r => r.Cars).Include(r => r.Branches).Include(r => r.Ratings).AsEnumerable().ToList();
+        public async Task<IEnumerable<RentACar>> GetAllAsync() => await context.RentACar.Include(r => r.Cars).Include(r => r.Branches).Include(r => r.Ratings).ToListAsync();
 
         public async Task UpdateAsync(RentACar rentACar)
         {
@@ -64,9 +64,9 @@ namespace Persistance.Repositories
             await context.SaveChangesAsync();
         }
 
-        public double GetAverageRating(long id)
+        public async Task<double> GetAverageRatingAsync(long id)
         {
-            var agencies = Get(id);
+            var agencies = await GetAsync(id);
             return agencies.Ratings.DefaultIfEmpty(new Rating()).Average(rating => rating.Value);
         }
     }
