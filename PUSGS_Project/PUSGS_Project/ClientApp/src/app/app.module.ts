@@ -70,8 +70,8 @@ export function provideConfig() {
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: "", component: HomeComponent, pathMatch: "full" },
-      { path: "counter", component: CounterComponent },
-      { path: "fetch-data", component: FetchDataComponent },
+      //{ path: "counter", component: CounterComponent },
+      //{ path: "fetch-data", component: FetchDataComponent },
       { path: "login", component: LoginComponent },
       { path: "profile", component: ProfileComponent },
       { path: "aviation/:id", component: AviationProfileComponent },
