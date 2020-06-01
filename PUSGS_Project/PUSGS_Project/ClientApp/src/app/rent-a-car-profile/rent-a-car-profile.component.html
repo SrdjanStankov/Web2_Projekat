@@ -53,7 +53,8 @@
   </div>
   <div class="row">
     <div class="col-md">
-      <button class="btn btn-warning" (click)="edit(rentACar.id)">Edit</button>
+      <button *ngIf="backend.getLogedInUserType() == 'RentACarAdmin'" class="btn btn-warning" (click)="edit(rentACar.id)">Edit</button>
+      <button *ngIf="backend.getLogedInUserType() == 'SystemAdmin'" class="btn btn-danger" (click)="remove(rentACar.id)">Remove</button>
     </div>
   </div>
 </div>
