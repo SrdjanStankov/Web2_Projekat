@@ -8,6 +8,7 @@ import { Car } from '../entities/car';
 import { CarService } from '../services/car.service';
 import { Branch } from '../entities/branch';
 import { BranchService } from '../services/branch.service';
+import { BackendService } from '../services/backend.service';
 
 @Component({
   selector: 'app-rent-a-car-profile-edit',
@@ -50,7 +51,7 @@ export class RentACarProfileEditComponent implements OnInit {
 
   agencyId: number;
 
-  constructor(private rentACarService: RentACarService, private route: ActivatedRoute, private modalService: NgbModal, private carService: CarService, private branchService: BranchService) {
+  constructor(private rentACarService: RentACarService, private route: ActivatedRoute, private modalService: NgbModal, private carService: CarService, private branchService: BranchService, public backend: BackendService) {
     route.params.subscribe(params => { this.agencyId = params['id']; });
     rentACarService.getAgency(this.agencyId).then(result => {
       this.rentACar = result;
