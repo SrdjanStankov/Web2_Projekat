@@ -14,20 +14,20 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th>Branches location</th>
+        <th>Branch name</th>
         <th>Rating</th>
-        <th>Action</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let agency of displayAgencies">
-        <td>{{agency.Name}}</td>
+        <td>{{agency.name}}</td>
         <td>
-          <div *ngFor="let branch of agency.Branches">
-            {{branch}}
+          <div *ngFor="let branch of agency.branches">
+            {{branch.name}}
           </div>
         </td>
-        <td>{{agency.getAverageRating()}}</td>
+        <td>{{agency.averageRating}}</td>
         <td><button type="button" class="btn btn-primary" (click)="choosedAgency(agency)">Choose</button></td>
       </tr>
     </tbody>
@@ -38,40 +38,58 @@
   <form [formGroup]="editGroup" (ngSubmit)="onSubmit()">
 
     <div class="input-group" formGroupName="take">
-      <div class="row">
-        <label>Datum preuzimanja</label>
-        <input class="form-control" placeholder="yyyy-mm-dd" (click)="date.toggle()" ngbDatepicker #date="ngbDatepicker" formControlName="date">
+      <div class="row col-md-3">
+        <label for="takeDate">Datum preuzimanja</label>
+        <input [class.is-invalid]="editGroup.get('take').get('date').invalid && editGroup.get('take').get('date').touched" class="form-control" id="takeDate" autocomplete="off" placeholder="yyyy-mm-dd" (click)="date.toggle()" ngbDatepicker #date="ngbDatepicker" formControlName="date">
+        <div *ngIf="(editGroup.get('take').get('date').invalid && editGroup.get('take').get('date').touched) || editGroup.get('take').get('date').dirty">
+          <small *ngIf="editGroup.get('take').get('date').errors?.required" class="text-danger">Date is required</small>
+        </div>
       </div>
-      <div class="row">
-        <label>Lokacija preuzimanja</label>
-        <input class="form-control" type="text" formControlName="location" />
+      <div class="row col-md-3">
+        <label for="takeLocation">Lokacija preuzimanja</label>
+        <input [class.is-invalid]="editGroup.get('take').get('location').invalid && editGroup.get('take').get('location').touched" class="form-control" id="takeLocation" type="text" formControlName="location" />
+        <div *ngIf="(editGroup.get('take').get('location').invalid && editGroup.get('take').get('location').touched) || editGroup.get('take').get('location').dirty">
+          <small *ngIf="editGroup.get('take').get('location').errors?.required" class="text-danger">Location is required</small>
+        </div>
       </div>
     </div>
 
     <div class="input-group" formGroupName="return">
-      <div class="row">
-        <label>Datum vracanja</label>
-        <input class="form-control" placeholder="yyyy-mm-dd" (click)="d.toggle()" ngbDatepicker #d="ngbDatepicker" formControlName="date">
+      <div class="row col-md-3">
+        <label for="returnDate">Datum vracanja</label>
+        <input [class.is-invalid]="editGroup.get('return').get('date').invalid && editGroup.get('return').get('date').touched" class="form-control" id="returnDate" autocomplete="off" placeholder="yyyy-mm-dd" (click)="d.toggle()" ngbDatepicker #d="ngbDatepicker" formControlName="date">
+        <div *ngIf="(editGroup.get('return').get('date').invalid && editGroup.get('return').get('date').touched) || editGroup.get('return').get('date').dirty">
+          <small *ngIf="editGroup.get('return').get('date').errors?.required" class="text-danger">Date is required</small>
+        </div>
       </div>
-      <div class="row">
-        <label>Lokacija vracanja</label>
-        <input class="form-control" type="text" formControlName="location" />
+      <div class="row col-md-3">
+        <label for="returnLocation">Lokacija vracanja</label>
+        <input [class.is-invalid]="editGroup.get('return').get('location').invalid && editGroup.get('return').get('location').touched" id="returnLocation" class="form-control" type="text" formControlName="location" />
+        <div *ngIf="(editGroup.get('return').get('location').invalid && editGroup.get('return').get('location').touched) || editGroup.get('return').get('location').dirty">
+          <small *ngIf="editGroup.get('return').get('location').errors?.required" class="text-danger">Location is required</small>
+        </div>
       </div>
     </div>
     <div class="row">
-      <label>Tip</label>
-      <input class="form-control" type="text" formControlName="type" />
+      <label for="type">Tip</label>
+      <input [class.is-invalid]="editGroup.get('type').invalid && editGroup.get('type').touched" class="form-control" id="type" type="text" formControlName="type" />
+      <div *ngIf="(editGroup.get('type').invalid && editGroup.get('type').touched) || editGroup.get('type').dirty">
+        <small *ngIf="editGroup.get('type').errors?.required" class="text-danger">Type is required</small>
+      </div>
     </div>
     <div class="row">
-      <label>Broj putnika</label>
-      <input class="form-control" type="number" formControlName="number" />
+      <label for="passengerNumber">Broj putnika</label>
+      <input [class.is-invalid]="editGroup.get('number').invalid && editGroup.get('number').touched" class="form-control" id="passengerNumber" type="number" formControlName="number" />
+      <div *ngIf="(editGroup.get('number').invalid && editGroup.get('number').touched) || editGroup.get('number').dirty">
+        <small *ngIf="editGroup.get('number').errors?.required" class="text-danger">Passenger number is required</small>
+      </div>
     </div>
     <div class="row">
       <label>Cenovni rang</label>
-      <input class="form-control" id="cost" type="range" min="0" max="2000" formControlName="costRange" (input)="valueChanged($event.target.value)" />
+      <input class="form-control custom-range" id="cost" type="range" min="0" max="2000" formControlName="costRange" (input)="valueChanged($event.target.value)" />
       <label>${{rangeVal}}</label>
     </div>
-    <input type="submit" class="btn btn-primary" value="Submit" />
+    <input type="submit" [disabled]="!editGroup.valid" class="btn btn-primary" value="Submit" />
   </form>
 </div>
 
@@ -92,14 +110,14 @@
     </thead>
     <tbody>
       <tr *ngFor="let car of foundCars">
-        <td>{{car.Name}}</td>
-        <td>{{car.Brand}}</td>
-        <td>{{car.Model}}</td>
-        <td>{{car.BuildDate}}</td>
-        <td>{{car.PassengerNumber}}</td>
-        <td>{{car.Type}}</td>
-        <td>{{car.averageRating()}}</td>
-        <td>${{calculateCostForRange(car)}}</td>
+        <td>{{car.name}}</td>
+        <td>{{car.brand}}</td>
+        <td>{{car.model}}</td>
+        <td>{{car.buildDate}}</td>
+        <td>{{car.passengerNumber}}</td>
+        <td>{{car.type}}</td>
+        <td>{{car.averageRating}}</td>
+        <td>${{car.costForRange}}</td>
         <td><button type="button" class="btn btn-primary" (click)="reserve(car)">Choose</button></td>
       </tr>
     </tbody>

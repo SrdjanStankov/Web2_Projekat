@@ -2,56 +2,128 @@
 using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces.Repositories;
+using Core.ViewModels.CarViewModels;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace PUSGS_Project.Controllers
 {
     [Route("api/[controller]")]
-    public class CarController : Controller
+    public class CarController : ApiController
     {
-        private readonly ICarRepository repository;
+        private readonly ICarRepository carRepository;
 
-        public CarController(ICarRepository carRepository)
+        public CarController(ICarRepository carRepository, IUserRepository userRepository) : base(userRepository)
         {
-            repository = carRepository;
+            this.carRepository = carRepository;
         }
 
         // GET: api/<controller>
-        [HttpGet]
-        public IEnumerable<string> Get() => new string[] { "value1", "value2" };
+        //[HttpGet]
+        //public IEnumerable<string> Get() => new string[] { "value1", "value2" };
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
         public async Task<Car> GetAsync(long id)
         {
-            return await repository.GetAsync(id);
+            return await carRepository.GetAsync(id);
+        }
+
+        // GET api/<controller>/RentACar/5
+        [HttpGet]
+        [Route("RentACar/{id}")]
+        public async Task<IEnumerable<CarReservationDetailsModel>> GetCarsAsync(long id, [FromQuery] CarReservationModel model)
+        {
+            var carsModel = new List<CarReservationDetailsModel>();
+
+            foreach (var item in await carRepository.GetCarsOfAgencyAsync(id))
+            {
+                if (item.PassengerNumber != model.PassengerNumber || model.MaxCost < item.CostPerDay || model.Type != item.Type || carRepository.IsReserved(item, model.TakeDate, model.ReturnDate))
+                {
+                    continue;
+                }
+                carsModel.Add(new CarReservationDetailsModel(item)
+                {
+                    AverageRating = await carRepository.GetAverageRatingAsync(item.Id),
+                    CostForRange = (model.ReturnDate - model.TakeDate).TotalDays * item.CostPerDay
+                });
+            }
+
+            return carsModel;
         }
 
         // POST api/<controller>
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<object> PostAsync([FromBody] Car model)
         {
-            if (!await repository.AddAsync(model))
+            var user = await GetLoginUserAsync();
+
+            if (user is RentACarAdministrator)
             {
-                return BadRequest(new { message = "Already exist" });
+                if (!await carRepository.AddAsync(model))
+                {
+                    return BadRequest(new { message = "Already exist" });
+                }
+                return Ok(model);
             }
-            return Ok(model);
+
+            return Forbid();
+
         }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public async Task Put(int id, [FromBody] Car value)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<object> Put(int id, [FromBody] Car value)
         {
-            await repository.UpdateAsync(value);
+            var user = await GetLoginUserAsync();
+
+            if (user is RentACarAdministrator)
+            {
+                await carRepository.UpdateAsync(value);
+                return Ok();
+            }
+
+            return Forbid();
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public async Task Delete(int id)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<object> Delete(int id)
         {
-            await repository.DeleteAsync(id);
+            var user = await GetLoginUserAsync();
+
+            if (user is RentACarAdministrator)
+            {
+                await carRepository.DeleteAsync(id);
+                return Ok();
+            }
+
+            return Forbid();
+        }
+
+        [HttpPost]
+        [Route("Reserve/{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<object> ReserveCarAsync(long id, [FromBody] ReservationDateInterval interval)
+        {
+            var user = await GetLoginUserAsync();
+            if (user is object)
+            {
+                if (!await carRepository.ReserveCarAsync(id, interval))
+                {
+                    return BadRequest(new { message = "Already taken" });
+                }
+                return Ok();
+            }
+
+            return Forbid();
         }
     }
 }

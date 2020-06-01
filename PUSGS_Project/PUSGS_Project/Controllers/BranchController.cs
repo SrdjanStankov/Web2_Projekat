@@ -2,27 +2,29 @@
 using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PUSGS_Project.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BranchController : Controller
+    public class BranchController : ApiController
     {
         private readonly IBranchRepository repository;
 
-        public BranchController(IBranchRepository branchRepository)
+        public BranchController(IBranchRepository branchRepository, IUserRepository userRepository) : base(userRepository)
         {
             repository = branchRepository;
         }
 
         // GET: api/Branch
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        //[HttpGet]
+        //public IEnumerable<string> Get()
+        //{
+        //    return new string[] { "value1", "value2" };
+        //}
 
         // GET: api/Branch/5
         [HttpGet("{id}")]
@@ -33,27 +35,53 @@ namespace PUSGS_Project.Controllers
 
         // POST: api/Branch
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<object> PostAsync([FromBody] Branch model)
         {
-            if (!await repository.AddAsync(model))
+            var user = await GetLoginUserAsync();
+
+            if (user is RentACarAdministrator)
             {
-                return BadRequest(new { message = "Already exist" });
+                if (!await repository.AddAsync(model))
+                {
+                    return BadRequest(new { message = "Already exist" });
+                }
+                return Ok(model); 
             }
-            return Ok(model);
+
+            return Forbid();
         }
 
         // PUT: api/Branch/5
         [HttpPut("{id}")]
-        public async Task PutAsync(int id, [FromBody] Branch value)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<object> PutAsync(int id, [FromBody] Branch value)
         {
-            await repository.UpdateAsync(value);
+            var user = await GetLoginUserAsync();
+
+            if (user is RentACarAdministrator)
+            {
+                await repository.UpdateAsync(value);
+                return Ok();
+            }
+
+            return Forbid();
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public async Task DeleteAsync(int id)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<object> DeleteAsync(int id)
         {
-            await repository.DeleteAsync(id);
+            var user = await GetLoginUserAsync();
+            
+            if (user is RentACarAdministrator)
+            {
+                await repository.DeleteAsync(id);
+                return Ok();
+            }
+
+            return Forbid();
         }
     }
 }

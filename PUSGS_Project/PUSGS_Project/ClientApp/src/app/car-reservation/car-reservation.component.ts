@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { RentACarService } from '../services/rent-a-car.service';
 import { RentACar } from '../entities/rent-a-car';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Car } from '../entities/car';
+import { CarService } from '../services/car.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-car-reservation',
@@ -20,28 +22,30 @@ export class CarReservationComponent implements OnInit {
 
   public editGroup = new FormGroup({
     take: new FormGroup({
-      date: new FormControl(''),
-      location: new FormControl(''),
+      date: new FormControl('', Validators.required),
+      location: new FormControl('', Validators.required),
     }),
     return: new FormGroup({
-      date: new FormControl(''),
-      location: new FormControl(''),
+      date: new FormControl('', Validators.required),
+      location: new FormControl('', Validators.required),
     }),
-    type: new FormControl(''),
-    number: new FormControl(''),
+    type: new FormControl('', Validators.required),
+    number: new FormControl('', Validators.required),
     costRange: new FormControl(2000),
   });
 
   private searchAgency: RentACar;
   public foundCars: Car[] = [];
-  constructor(private service: RentACarService) {
-    service.getAgencies().then(result => this.allAgencies = result);
-    this.displayAgencies = this.allAgencies;
-    this.step = 1;
-    this.valueChanged(2000);
-  }
+
+  constructor(private rentACarService: RentACarService, private carService: CarService, private router: Router) { }
 
   ngOnInit(): void {
+    this.rentACarService.getAgencies().then(result => {
+      this.allAgencies = result;
+      this.displayAgencies = this.allAgencies;
+    });
+    this.step = 1;
+    this.valueChanged(2000);
   }
 
   choosedAgency(agency) {
@@ -50,34 +54,30 @@ export class CarReservationComponent implements OnInit {
   }
 
   onSubmit() {
-    this.searchAgency.cars.forEach((car) => {
-      if (!car.isReserved()) {
-        if (car.passengerNumber === this.editGroup.get("number").value) {
-          if (car.type.toLowerCase() === (this.editGroup.get("type").value as string).toLowerCase()) {
-            var ret = this.editGroup.get("return").get("date").value;
-            var take = this.editGroup.get("take").get("date").value
-            if (car.calculateCostForRange(new Date(ret.year, ret.month, ret.day), new Date(take.year, take.month, take.day)) <+ this.editGroup.get("costRange").value) {
-              this.foundCars.push(car);
-            }
-          }
-        }
-      }
-    })
-    this.step++;
+    const retDate = this.editGroup.get("return").get("date").value;
+    const takeDate = this.editGroup.get("take").get("date").value;
+
+    this.carService.getCars(this.searchAgency.id,
+      this.editGroup.get("number").value,
+      this.editGroup.get("type").value,
+      (new Date(retDate.year, retDate.month - 1, retDate.day)).toUTCString(),
+      (new Date(takeDate.year, takeDate.month - 1, takeDate.day)).toUTCString(),
+      this.editGroup.get("costRange").value).then(result => {
+        this.foundCars = result;
+        this.step++;
+      });
   }
 
   reserve(car: Car) {
     var ret = this.editGroup.get("return").get("date").value;
     var take = this.editGroup.get("take").get("date").value;
-    car.reserveCar(new Date(take.year, take.month, take.day), new Date(ret.year, ret.month, ret.day));
-  }
-
-  calculateCostForRange(car: Car) {
-    var ret = this.editGroup.get("return").get("date").value;
-    var take = this.editGroup.get("take").get("date").value;
-    var gg = new Date(ret.year, ret.month, ret.day);
-    var hh = new Date(take.year, take.month, take.day);
-    return car.calculateCostForRange(gg, hh);
+    this.carService.reserveCar(car.id, new Date(ret.year, ret.month - 1, ret.day), new Date(take.year, take.month - 1, take.day)).then(result => {
+      location.reload(true);
+    }, err => {
+        if (err.status === 400) {
+          alert(err.error.message);
+        }
+    });
   }
 
   valueChanged(e) {

@@ -10,8 +10,8 @@ import { GoogleLoginProvider } from "angularx-social-login";
 import { AppComponent } from "./app.component";
 import { NavMenuComponent } from "./nav-menu/nav-menu.component";
 import { HomeComponent } from "./home/home.component";
-import { CounterComponent } from "./counter/counter.component";
-import { FetchDataComponent } from "./fetch-data/fetch-data.component";
+//import { CounterComponent } from "./counter/counter.component";
+//import { FetchDataComponent } from "./fetch-data/fetch-data.component";
 import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
 import { ProfileComponent } from "./profile/profile.component";
@@ -45,8 +45,8 @@ export function provideConfig() {
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent,
+    //CounterComponent,
+    //FetchDataComponent,
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
@@ -70,14 +70,14 @@ export function provideConfig() {
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: "", component: HomeComponent, pathMatch: "full" },
-      { path: "counter", component: CounterComponent },
-      { path: "fetch-data", component: FetchDataComponent },
+      //{ path: "counter", component: CounterComponent },
+      //{ path: "fetch-data", component: FetchDataComponent },
       { path: "login", component: LoginComponent },
       { path: "profile", component: ProfileComponent },
       { path: "aviation/:id", component: AviationProfileComponent },
       { path: "rent-a-car/:id", component: RentACarProfileComponent },
-      { path: "rent-a-car-edit/:id", component: RentACarProfileEditComponent },
-      { path: "car-reservation", component: CarReservationComponent },
+      { path: "rent-a-car-edit/:id", component: RentACarProfileEditComponent, canActivate:[AuthGuard] },
+      { path: "car-reservation", component: CarReservationComponent, canActivate: [AuthGuard] },
       { path: "users", component: FriendsComponent },
       { path: "ConfirmEmail/:email", component: MailConfirmationComponent },
       { path: "services", component: RegisterServicesComponent, canActivate:[AuthGuard] },
