@@ -43,4 +43,8 @@ export class RentACarService {
     return this.http.put<RentACar>(this.rentACarControllerUri + agency.id, agency).toPromise();
   }
 
+  remove(id: number) {
+    return this.http.delete<RentACar>(this.rentACarControllerUri + id).toPromise();
+  }
+
 }

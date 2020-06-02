@@ -48,11 +48,11 @@
       <div class="col-md-6">
         <div *ngFor="let car of rentACar.cars">
           <label class="col-md-3 m-2">{{car.name}}</label>
-          <button type="button" class="btn btn-warning m-2 col-md-2" (click)="editCar(car.id, contentEditCar)">Edit</button>
-          <button type="button" class="btn btn-danger m-2 col-md-2" (click)="removeCar(car.id)">Remove</button>
+          <button *ngIf="backend.getLogedInUserType() == 'RentACarAdmin'" type="button" class="btn btn-warning m-2 col-md-2" (click)="editCar(car.id, contentEditCar)">Edit</button>
+          <button *ngIf="backend.getLogedInUserType() == 'RentACarAdmin'" type="button" class="btn btn-danger m-2 col-md-2" (click)="removeCar(car.id)">Remove</button>
         </div>
         <div>
-          <button type="button" class="btn btn-success" (click)="addCar(content)">Add car</button>
+          <button *ngIf="backend.getLogedInUserType() == 'RentACarAdmin'" type="button" class="btn btn-success" (click)="addCar(content)">Add car</button>
         </div>
       </div>
     </div>
@@ -64,10 +64,10 @@
       <div class="col-md-6">
         <div *ngFor="let branch of rentACar.branches">
           <label class="col-md-4">{{branch.name}}</label>
-          <button type="button" class="btn btn-danger m-2 col-md-2" (click)="removeBranch(branch.id)">Remove</button>
+          <button *ngIf="backend.getLogedInUserType() == 'RentACarAdmin'" type="button" class="btn btn-danger m-2 col-md-2" (click)="removeBranch(branch.id)">Remove</button>
         </div>
         <div>
-          <button type="button" class="btn btn-success" (click)="addBranch(contentAddBranch)">Add branch</button>
+          <button *ngIf="backend.getLogedInUserType() == 'RentACarAdmin'" type="button" class="btn btn-success" (click)="addBranch(contentAddBranch)">Add branch</button>
         </div>
       </div>
     </div>
