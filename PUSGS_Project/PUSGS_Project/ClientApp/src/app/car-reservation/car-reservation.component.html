@@ -14,7 +14,7 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th>Branch name</th>
+        <th>Branch location</th>
         <th>Rating</th>
         <th></th>
       </tr>
@@ -24,7 +24,7 @@
         <td>{{agency.name}}</td>
         <td>
           <div *ngFor="let branch of agency.branches">
-            {{branch.name}}
+            {{branch.address}}
           </div>
         </td>
         <td>{{agency.averageRating}}</td>
@@ -85,7 +85,7 @@
       </div>
     </div>
     <div class="row">
-      <label>Cenovni rang</label>
+      <label>Max cena</label>
       <input class="form-control custom-range" id="cost" type="range" min="0" max="2000" formControlName="costRange" (input)="valueChanged($event.target.value)" />
       <label>${{rangeVal}}</label>
     </div>
