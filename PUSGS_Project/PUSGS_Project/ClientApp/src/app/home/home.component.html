@@ -28,41 +28,82 @@
     <li ngbNavItem="middle">
       <a ngbNavLink>Rent-a-car kompanije</a>
       <ng-template ngbNavContent>
-        <div class="card-columns" id="collapsableRAC" [ngbCollapse]="isCollapsedRAC">
-          <div class="card" style="width: 18rem;" *ngFor="let agency of rentACarAgencies">
 
-            <h3 class="card-header">{{agency.name}}</h3>
-
-            <div class="card-body">
-              <p class="card-text">{{agency.description}}</p>
-              <div class="card-text">{{agency.address}}</div>
-              <br />
-              <div ngbDropdown class="d-inline-block">
-                <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>Cars</button>
-                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                  <button ngbDropdownItem *ngFor="let car of agency.cars">{{car.name}}</button>
-                </div>
-              </div>
-              <br />
-              <br />
-              <div ngbDropdown class="d-inline-block">
-                <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>Branches</button>
-                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                  <button ngbDropdownItem *ngFor="let branch of agency.branches">{{branch.name}}</button>
-                </div>
-              </div>
+        <form #filterForm="ngForm" (ngSubmit)="onFilterCar()">
+          <div class="form-row">
+            <div class="form-group col">
+              <input type="text" name="search" class="form-control" placeholder="Search..." [(ngModel)]="search">
             </div>
+            <div class="form-group col-md-2">
+              <input type="submit" class="form-control btn btn-primary" value="Apply filter" />
+            </div>
+          </div>
+        </form>
+        <div *ngIf="displayAgencies">
 
-            <div class="card-footer">
-              <div>
-                {{agency.averageRating}}
+          <div class="card-columns" id="collapsableRAC" [ngbCollapse]="isCollapsedRAC">
+            <div class="card" style="width: 18rem;" *ngFor="let agency of rentACarAgencies">
+
+              <h3 class="card-header">{{agency.name}}</h3>
+
+              <div class="card-body">
+                <p class="card-text">{{agency.description}}</p>
+                <div class="card-text">{{agency.address}}</div>
+                <br />
+                <div ngbDropdown class="d-inline-block">
+                  <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>Cars</button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button ngbDropdownItem *ngFor="let car of agency.cars">{{car.name}}</button>
+                  </div>
+                </div>
+                <br />
+                <br />
+                <div ngbDropdown class="d-inline-block">
+                  <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>Branches</button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button ngbDropdownItem *ngFor="let branch of agency.branches">{{branch.name}}</button>
+                  </div>
+                </div>
               </div>
-              <div>
-                <button *ngIf="backend.getLogedInUserType() == 'RentACarAdmin'" class="btn btn-warning" (click)="details(agency.id)">Details</button>
+
+              <div class="card-footer">
+                <div>
+                  {{agency.averageRating}}
+                </div>
+                <div>
+                  <button *ngIf="backend.getLogedInUserType() == 'RentACarAdmin'" class="btn btn-warning" (click)="details(agency.id)">Details</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        <div *ngIf="!displayAgencies">
+          <div class="card-columns" id="collapsableRAC" [ngbCollapse]="isCollapsedRAC">
+            <div class="card" style="width: 18rem;" *ngFor="let car of carsToShow">
+
+              <h3 class="card-header">{{car.name}}</h3>
+
+              <div class="card-body">
+                <p class="card-text">Passenger number: {{car.passengerNumber}}</p>
+                <p class="card-text">Type: {{car.type}}</p>
+                <p class="card-text">Brand: {{car.brand}}</p>
+                <p class="card-text">Model: {{car.model}}</p>
+                <p class="card-text">Cost per day: {{car.costPerDay}}</p>
+              </div>
+
+              <div class="card-footer">
+                <div>
+                  {{car.averageRating}}
+                </div>
+                <div>
+                  <button *ngIf="backend.getLogedInUserType() == 'RentACarAdmin'" class="btn btn-warning" (click)="details(agency.id)">Details</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </ng-template>
     </li>
   </ul>
