@@ -28,6 +28,8 @@ import { AddAviationCompanyComponent } from "./add-aviation-company/add-aviation
 import { AviationProfileComponent } from './aviation-profile/aviation-profile.component';
 import { AuthInterceptor } from "./auth/auth.interceptor";
 import { AuthGuard } from "./auth/auth.guard";
+import { FlightsComponent } from './flights/flights.component';
+import { FlightDetailsComponent } from './flight-details/flight-details.component';
 
 let config = new AuthServiceConfig([
   {
@@ -60,6 +62,8 @@ export function provideConfig() {
     AddAviationCompanyComponent,
     RegisterServicesComponent,
     AviationProfileComponent,
+    FlightsComponent,
+    FlightDetailsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -76,11 +80,13 @@ export function provideConfig() {
       { path: "profile", component: ProfileComponent },
       { path: "aviation/:id", component: AviationProfileComponent },
       { path: "rent-a-car/:id", component: RentACarProfileComponent },
-      { path: "rent-a-car-edit/:id", component: RentACarProfileEditComponent, canActivate:[AuthGuard] },
+      { path: "rent-a-car-edit/:id", component: RentACarProfileEditComponent, canActivate: [AuthGuard] },
       { path: "car-reservation", component: CarReservationComponent, canActivate: [AuthGuard] },
       { path: "users", component: FriendsComponent },
+      { path: "flights", component: FlightsComponent },
+      { path: "flight/:id", component: FlightDetailsComponent },
       { path: "ConfirmEmail/:email", component: MailConfirmationComponent },
-      { path: "services", component: RegisterServicesComponent, canActivate:[AuthGuard] },
+      { path: "services", component: RegisterServicesComponent, canActivate: [AuthGuard] },
     ]),
   ],
   providers: [

@@ -1,0 +1,89 @@
+<div *ngIf="!!flight">
+  <h1>Flight details</h1>
+  <section class="container profile-display">
+    <div class="row">
+      <div class="col-md-6">
+        <label>Aviation</label>
+      </div>
+      <div class="col-md-6">
+        <p>{{flight.aviationCompanyName}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label>From</label>
+      </div>
+      <div class="col-md-6">
+        <p>{{flight.from.cityName}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label>To</label>
+      </div>
+      <div class="col-md-6">
+        <p>{{flight.to.cityName}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label>Departure Time</label>
+      </div>
+      <div class="col-md-6">
+        <p>{{flight.departureTime}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label>Arrival Time</label>
+      </div>
+      <div class="col-md-6">
+        <p>{{flight.arrivalTime}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label>Travel length</label>
+      </div>
+      <div class="col-md-6">
+        <p>{{flight.travelLength}} (km)</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label>Ticket price</label>
+      </div>
+      <div class="col-md-6">
+        <p>{{flight.ticketPrice}} ($)</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label>No. changeovers</label>
+      </div>
+      <div class="col-md-6">
+        <p>{{flight.numberOfChangeovers}}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <label>Average rating</label>
+      </div>
+      <div class="col-md-6">
+        <p>TODO</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md">
+        <button class="btn btn-warning" disabled>Edit info</button>
+      </div>
+    </div>
+  </section>
+  <hr />
+  <h3>Flight seats</h3>
+  <section class="container">
+    <p>TODO</p>
+    <button class="btn btn-warning" disabled>Edit seats</button>
+  </section>
+</div>
