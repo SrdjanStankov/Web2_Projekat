@@ -7,7 +7,6 @@ var Flight = /** @class */ (function () {
         this.arrivalTime = new Date();
     }
     Object.defineProperty(Flight.prototype, "travelTime", {
-        // TODO: dodati lokacije presedanja
         /**
          * Returns difference between departure and arrival time in milliseconds
          */

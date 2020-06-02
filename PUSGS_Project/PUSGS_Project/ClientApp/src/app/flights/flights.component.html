@@ -1,0 +1,29 @@
+<h1 id="usersLabel">Flights</h1>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="displayedFlights">
+  <thead>
+    <tr>
+      <th>From</th>
+      <th>To</th>
+      <th>Departure Time</th>
+      <th>Arrival Time</th>
+      <th>Ticket Price ($)</th>
+      <th>Travel Length (km)</th>
+      <th>No. Changeovers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let flight of displayedFlights">
+      <td>{{flight.from.cityName}}</td>
+      <td>{{flight.to.cityName}}</td>
+      <td>{{flight.departureTime}}</td>
+      <td>{{flight.arrivalTime}}</td>
+      <td>{{flight.ticketPrice}}</td>
+      <td>{{flight.travelLength}}</td>
+      <td>{{flight.numberOfChangeovers}}</td>
+      <td>
+        <button (click)="flightDetails(flight.id)" class="btn btn-secondary">Details</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -41,8 +41,10 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\constants\storage.ts" />
+    <None Remove="ClientApp\src\app\entities\flight-seat.ts" />
     <None Remove="ClientApp\src\app\entities\rating.ts" />
     <None Remove="ClientApp\src\app\entities\RentACarAdmin.ts" />
+    <None Remove="ClientApp\src\app\entities\requests\add-flight-request.ts" />
     <None Remove="ClientApp\src\app\entities\requests\add-or-update-aviation-company-request.ts" />
   </ItemGroup>
 
@@ -53,8 +55,10 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\constants\storage.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\entities\flight-seat.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\entities\rating.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\entities\RentACarAdmin.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\entities\requests\add-flight-request.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\entities\requests\add-or-update-aviation-company-request.ts" />
   </ItemGroup>
 
