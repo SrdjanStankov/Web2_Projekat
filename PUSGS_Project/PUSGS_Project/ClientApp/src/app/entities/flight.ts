@@ -7,6 +7,7 @@ import { Location } from "./location";
 export class Flight {
   id: number;
   aviationCompanyId: number;
+  aviationCompanyName: string;
   departureTime: Date = new Date();
   arrivalTime: Date = new Date();
   travelLength: number;

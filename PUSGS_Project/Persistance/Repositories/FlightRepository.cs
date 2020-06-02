@@ -39,6 +39,7 @@ namespace Persistance.Repositories
                 .Include(f => f.Ratings)
                 .Include(f => f.Seats)
                 .Include(f => f.Tickets)
+                .Include(f => f.AviationCompany)
                 .SingleOrDefaultAsync(f => f.Id == id);
         }
 

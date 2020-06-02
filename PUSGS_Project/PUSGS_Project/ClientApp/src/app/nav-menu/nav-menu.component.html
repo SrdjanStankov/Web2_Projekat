@@ -21,19 +21,19 @@
             <a class="nav-link text-dark" [routerLink]="['/flights']">Flights</a>
           </li>
           <li *ngIf="backend.isLogedIn()" class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/car-reservation']">Car reservation</a>
+          </li>
+          <li *ngIf="backend.isLogedIn()" class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/users']">Users</a>
           </li>
           <li *ngIf="backend.isLogedIn()" class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/profile']">Profile</a>
           </li>
-          <li *ngIf="backend.isLogedIn()" class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/']" (click)="logout()">Log out</a>
-          </li>
-          <li *ngIf="backend.isLogedIn()" class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/car-reservation']">Car reservation</a>
-          </li>
           <li *ngIf="backend.getLogedInUserType() == 'SystemAdmin'" class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/services']">Services</a>
+          </li>
+          <li *ngIf="backend.isLogedIn()" class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/']" (click)="logout()">Log out</a>
           </li>
         </ul>
       </div>

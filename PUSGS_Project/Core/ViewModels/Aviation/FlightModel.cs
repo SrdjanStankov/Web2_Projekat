@@ -10,6 +10,8 @@ namespace Core.ViewModels.Aviation
         public long Id { get; set; }
 
         public long AviationCompanyId { get; set; }
+        public string AviationCompanyName { get; set; }
+
         public DateTime? DepartureTime { get; set; }
         public DateTime? ArrivalTime { get; set; }
         public double TravelLength { get; set; }
@@ -34,6 +36,7 @@ namespace Core.ViewModels.Aviation
 
             Id = flight.Id;
             AviationCompanyId = flight.AviationCompanyId;
+            AviationCompanyName = flight.AviationCompany?.Name ?? "";
             DepartureTime = flight.DepartureTime;
             ArrivalTime = flight.ArrivalTime;
             TravelLength = flight.TravelLength;
