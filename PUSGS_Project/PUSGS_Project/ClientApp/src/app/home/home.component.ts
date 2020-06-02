@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AviationService } from '../services/aviation.service';
 import { AviationCompany } from '../entities/aviation-company';
 import { Car } from '../entities/car';
+import { Flight } from '../entities/flight';
 
 @Component({
   selector: 'app-home',
@@ -13,12 +14,15 @@ import { Car } from '../entities/car';
 })
 export class HomeComponent {
   public aviationCompanies: AviationCompany[];
+  public flightsToShow: Flight[];
   public rentACarAgencies: RentACar[];
   public carsToShow: Car[];
   public isCollapsedRAC: boolean;
   public isCollapsed: boolean;
   public search: string = "";
+  public searchFlight: string = "";
   public displayAgencies: boolean = true;
+  public displayCompanies: boolean = true;
 
   constructor(private RACService: RentACarService, public backend: BackendService, private aviationService: AviationService, private router: Router) {
     RACService.getAgencies().then(result => {
@@ -26,6 +30,7 @@ export class HomeComponent {
     });
     aviationService.getAll().then(result => this.aviationCompanies = result);
     this.displayAgencies = true;
+    this.displayCompanies = true;
   }
 
   details(id: number) {
@@ -61,4 +66,26 @@ export class HomeComponent {
       });
     });
   }
+
+  onFilterFlight() {
+    const searchText = this.searchFlight.toLowerCase();
+    if (searchText.trim() == "") {
+      this.displayCompanies = true;
+    }
+    else {
+      this.displayCompanies = false;
+    }
+    this.flightsToShow = [];
+    this.aviationCompanies.filter(company => {
+      company.flights.filter(flight => {
+        if (flight.from.cityName.toLowerCase().includes(searchText)) {
+          this.flightsToShow.push(flight);
+        }
+        else if (flight.to.cityName.toLowerCase().includes(searchText)) {
+          this.flightsToShow.push(flight);
+        }
+      });
+    });
+  }
+
 }
