@@ -25,12 +25,17 @@ namespace Persistance.Repositories
 
         public Task<List<Flight>> GetAllAsync()
         {
-            return _context.Flight.Include(f => f.Ratings).ToListAsync();
+            return _context.Flight
+                .Include(f => f.From)
+                .Include(f => f.To)
+                .Include(f => f.Ratings).ToListAsync();
         }
 
         public Task<Flight> GetByIdAsync(long id)
         {
             return _context.Flight
+                .Include(f => f.From)
+                .Include(f => f.To)
                 .Include(f => f.Ratings)
                 .Include(f => f.Seats)
                 .Include(f => f.Tickets)
