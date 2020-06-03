@@ -19,6 +19,8 @@ namespace Core.ViewModels.Users
         public string Name { get; set; }
         public string Phone { get; set; }
 
+        public bool RequirePasswordChange { get; set; }
+
         // Note: Password is ommited - should not be viewed by front end in Get response
 
         public UserModel()
