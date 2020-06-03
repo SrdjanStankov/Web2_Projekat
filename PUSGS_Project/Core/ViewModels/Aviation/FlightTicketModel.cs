@@ -14,6 +14,8 @@ namespace Core.ViewModels.Aviation
 
         public double Discount { get; set; }
 
+        public bool CanReject { get; set; }
+
         public FlightTicketModel()
         {
         }
