@@ -6,7 +6,6 @@ namespace Core.Entities
     {
         public string City { get; set; }
         public string Email { get; set; }
-        public ICollection<User> Friends { get; set; }
         public string LastName { get; set; }
         public string Name { get; set; }
         public string Password { get; set; }
@@ -15,9 +14,15 @@ namespace Core.Entities
         public bool IsSystemAdmin { get; set; }
         public bool IsRentACarAdmin { get; set; }
 
+        public bool RequirePasswordChange { get; set; }
+
+        public ICollection<User> Friends { get; set; }
+        public ICollection<FlightTicket> Tickets { get; set; }
+
         public User()
         {
             Friends = new HashSet<User>();
+            Tickets = new HashSet<FlightTicket>();
         }
     }
 }
