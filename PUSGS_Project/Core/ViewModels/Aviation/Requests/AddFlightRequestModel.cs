@@ -13,5 +13,9 @@ namespace Core.ViewModels.Aviation.Requests
 
         public LocationModel From { get; set; }
         public LocationModel To { get; set; }
+
+        public int NumberOfSeats { get; set; } = 20;
+
+        public int MaxSeatsPerRow { get; set; } = 4;
     }
 }

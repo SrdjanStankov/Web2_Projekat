@@ -25,6 +25,8 @@ namespace Core.ViewModels.Aviation
         public ICollection<FlightSeatModel> Seats { get; set; }
         public ICollection<RatingModel> Ratings { get; set; }
 
+        public int MaxSeatsPerRow { get; set; } = 4;
+
         public FlightModel()
         {
         }
@@ -49,6 +51,8 @@ namespace Core.ViewModels.Aviation
             Tickets = flight.Tickets.Select(t => new FlightTicketModel(t)).ToList();
             Seats = flight.Seats.Select(s => AviationMapper.MapSeat(s, flight.Tickets)).ToList();
             Ratings = flight.Ratings.Select(r => new RatingModel(r)).ToList();
+
+            MaxSeatsPerRow = flight.MaxSeatsPerRow;
         }
     }
 }

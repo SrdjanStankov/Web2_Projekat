@@ -30,6 +30,8 @@ import { AuthInterceptor } from "./auth/auth.interceptor";
 import { AuthGuard } from "./auth/auth.guard";
 import { FlightsComponent } from './flights/flights.component';
 import { FlightDetailsComponent } from './flight-details/flight-details.component';
+import { FlightSeatsComponent } from './flight-seats/flight-seats.component';
+import { FlightSeatComponent } from './flight-seat/flight-seat.component';
 
 let config = new AuthServiceConfig([
   {
@@ -64,6 +66,8 @@ export function provideConfig() {
     AviationProfileComponent,
     FlightsComponent,
     FlightDetailsComponent,
+    FlightSeatsComponent,
+    FlightSeatComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
