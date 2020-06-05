@@ -40,6 +40,9 @@ export class FlightSeatsComponent implements OnInit {
     const seats = [];
     for (let i = 0; i < numSeats; ++i) {
       const seat = new FlightSeat();
+      if (i === 1) {
+        seat.reservedById = i;
+      }
       seat.seatNumber = i;
       seats.push(seat);
     }

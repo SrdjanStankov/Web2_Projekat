@@ -16,6 +16,10 @@ export class FlightSeatComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  isDisabled(): boolean {
+    return !this.selectable || !!this.flightSeat.reservedById;
+  }
+
   onSelect() {
     this.selected = !this.selected;
   }
