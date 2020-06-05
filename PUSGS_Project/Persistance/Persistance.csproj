@@ -27,6 +27,8 @@
     <Compile Remove="Migrations\20200525111422_AddFlightSeatRefferenceInFlightTicket.Designer.cs" />
     <Compile Remove="Migrations\20200525111614_AddFlightSeatRefferenceInFlightTicket.cs" />
     <Compile Remove="Migrations\20200525111614_AddFlightSeatRefferenceInFlightTicket.Designer.cs" />
+    <Compile Remove="Migrations\20200605173619_AddMaxSeatsPerRowAndSeatNumberFields.cs" />
+    <Compile Remove="Migrations\20200605173619_AddMaxSeatsPerRowAndSeatNumberFields.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

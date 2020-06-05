@@ -84,6 +84,10 @@
   <h3>Flight seats</h3>
   <section class="container">
     <app-flight-seats [flightSeats]="flight.seats"></app-flight-seats>
+    <div class="btn-group" role="group" aria-label="Flight seat actions">
+      <button class="btn btn-info" disabled>Add</button>
+      <button class="btn btn-danger" disabled>Delete</button>
+    </div>
     <button class="btn btn-info" disabled>Make reservation(s)</button>
   </section>
 </div>

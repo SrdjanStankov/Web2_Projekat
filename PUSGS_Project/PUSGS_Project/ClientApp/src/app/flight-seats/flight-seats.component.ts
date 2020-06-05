@@ -14,8 +14,10 @@ export class FlightSeatsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    const mockedSeats = this.createMockSeats();
-    const sortedSeats = mockedSeats.sort((a, b) => a.seatNumber - b.seatNumber);
+    if (this.flightSeats.length === 0)
+      return;
+
+    const sortedSeats = this.flightSeats.sort((a, b) => a.seatNumber - b.seatNumber);
     this.flightSeats = this.fillGap(sortedSeats);
   }
 
@@ -33,19 +35,6 @@ export class FlightSeatsComponent implements OnInit {
       ++currSeatNumber;
     }
 
-    return seats;
-  }
-
-  private createMockSeats(numSeats = 20): FlightSeat[] {
-    const seats = [];
-    for (let i = 0; i < numSeats; ++i) {
-      const seat = new FlightSeat();
-      if (i === 1) {
-        seat.reservedById = i;
-      }
-      seat.seatNumber = i;
-      seats.push(seat);
-    }
     return seats;
   }
 }

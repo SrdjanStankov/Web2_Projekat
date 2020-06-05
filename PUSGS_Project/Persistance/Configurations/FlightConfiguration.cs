@@ -8,6 +8,7 @@ namespace Persistance.Configurations
     {
         public void Configure(EntityTypeBuilder<Flight> builder)
         {
+            builder.Property(f => f.MaxSeatsPerRow).HasDefaultValue(4);
         }
     }
 }
