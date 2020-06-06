@@ -22,6 +22,8 @@ namespace Core.Entities
         public ICollection<FlightSeat> Seats { get; set; }
         public ICollection<Rating> Ratings { get; set; }
 
+        public int MaxSeatsPerRow { get; set; } = 4;
+
         public Flight()
         {
             Tickets = new HashSet<FlightTicket>();

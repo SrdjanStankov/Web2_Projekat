@@ -3,6 +3,7 @@ using Core.Interfaces.Repositories;
 using Core.Interfaces.Services;
 using Core.ViewModels.Aviation;
 using Core.ViewModels.Aviation.Requests;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,11 +14,13 @@ namespace Core.Services
     {
         private readonly IFlightRepository _flightRepository;
         private readonly IAviationRepository _aviationRepository;
+        private readonly IFlightSeatRepository _seatRepository;
 
-        public FlightService(IFlightRepository flightRepository, IAviationRepository aviationRepository)
+        public FlightService(IFlightRepository flightRepository, IAviationRepository aviationRepository, IFlightSeatRepository seatRepository)
         {
             _flightRepository = flightRepository;
             _aviationRepository = aviationRepository;
+            _seatRepository = seatRepository;
         }
 
         public async Task<long> AddAsync(AddFlightRequestModel company)
@@ -28,7 +31,32 @@ namespace Core.Services
                 throw new KeyNotFoundException($"AviationCompany with Id='{company.AviationCompanyId}' could not be found!");
             }
 
-            var flight = new Flight
+            var flight = MapToFlight(company, aviation);
+
+            long flightId = await _flightRepository.AddAsync(flight);
+
+            await AddSeatsAsync(flightId, company.NumberOfSeats);
+
+            return flightId;
+        }
+
+        private Task AddSeatsAsync(long flightId, int numberOfSeats)
+        {
+            var seats = new List<FlightSeat>();
+            for (int i = 0; i < numberOfSeats; ++i)
+            {
+                seats.Add(new FlightSeat
+                {
+                    FlightId = flightId,
+                    SeatNumber = i
+                });
+            }
+            return _seatRepository.AddRangeAsync(seats);
+        }
+
+        private static Flight MapToFlight(AddFlightRequestModel company, AviationCompany aviation)
+        {
+            return new Flight
             {
                 AviationCompanyId = aviation.Id,
                 ArrivalTime = company.ArrivalTime,
@@ -39,8 +67,6 @@ namespace Core.Services
                 From = company.From.ToLocation(),
                 To = company.To.ToLocation()
             };
-
-            return await _flightRepository.AddAsync(flight);
         }
 
         public async Task<List<FlightModel>> GetAllAsync()
