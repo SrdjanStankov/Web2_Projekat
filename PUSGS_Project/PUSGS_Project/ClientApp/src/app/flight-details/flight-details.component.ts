@@ -25,4 +25,8 @@ export class FlightDetailsComponent implements OnInit {
   openReservationForm(): void {
     this.router.navigateByUrl(`flight/${this.id}/reservation`);
   }
+
+  canMakeReservation(): boolean {
+    return this.flight.seats.some(s => !s.isReserved);
+  }
 }
