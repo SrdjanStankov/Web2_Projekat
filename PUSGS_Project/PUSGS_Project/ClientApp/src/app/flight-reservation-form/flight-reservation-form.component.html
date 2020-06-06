@@ -1,0 +1,25 @@
+<div *ngIf="flight">
+  <div *ngIf="currPageIndex === 0">
+    <h3>Select seats to reserve</h3>
+    <app-flight-seats [flightSeats]="flight.seats" [selectable]="true"></app-flight-seats>
+    <button class="btn btn-primary" (click)="next()">Next</button>
+  </div>
+
+  <div *ngIf="currPageIndex === 1">
+    <h3>Chose your seat</h3>
+    <p>TODO</p>
+    <div class="btn-group" role="group">
+      <button class="btn btn-outline-secondary" (click)="back()">Back</button>
+      <button class="btn btn-primary" (click)="next()">Next</button>
+    </div>
+  </div>
+
+  <div *ngIf="currPageIndex === 2">
+    <h3>Chose seats for your friends</h3>
+    <p>TODO</p>
+    <div class="btn-group" role="group">
+      <button class="btn btn-outline-secondary" (click)="back()">Back</button>
+      <button class="btn btn-success" (click)="submit()">Submit</button>
+    </div>
+  </div>
+</div>
