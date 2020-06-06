@@ -2,7 +2,7 @@
   <div *ngIf="currPageIndex === 0">
     <h3>Select seats to reserve</h3>
     <app-flight-seats [flightSeats]="flight.seats" [selectable]="true" (onSeatSelectedChange)="onSeatSelectedChange($event)"></app-flight-seats>
-    <button class="btn btn-primary" (click)="next()">Next</button>
+    <button class="btn btn-primary" (click)="next()" [disabled]="selectedSeats.length === 0">Next</button>
   </div>
 
   <div *ngIf="currPageIndex === 1">

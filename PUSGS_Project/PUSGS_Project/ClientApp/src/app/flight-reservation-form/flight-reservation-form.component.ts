@@ -3,6 +3,7 @@ import { FlightService } from '../services/flight.service';
 import { ActivatedRoute } from '@angular/router';
 import { Flight } from '../entities/flight';
 import { FlightSeatSelectedEventArgs } from '../flight-seat/flight-seat.component';
+import { FlightSeat } from '../entities/flight-seat';
 
 @Component({
   selector: 'app-flight-reservation-form',
@@ -15,6 +16,8 @@ export class FlightReservationFormComponent implements OnInit {
 
   private numPages = 3;
   currPageIndex = 0;
+
+  selectedSeats: FlightSeat[] = [];
 
   constructor(private service: FlightService, private route: ActivatedRoute) { }
 
@@ -40,11 +43,17 @@ export class FlightReservationFormComponent implements OnInit {
   }
 
   onSeatSelectedChange(args: FlightSeatSelectedEventArgs) {
-    console.log(args);
+    const seat = args.seat;
+    if (!seat)
+      return;
+    if (args.selected) {
+      this.selectedSeats.push(seat);
+    } else {
+      this.selectedSeats = this.selectedSeats.filter(s => s.id !== seat.id);
+    }
   }
 
   submit() {
-    // TODO: Submit form to back-end & re-route to home
-    window.alert("Form submited");
+    window.alert("TODO: Submit form to back-end & re-route to home");
   }
 }
