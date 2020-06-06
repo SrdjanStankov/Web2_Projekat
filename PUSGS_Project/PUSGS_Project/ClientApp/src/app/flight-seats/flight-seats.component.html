@@ -1,5 +1,11 @@
-<div class="seat-container" style="display: grid; grid-template-columns: repeat({{maxSeatsPerRow}}, auto); grid-template-rows: auto; justify-content: flex-start; grid-row-gap: 0.5em; grid-column-gap: 0.5em">
-  <ng-container *ngFor="let seat of flightSeats; let i = index">
-    <app-flight-seat [flightSeat]="seat" [selectable]="!!selectable"></app-flight-seat>
-  </ng-container>
-</div>
+<div class="flight-seats-display">
+  <div class="seat-container" style="display: grid; grid-template-columns: repeat({{maxSeatsPerRow}}, auto); grid-template-rows: auto; justify-content: flex-start; grid-row-gap: 0.5em; grid-column-gap: 0.5em">
+    <ng-container *ngFor="let seat of flightSeats; let i = index">
+      <app-flight-seat [flightSeat]="seat" [selectable]="!!selectable"></app-flight-seat>
+    </ng-container>
+  </div>
+  <div class="seat-legend" *ngIf="!hideLegend">
+    <button class="btn btn-danger" disabled>Reserved</button>
+    <button class="btn btn-info" [disabled]="!selectable">Available</button>
+    <button class="btn btn-success" *ngIf="!!selectable">Selected</button>
+  </div>

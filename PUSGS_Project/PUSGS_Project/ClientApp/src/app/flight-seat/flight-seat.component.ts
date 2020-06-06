@@ -17,7 +17,11 @@ export class FlightSeatComponent implements OnInit {
   }
 
   isDisabled(): boolean {
-    return !this.selectable || !!this.flightSeat.reservedById;
+    return !this.selectable || this.isReserved();
+  }
+
+  isReserved(): boolean {
+    return !!this.flightSeat.reservedById;
   }
 
   onSelect() {

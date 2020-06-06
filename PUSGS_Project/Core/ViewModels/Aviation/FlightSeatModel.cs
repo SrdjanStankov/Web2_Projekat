@@ -8,6 +8,7 @@ namespace Core.ViewModels.Aviation
         public long Id { get; set; }
 
         public long FlightId { get; set; }
+        public long SeatNumber { get; set; }
         public long? ReservedById { get; set; }
 
         public FlightSeatModel()
@@ -21,6 +22,7 @@ namespace Core.ViewModels.Aviation
 
             Id = seat.Id;
             FlightId = seat.FlightId;
+            SeatNumber = seat.SeatNumber;
         }
     }
 }
