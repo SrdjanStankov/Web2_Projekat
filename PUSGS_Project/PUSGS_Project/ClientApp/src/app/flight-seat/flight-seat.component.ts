@@ -1,5 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FlightSeat } from '../entities/flight-seat';
+
+export class FlightSeatSelectedEventArgs {
+  constructor(public seat: FlightSeat, public selected: boolean) {
+  }
+}
 
 @Component({
   selector: 'app-flight-seat',
@@ -10,6 +15,8 @@ export class FlightSeatComponent implements OnInit {
   @Input() flightSeat: FlightSeat;
   @Input() selectable: boolean;
   selected: boolean;
+
+  @Output() onSeatSelect: EventEmitter<FlightSeatSelectedEventArgs> = new EventEmitter();
 
   constructor() { }
 
@@ -26,5 +33,7 @@ export class FlightSeatComponent implements OnInit {
 
   onSelect() {
     this.selected = !this.selected;
+
+    this.onSeatSelect.emit({ seat: this.flightSeat, selected: this.selected });
   }
 }

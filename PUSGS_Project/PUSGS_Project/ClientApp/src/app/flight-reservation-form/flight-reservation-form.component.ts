@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FlightService } from '../services/flight.service';
 import { ActivatedRoute } from '@angular/router';
 import { Flight } from '../entities/flight';
+import { FlightSeatSelectedEventArgs } from '../flight-seat/flight-seat.component';
 
 @Component({
   selector: 'app-flight-reservation-form',
@@ -36,6 +37,10 @@ export class FlightReservationFormComponent implements OnInit {
       return;
 
     this.currPageIndex--;
+  }
+
+  onSeatSelectedChange(args: FlightSeatSelectedEventArgs) {
+    console.log(args);
   }
 
   submit() {
