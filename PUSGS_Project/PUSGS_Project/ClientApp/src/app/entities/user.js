@@ -11,6 +11,13 @@ var User = /** @class */ (function () {
         this.password = password;
         this.friends = friends;
     }
+    Object.defineProperty(User.prototype, "id", {
+        get: function () {
+            return this.email;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return User;
 }());
 exports.User = User;

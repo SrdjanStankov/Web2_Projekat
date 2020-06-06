@@ -6,7 +6,7 @@ namespace Core.ViewModels.Aviation
     {
         public long Id { get; set; }
 
-        public long TicketOwnerId { get; set; }
+        public string TicketOwnerEmail { get; set; }
 
         public long FlightId { get; set; }
 
@@ -26,7 +26,7 @@ namespace Core.ViewModels.Aviation
                 return;
 
             Id = ticket.Id;
-            TicketOwnerId = ticket.TicketOwnerId;
+            TicketOwnerEmail = ticket.TicketOwnerEmail;
             FlightId = ticket.FlightId;
             FlightSeatId = ticket.FlightSeatId;
             Discount = ticket.Discount;
