@@ -10,6 +10,7 @@ export class FlightSeatsComponent implements OnInit {
   @Input() flightSeats: FlightSeat[] = [];
   @Input() selectable: boolean;
   @Input() maxSeatsPerRow = 4;
+  @Input() hideLegend: boolean;
 
   constructor() { }
 
