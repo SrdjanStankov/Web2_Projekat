@@ -53,26 +53,6 @@ namespace Persistance.Repositories
             return (await context.RentACar.Include(r => r.Cars).FirstOrDefaultAsync(item => item.Id == rentACarId))?.Cars;
         }
 
-        public bool IsReserved(Car car, DateTime takeDate, DateTime returnDate)
-        {
-            return car.ReservedFrom < returnDate && takeDate < car.ReservedTo;
-        }
-
-        public async Task<bool> ReserveCarAsync(long id, ReservationDateInterval interval)
-        {
-            var car = await GetAsync(id);
-
-            if (IsReserved(car, interval.DateFrom, interval.DateTo))
-            {
-                return false;
-            }
-
-            car.ReservedFrom = interval.DateFrom;
-            car.ReservedTo = interval.DateTo;
-            await context.SaveChangesAsync();
-            return true;
-        }
-
         public async Task UpdateAsync(Car car)
         {
             context.Update(car);
