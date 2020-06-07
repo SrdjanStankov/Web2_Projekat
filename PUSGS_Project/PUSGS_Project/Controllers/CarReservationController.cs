@@ -20,17 +20,17 @@ namespace PUSGS_Project.Controllers
 		}
 
 		// GET: api/<CarReservationController>
-		[HttpGet]
-		public IEnumerable<string> Get()
-		{
-			return new string[] { "value1", "value2" };
-		}
+		//[HttpGet]
+		//public IEnumerable<string> Get()
+		//{
+		//	return new string[] { "value1", "value2" };
+		//}
 
 		// GET api/<CarReservationController>/5
 		[HttpGet("{id}")]
-		public string Get(int id)
+		public async Task<IEnumerable<CarReservation>> Get(string id)
 		{
-			return "value";
+			return await carReservationRepository.GetReservationsAsync(id);
 		}
 
 		// POST api/<CarReservationController>
