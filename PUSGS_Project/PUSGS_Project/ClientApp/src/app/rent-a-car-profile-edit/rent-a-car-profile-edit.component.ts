@@ -81,7 +81,11 @@ export class RentACarProfileEditComponent implements OnInit {
   removeCar(index: number) {
     this.carService.removeCar(index).then(() => {
       this.refreshAgency();
-    })
+    }, err => {
+      if (err.status === 400) {
+        alert(err.error.message);
+      }
+    });
   }
 
   editCar(id: number, content) {
@@ -110,6 +114,10 @@ export class RentACarProfileEditComponent implements OnInit {
       car.id = id;
       this.carService.updateCar(car).then(() => {
         this.refreshAgency();
+      }, err => {
+          if (err.status === 400) {
+            alert(err.error.message);
+          }
       });
     }, err => { });
   }
