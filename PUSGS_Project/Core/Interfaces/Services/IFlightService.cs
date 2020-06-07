@@ -14,5 +14,9 @@ namespace Core.Interfaces.Services
         Task<FlightModel> GetByIdAsync(long id);
 
         Task RemoveAsync(long id);
+
+        Task<long> MakeReservation(FlightTicketModel model);
+
+        Task MakeFriendReservations(IEnumerable<FlightTicketModel> models);
     }
 }

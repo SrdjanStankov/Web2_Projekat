@@ -15,12 +15,18 @@ namespace Core.Services
         private readonly IFlightRepository _flightRepository;
         private readonly IAviationRepository _aviationRepository;
         private readonly IFlightSeatRepository _seatRepository;
+        private readonly IFlightTicketRepository _ticketRepository;
 
-        public FlightService(IFlightRepository flightRepository, IAviationRepository aviationRepository, IFlightSeatRepository seatRepository)
+        public FlightService(
+            IFlightRepository flightRepository,
+            IAviationRepository aviationRepository,
+            IFlightSeatRepository seatRepository,
+            IFlightTicketRepository ticketRepository)
         {
             _flightRepository = flightRepository;
             _aviationRepository = aviationRepository;
             _seatRepository = seatRepository;
+            _ticketRepository = ticketRepository;
         }
 
         public async Task<long> AddAsync(AddFlightRequestModel company)
@@ -84,6 +90,30 @@ namespace Core.Services
         public Task RemoveAsync(long id)
         {
             return _flightRepository.RemoveAsync(id);
+        }
+
+        public Task<long> MakeReservation(FlightTicketModel model)
+        {
+            var ticket = MapToTicket(model, accepted: true);
+            return _ticketRepository.AddAsync(ticket);
+        }
+
+        public Task MakeFriendReservations(IEnumerable<FlightTicketModel> models)
+        {
+            var tickets = models.Select(m => MapToTicket(m, accepted: false));
+            return _ticketRepository.AddRangeAsync(tickets);
+        }
+
+        private static FlightTicket MapToTicket(FlightTicketModel model, bool accepted = true)
+        {
+            return new FlightTicket
+            {
+                FlightId = model.FlightId,
+                FlightSeatId = model.FlightSeatId,
+                TicketOwnerEmail = model.TicketOwnerEmail,
+                Discount = model.Discount,
+                Accepted = accepted
+            };
         }
     }
 }
