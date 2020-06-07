@@ -2,6 +2,8 @@
 using Core.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Persistance.Repositories
@@ -40,6 +42,11 @@ namespace Persistance.Repositories
 		public Task<CarReservation> GetReservationAsync(long id)
 		{
 			throw new NotImplementedException();
+		}
+
+		public async Task<IEnumerable<CarReservation>> GetReservationsAsync(string userEmail)
+		{
+			return await context.CarReservations.Where(item => item.OwnerEmail == userEmail).ToListAsync();
 		}
 	}
 }
