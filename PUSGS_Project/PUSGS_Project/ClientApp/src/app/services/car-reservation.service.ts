@@ -7,15 +7,19 @@ import { CarReservation } from '../entities/car-reservation';
 })
 export class CarReservationService {
   http: HttpClient;
-  carControllerUri: string;
+  carReservationControllerUri: string;
 
   constructor(http: HttpClient, @Inject("BASE_URL") baseUrl: string) {
     this.http = http;
-    this.carControllerUri = baseUrl + "api/carReservation/";
+    this.carReservationControllerUri = baseUrl + "api/carReservation/";
   }
 
   reserveCar(reservation: CarReservation) {
-    return this.http.post(this.carControllerUri, reservation).toPromise();
+    return this.http.post(this.carReservationControllerUri, reservation).toPromise();
+  }
+
+  getReservations(userEmail: string) {
+    return this.http.get<CarReservation[]>(this.carReservationControllerUri + userEmail).toPromise();
   }
 
 }
