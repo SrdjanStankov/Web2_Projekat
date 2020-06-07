@@ -139,6 +139,33 @@
 
       </ng-template>
     </li>
+
+    <!--Istorija rezervacija vozila-->
+    <li ngbNavItem="vozila" *ngIf="backend.isLogedIn()">
+      <a ngbNavLink>Istorija rezervacije vozila</a>
+      <ng-template ngbNavContent>
+
+        <table class="table table-striped table-bordered" id="collapsableCarResHistory" [ngbCollapse]="isCollapsedCarResHistory">
+          <thead class="thead-light">
+            <tr>
+              <th class="text-center" scope="col">Created on</th>
+              <th class="text-center" scope="col">Reserved from</th>
+              <th class="text-center" scope="col">Reserved to</th>
+              <th class="text-center" scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let reservation of carReservations">
+              <td class="">{{reservation.dateCreated | date: 'fullDate'}}</td>
+              <td>{{reservation.from | date: 'fullDate'}}</td>
+              <td>{{reservation.to | date: 'fullDate'}}</td>
+              <td *ngIf="checkDate(reservation.to)"><button class="btn btn-outline-primary" (click)="rateCar(reservation)">Rate!</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-template>
+    </li>
+
   </ul>
 
   <div [ngbNavOutlet]="nav" class="ml-4"></div>

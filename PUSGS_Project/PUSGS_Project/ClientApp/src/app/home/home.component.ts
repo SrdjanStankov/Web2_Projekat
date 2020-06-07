@@ -7,6 +7,9 @@ import { AviationService } from '../services/aviation.service';
 import { AviationCompany } from '../entities/aviation-company';
 import { Car } from '../entities/car';
 import { Flight } from '../entities/flight';
+import { CarReservation } from '../entities/car-reservation';
+import { CarReservationService } from '../services/car-reservation.service';
+import { STORAGE_USER_ID_KEY } from '../constants/storage';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +19,9 @@ export class HomeComponent {
   public aviationCompanies: AviationCompany[];
   public flightsToShow: Flight[];
   public rentACarAgencies: RentACar[];
+  public carReservations: CarReservation[];
   public carsToShow: Car[];
+  public isCollapsedCarResHistory: boolean;
   public isCollapsedRAC: boolean;
   public isCollapsed: boolean;
   public search: string = "";
@@ -24,13 +29,26 @@ export class HomeComponent {
   public displayAgencies: boolean = true;
   public displayCompanies: boolean = true;
 
-  constructor(private RACService: RentACarService, public backend: BackendService, private aviationService: AviationService, private router: Router) {
+  constructor(private RACService: RentACarService, public backend: BackendService, private aviationService: AviationService, private router: Router, private carReservationService: CarReservationService) {
     RACService.getAgencies().then(result => {
       this.rentACarAgencies = result;
     });
     aviationService.getAll().then(result => this.aviationCompanies = result);
     this.displayAgencies = true;
     this.displayCompanies = true;
+    if (backend.isLogedIn()) {
+      carReservationService.getReservations(localStorage.getItem(STORAGE_USER_ID_KEY)).then(result => {
+        this.carReservations = result;
+      });
+    }
+  }
+
+  checkDate(to: Date): boolean {
+    return (new Date(Date.now()) >= new Date(to.toString()));
+  }
+
+  rateCar(reservation: CarReservation) {
+    // TODO: Add modal for rating a car
   }
 
   details(id: number) {
