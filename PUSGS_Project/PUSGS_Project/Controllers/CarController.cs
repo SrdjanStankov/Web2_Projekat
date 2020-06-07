@@ -38,8 +38,7 @@ namespace PUSGS_Project.Controllers
 
             foreach (var item in await carRepository.GetCarsOfAgencyAsync(id))
             {
-                // TODO: check if car is reserved
-                if (item.PassengerNumber != model.PassengerNumber || model.MaxCost < item.CostPerDay || model.Type != item.Type)
+                if (item.PassengerNumber != model.PassengerNumber || model.MaxCost < item.CostPerDay || model.Type != item.Type || item.IsReserved)
                 {
                     continue;
                 }
