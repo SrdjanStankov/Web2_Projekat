@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FlightSeat } from '../entities/flight-seat';
+import { FlightSeatSelectedEventArgs } from '../flight-seat/flight-seat.component';
 
 @Component({
   selector: 'app-flight-seats',
@@ -12,7 +13,13 @@ export class FlightSeatsComponent implements OnInit {
   @Input() maxSeatsPerRow = 4;
   @Input() hideLegend: boolean;
 
+  @Output() onSeatSelectedChange: EventEmitter<FlightSeatSelectedEventArgs> = new EventEmitter();
+
   constructor() { }
+
+  onSeatSelect(args: FlightSeatSelectedEventArgs) {
+    this.onSeatSelectedChange.emit(args);
+  }
 
   ngOnInit(): void {
     if (this.flightSeats.length === 0)

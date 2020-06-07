@@ -32,6 +32,7 @@ import { FlightsComponent } from './flights/flights.component';
 import { FlightDetailsComponent } from './flight-details/flight-details.component';
 import { FlightSeatsComponent } from './flight-seats/flight-seats.component';
 import { FlightSeatComponent } from './flight-seat/flight-seat.component';
+import { FlightReservationFormComponent } from './flight-reservation-form/flight-reservation-form.component';
 
 let config = new AuthServiceConfig([
   {
@@ -68,6 +69,7 @@ export function provideConfig() {
     FlightDetailsComponent,
     FlightSeatsComponent,
     FlightSeatComponent,
+    FlightReservationFormComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -89,6 +91,7 @@ export function provideConfig() {
       { path: "users", component: FriendsComponent },
       { path: "flights", component: FlightsComponent },
       { path: "flight/:id", component: FlightDetailsComponent },
+      { path: "flight/:id/reservation", component: FlightReservationFormComponent },
       { path: "ConfirmEmail/:email", component: MailConfirmationComponent },
       { path: "services", component: RegisterServicesComponent, canActivate: [AuthGuard] },
     ]),

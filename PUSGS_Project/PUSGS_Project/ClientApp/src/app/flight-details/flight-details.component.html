@@ -90,5 +90,5 @@
     </div>
   </section>
   <hr />
-  <button class="btn-reservation-sticky btn btn-success">Make reservation(s)</button>
+  <button class="btn-reservation-sticky btn btn-success" (click)="openReservationForm()" *ngIf="canMakeReservation()">Make reservation(s)</button>
 </div>

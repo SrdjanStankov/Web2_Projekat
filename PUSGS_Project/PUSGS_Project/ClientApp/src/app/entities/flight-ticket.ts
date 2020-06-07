@@ -1,9 +1,15 @@
-import { Flight } from "./flight";
-import { User } from "./user";
-
 export class FlightTicket {
-  ticketOwner: User;
-  flight: Flight;
-  discount: number = 0;
-  airplaneSeat: number;
+  ticketOwnerEmail: string;
+  flightId: number;
+  flightSeatId: number;
+  discount: number;
+  canReject: boolean;
+
+  constructor({ ticketOwnerEmail = "", flightId = -1, flightSeatId = -1, discount = 0, canReject = true } = {}) {
+    this.ticketOwnerEmail = ticketOwnerEmail;
+    this.flightId = flightId;
+    this.flightSeatId = flightSeatId;
+    this.discount = discount;
+    this.canReject = canReject;
+  }
 }
