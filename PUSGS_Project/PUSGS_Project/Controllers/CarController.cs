@@ -22,10 +22,6 @@ namespace PUSGS_Project.Controllers
             this.carRepository = carRepository;
         }
 
-        // GET: api/<controller>
-        //[HttpGet]
-        //public IEnumerable<string> Get() => new string[] { "value1", "value2" };
-
         // GET api/<controller>/5
         [HttpGet("{id}")]
         public async Task<Car> GetAsync(long id)
@@ -42,7 +38,7 @@ namespace PUSGS_Project.Controllers
 
             foreach (var item in await carRepository.GetCarsOfAgencyAsync(id))
             {
-                if (item.PassengerNumber != model.PassengerNumber || model.MaxCost < item.CostPerDay || model.Type != item.Type || carRepository.IsReserved(item, model.TakeDate, model.ReturnDate))
+                if (item.PassengerNumber != model.PassengerNumber || model.MaxCost < item.CostPerDay || model.Type != item.Type || item.IsReserved)
                 {
                     continue;
                 }
@@ -102,24 +98,6 @@ namespace PUSGS_Project.Controllers
             if (user is RentACarAdministrator)
             {
                 await carRepository.DeleteAsync(id);
-                return Ok();
-            }
-
-            return Forbid();
-        }
-
-        [HttpPost]
-        [Route("Reserve/{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<object> ReserveCarAsync(long id, [FromBody] ReservationDateInterval interval)
-        {
-            var user = await GetLoginUserAsync();
-            if (user is object)
-            {
-                if (!await carRepository.ReserveCarAsync(id, interval))
-                {
-                    return BadRequest(new { message = "Already taken" });
-                }
                 return Ok();
             }
 

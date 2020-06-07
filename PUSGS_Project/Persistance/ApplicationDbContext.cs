@@ -24,5 +24,6 @@ namespace Persistance
         public DbSet<RentACar> RentACar { get; set; }
         public DbSet<AviationCompany> AviationCompany { get; set; }
         public DbSet<Branch> Branches { get; set; }
-    }
+		public DbSet<CarReservation> CarReservations { get; set; }
+	}
 }

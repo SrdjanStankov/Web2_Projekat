@@ -10,8 +10,6 @@ namespace Core.ViewModels.CarViewModels
         public string Name { get; set; }
         public int PassengerNumber { get; set; }
         public ICollection<Rating> Ratings { get; set; }
-        public DateTime? ReservedFrom { get; set; }
-        public DateTime? ReservedTo { get; set; }
         public string Type { get; set; }
         public string Brand { get; set; }
         public string Model { get; set; }
@@ -31,8 +29,6 @@ namespace Core.ViewModels.CarViewModels
             Name = car.Name;
             PassengerNumber = car.PassengerNumber;
             Ratings = new HashSet<Rating>(car.Ratings);
-            ReservedFrom = car.ReservedFrom;
-            ReservedTo = car.ReservedTo;
             Type = car.Type;
             Brand = car.Brand;
             Model = car.Model;
