@@ -35,7 +35,4 @@ export class CarService {
     return this.http.delete<Car>(this.carControllerUri + index).toPromise();
   }
 
-  reserveCar(id: number, to: Date, from: Date) {
-    return this.http.post(this.carControllerUri + "Reserve/" + id, { dateFrom: from, dateTo: to }).toPromise();
-  }
 }

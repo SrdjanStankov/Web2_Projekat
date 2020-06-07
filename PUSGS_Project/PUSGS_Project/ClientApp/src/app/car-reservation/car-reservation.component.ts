@@ -5,6 +5,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Car } from '../entities/car';
 import { CarService } from '../services/car.service';
 import { Router } from '@angular/router';
+import { CarReservationService } from '../services/car-reservation.service';
+import { CarReservation } from '../entities/car-reservation';
+import { STORAGE_USER_ID_KEY } from '../constants/storage';
 
 @Component({
   selector: 'app-car-reservation',
@@ -37,7 +40,7 @@ export class CarReservationComponent implements OnInit {
   private searchAgency: RentACar;
   public foundCars: Car[] = [];
 
-  constructor(private rentACarService: RentACarService, private carService: CarService, private router: Router) { }
+  constructor(private rentACarService: RentACarService, private carService: CarService, private router: Router, private carReservationService: CarReservationService) { }
 
   ngOnInit(): void {
     this.rentACarService.getAgencies().then(result => {
@@ -71,7 +74,13 @@ export class CarReservationComponent implements OnInit {
   reserve(car: Car) {
     var ret = this.editGroup.get("return").get("date").value;
     var take = this.editGroup.get("take").get("date").value;
-    this.carService.reserveCar(car.id, new Date(ret.year, ret.month - 1, ret.day), new Date(take.year, take.month - 1, take.day)).then(result => {
+    const reservation = new CarReservation();
+    reservation.dateCreated = new Date(Date.now());
+    reservation.from = new Date(take.year, take.month - 1, take.day);
+    reservation.to = new Date(ret.year, ret.month - 1, ret.day);
+    reservation.ownerEmail = localStorage.getItem(STORAGE_USER_ID_KEY);
+    reservation.reservedCarId = car.id;
+    this.carReservationService.reserveCar(reservation).then(result => {
       location.reload(true);
     }, err => {
         if (err.status === 400) {
