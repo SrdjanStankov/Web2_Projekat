@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FlightService } from '../services/flight.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Flight } from '../entities/flight';
 import { FlightSeatSelectedEventArgs } from '../flight-seat/flight-seat.component';
 import { FlightSeat } from '../entities/flight-seat';
@@ -35,7 +35,12 @@ export class FlightReservationFormComponent implements OnInit {
   availableFriendEmails: string[];
   friendTickets: FlightTicket[] = [];
 
-  constructor(private service: FlightService, private route: ActivatedRoute, private userService: UserService, private modalService: NgbModal) { }
+  constructor(
+    private service: FlightService,
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private modalService: NgbModal,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => { this.flightId = params['id']; });
@@ -130,14 +135,20 @@ export class FlightReservationFormComponent implements OnInit {
   }
 
   submit() {
-    window.alert("TODO: Submit form to back-end & re-route to home");
-
-    this.friendTickets = this.seatReservations.filter(r => !!r.ticketOwnerEmail).map(r => this.makeFlightTicket(r));
-
     console.group("Submit variables");
     console.log("currUserTicket", this.currUserTicket);
     console.log("friendTickets", this.friendTickets);
     console.groupEnd();
+
+    this.friendTickets = this.seatReservations.filter(r => !!r.ticketOwnerEmail).map(r => this.makeFlightTicket(r));
+    if (this.friendTickets.length > 0) {
+      this.service.inviteFriends(this.friendTickets).then(() => console.log("Friend invitations sent"));
+    }
+
+    this.service.makeReservation(this.currUserTicket).then(() => {
+      console.log("Successfully made reservation for current user");
+      this.router.navigateByUrl("");
+    });
   }
 
   private makeFlightTicket(reservation: FlightSeatReservation): FlightTicket {
