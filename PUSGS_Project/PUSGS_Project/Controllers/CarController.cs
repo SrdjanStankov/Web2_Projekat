@@ -81,6 +81,10 @@ namespace PUSGS_Project.Controllers
 
             if (user is RentACarAdministrator)
             {
+                if ((await carRepository.GetAsync(value.Id)).IsReserved)
+                {
+					return BadRequest(new { message = "Unable to change reserved car!" });
+                }
                 await carRepository.UpdateAsync(value);
                 return Ok();
             }
@@ -97,6 +101,10 @@ namespace PUSGS_Project.Controllers
 
             if (user is RentACarAdministrator)
             {
+                if((await carRepository.GetAsync(id)).IsReserved)
+				{
+					return BadRequest(new { message = "Unable to remove reserved car!" });
+				}
                 await carRepository.DeleteAsync(id);
                 return Ok();
             }

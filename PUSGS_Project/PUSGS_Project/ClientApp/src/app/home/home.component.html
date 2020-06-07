@@ -104,7 +104,7 @@
                   {{agency.averageRating}}
                 </div>
                 <div>
-                  <button *ngIf="backend.getLogedInUserType() == 'RentACarAdmin'" class="btn btn-warning" (click)="details(agency.id)">Details</button>
+                  <button *ngIf="backend.getLogedInUserType() == 'RentACarAdmin' || backend.getLogedInUserType() == 'SystemAdmin'" class="btn btn-warning" (click)="details(agency.id)">Details</button>
                 </div>
               </div>
             </div>
