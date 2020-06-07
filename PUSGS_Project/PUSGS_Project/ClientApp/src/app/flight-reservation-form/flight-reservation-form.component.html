@@ -37,7 +37,7 @@
           <td>{{reservation.ticketOwnerEmail}}</td>
           <td>
             <div class="card-item btn-group">
-              <button class="btn btn-primary" *ngIf="!reservation.ticketOwnerEmail" (click)="chooseFriend(reservation)">Choose friend</button>
+              <button class="btn btn-primary" *ngIf="!reservation.ticketOwnerEmail" (click)="chooseFriend(friendModal, reservation)" [disabled]="availableFriendEmails.length === 0">Choose friend</button>
               <button class="btn btn-outline-secondary" *ngIf="reservation.ticketOwnerEmail" (click)="freeFriend(reservation)">Free friend</button>
               <button class="btn btn-danger" title="Cancels reservation for this seat" (click)="cancelReservation(reservation)">Cancel reservation</button>
             </div>
@@ -52,3 +52,27 @@
     </div>
   </div>
 </div>
+
+<!--Choose friend modal-->
+<ng-template #friendModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Choose Friend</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="modalFriend">Friend Email</label>
+        <select class="form-control" [ngModel]="modalFriendEmail" (ngModelChange)="onModalFriendEmailChange($event)" id="modalFriend" name="modalFriendEmail">
+          <option [value]="friendEmail" *ngFor="let friendEmail of availableFriendEmails">{{friendEmail}}</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" [disabled]="" class="btn btn-outline-dark" (click)="modal.close('Save click')">Submit</button>
+  </div>
+</ng-template>

@@ -8,6 +8,7 @@ import { FlightTicket } from '../entities/flight-ticket';
 import { UserService } from '../services/user.service';
 import { User } from '../entities/user';
 import { FlightSeatReservation } from "./helpers/flight-seat-reservation"
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-flight-reservation-form',
@@ -34,7 +35,7 @@ export class FlightReservationFormComponent implements OnInit {
   availableFriendEmails: string[];
   friendTickets: FlightTicket[] = [];
 
-  constructor(private service: FlightService, private route: ActivatedRoute, private userService: UserService) { }
+  constructor(private service: FlightService, private route: ActivatedRoute, private userService: UserService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => { this.flightId = params['id']; });
@@ -90,10 +91,28 @@ export class FlightReservationFormComponent implements OnInit {
   }
 
   // Step 3
-  chooseFriend(reservation: FlightSeatReservation) {
-    // TODO: Open choose friend modal window
-    console.log(reservation);
+  modalFriendEmail: string;
+
+  chooseFriend(friendModal, reservation: FlightSeatReservation) {
+    this.modalService.open(friendModal, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      console.log(`Closed with: ${result}`);
+      reservation.ticketOwnerEmail = this.modalFriendEmail;
+      this.availableFriendEmails = this.availableFriendEmails.filter(e => e !== this.modalFriendEmail);
+      this.clearModal();
+    }, (reason) => {
+      console.log(`Dismissed ${reason}`);
+      this.clearModal();
+    });
   }
+
+  private clearModal() {
+    this.modalFriendEmail = "";
+  }
+
+  onModalFriendEmailChange(email: string) {
+    this.modalFriendEmail = email;
+  }
+
   freeFriend(reservation: FlightSeatReservation) {
     this.availableFriendEmails.push(reservation.ticketOwnerEmail);
     reservation.ticketOwnerEmail = "";
@@ -105,13 +124,15 @@ export class FlightReservationFormComponent implements OnInit {
   }
 
   allSeatsReserved(): boolean {
-    return this.seatReservations.length === 0 || !this.seatReservations.some(r => !r.ticketOwnerEmail);
+    return this.seatReservations.length === 0
+      || this.availableFriendEmails.length === 0
+      || !this.seatReservations.some(r => !r.ticketOwnerEmail);
   }
 
   submit() {
     window.alert("TODO: Submit form to back-end & re-route to home");
 
-    this.friendTickets = this.seatReservations.map(r => this.makeFlightTicket(r));
+    this.friendTickets = this.seatReservations.filter(r => !!r.ticketOwnerEmail).map(r => this.makeFlightTicket(r));
 
     console.group("Submit variables");
     console.log("currUserTicket", this.currUserTicket);
