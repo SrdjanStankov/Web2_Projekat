@@ -7,6 +7,7 @@ import { FlightSeat } from '../entities/flight-seat';
 import { FlightTicket } from '../entities/flight-ticket';
 import { UserService } from '../services/user.service';
 import { User } from '../entities/user';
+import { FlightSeatReservation } from "./helpers/flight-seat-reservation"
 
 @Component({
   selector: 'app-flight-reservation-form',
@@ -14,7 +15,7 @@ import { User } from '../entities/user';
   styleUrls: ['./flight-reservation-form.component.css']
 })
 export class FlightReservationFormComponent implements OnInit {
-  private id;
+  private flightId;
   flight: Flight;
   currUser: User;
 
@@ -29,13 +30,15 @@ export class FlightReservationFormComponent implements OnInit {
   currUserTicket: FlightTicket = new FlightTicket();
 
   // Step 3
+  seatReservations: FlightSeatReservation[];
+  availableFriendEmails: string[];
   friendTickets: FlightTicket[] = [];
 
   constructor(private service: FlightService, private route: ActivatedRoute, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => { this.id = params['id']; });
-    this.service.get(this.id).then(flight => {
+    this.route.params.subscribe(params => { this.flightId = params['id']; });
+    this.service.get(this.flightId).then(flight => {
       this.flight = flight;
       this.currUserTicket.flightId = flight.id;
     });
@@ -45,6 +48,7 @@ export class FlightReservationFormComponent implements OnInit {
     })
   }
 
+  // Step 1
   onSeatSelectedChange(args: FlightSeatSelectedEventArgs) {
     const seat = args.seat;
     if (!seat)
@@ -53,33 +57,77 @@ export class FlightReservationFormComponent implements OnInit {
       this.selectedSeats.push(seat);
     } else {
       this.selectedSeats = this.selectedSeats.filter(s => s.id !== seat.id);
-      this.clearNextStepIfFaulted(seat);
     }
   }
 
-  private clearNextStepIfFaulted(unselectedSeat: FlightSeat) {
-    if (unselectedSeat.id.toString() === this.currUserSeatId) {
-      this.currUserSeatId = "-1";
-      this.currUserTicket.flightSeatId = -1;
-    }
+  selectSeatPrep() {
+    this.currUserSeatId = "-1";
+    this.currUserTicket.flightSeatId = -1;
+    this.selectedSeats = this.selectedSeats.sort((a, b) => a.seatNumber - b.seatNumber);
+    this.next();
   }
 
+  // Step 2
   onCurrUserSeatChange(seatId: number) {
     this.currUserSeatId = seatId.toString();
     this.currUserTicket.flightSeatId = seatId;
-    console.log("seatId: ", seatId);
+  }
+
+  inviteFriendsPrep() {
+    const availableSeats = this.selectedSeats.filter(s => s.id.toString() !== this.currUserSeatId);
+    this.seatReservations = availableSeats.map(seat => this.makeSeatReservation(seat));
+    this.availableFriendEmails = [...this.currUser.friends];
+    this.next();
+  }
+
+  private makeSeatReservation(seat: FlightSeat, ticketOwnerEmail = ""): FlightSeatReservation {
+    return new FlightSeatReservation({
+      flightId: this.flight.id,
+      flightSeatId: seat.id,
+      flightSeatNumber: seat.seatNumber,
+      ticketOwnerEmail: ticketOwnerEmail
+    });
+  }
+
+  // Step 3
+  chooseFriend(reservation: FlightSeatReservation) {
+    // TODO: Open choose friend modal window
+    console.log(reservation);
+  }
+  freeFriend(reservation: FlightSeatReservation) {
+    this.availableFriendEmails.push(reservation.ticketOwnerEmail);
+    reservation.ticketOwnerEmail = "";
+  }
+
+  cancelReservation(reservation: FlightSeatReservation) {
+    this.freeFriend(reservation);
+    this.seatReservations = this.seatReservations.filter(r => r.flightSeatId !== reservation.flightSeatId);
+  }
+
+  allSeatsReserved(): boolean {
+    return this.seatReservations.length === 0 || !this.seatReservations.some(r => !r.ticketOwnerEmail);
   }
 
   submit() {
     window.alert("TODO: Submit form to back-end & re-route to home");
 
+    this.friendTickets = this.seatReservations.map(r => this.makeFlightTicket(r));
+
     console.group("Submit variables");
-    console.log("selectedSeats", this.selectedSeats);
     console.log("currUserTicket", this.currUserTicket);
     console.log("friendTickets", this.friendTickets);
     console.groupEnd();
   }
 
+  private makeFlightTicket(reservation: FlightSeatReservation): FlightTicket {
+    return new FlightTicket({
+      flightId: reservation.flightId,
+      flightSeatId: reservation.flightSeatId,
+      ticketOwnerEmail: reservation.ticketOwnerEmail
+    });
+  }
+
+  // Form navigation
   next() {
     if (this.currPageIndex + 1 >= this.numPages)
       return;

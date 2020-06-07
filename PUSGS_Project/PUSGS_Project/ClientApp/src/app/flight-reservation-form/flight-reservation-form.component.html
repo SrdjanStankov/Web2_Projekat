@@ -3,7 +3,7 @@
   <div [hidden]="currPageIndex !== 0">
     <p>Select seats to reserve</p>
     <app-flight-seats [flightSeats]="flight.seats" [selectable]="true" (onSeatSelectedChange)="onSeatSelectedChange($event)"></app-flight-seats>
-    <button class="btn btn-primary" (click)="next()" [disabled]="selectedSeats.length === 0">Next</button>
+    <button class="btn btn-primary" (click)="selectSeatPrep()" [disabled]="selectedSeats.length === 0">Next</button>
   </div>
 
   <div [hidden]="currPageIndex !== 1">
@@ -17,16 +17,38 @@
     </form>
     <div class="btn-group" role="group">
       <button class="btn btn-outline-secondary" (click)="back()">Back</button>
-      <button class="btn btn-primary" (click)="next()" [disabled]="currUserTicket.flightSeatId <= 0" *ngIf="selectedSeats.length > 1">Next</button>
+      <button class="btn btn-primary" (click)="inviteFriendsPrep()" [disabled]="currUserTicket.flightSeatId <= 0" *ngIf="selectedSeats.length > 1">Next</button>
       <button class="btn btn-success" (click)="submit()" [disabled]="currUserTicket.flightSeatId <= 0" *ngIf="selectedSeats.length === 1">Submit</button>
     </div>
   </div>
 
   <div *ngIf="currPageIndex === 2">
-    <p>Choose seats for your friends</p>
+    <table class='table table-striped' aria-labelledby="Friend reservations">
+      <thead>
+        <tr>
+          <th>Seat Number</th>
+          <th>Friend email</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reservation of seatReservations">
+          <td>{{reservation.flightSeatNumber}}</td>
+          <td>{{reservation.ticketOwnerEmail}}</td>
+          <td>
+            <div class="card-item btn-group">
+              <button class="btn btn-primary" *ngIf="!reservation.ticketOwnerEmail" (click)="chooseFriend(reservation)">Choose friend</button>
+              <button class="btn btn-outline-secondary" *ngIf="reservation.ticketOwnerEmail" (click)="freeFriend(reservation)">Free friend</button>
+              <button class="btn btn-danger" title="Cancels reservation for this seat" (click)="cancelReservation(reservation)">Cancel reservation</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr />
     <div class="btn-group" role="group">
       <button class="btn btn-outline-secondary" (click)="back()">Back</button>
-      <button class="btn btn-success" (click)="submit()">Submit</button>
+      <button class="btn btn-success" (click)="submit()" [disabled]="!allSeatsReserved()">Submit</button>
     </div>
   </div>
 </div>
