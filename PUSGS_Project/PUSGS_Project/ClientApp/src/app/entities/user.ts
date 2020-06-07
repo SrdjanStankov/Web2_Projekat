@@ -29,4 +29,8 @@ export class User {
     this.password = password;
     this.friends = friends;
   }
+
+  get id(): string {
+    return this.email;
+  }
 }

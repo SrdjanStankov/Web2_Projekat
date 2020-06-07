@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistance;
 
 namespace Persistance.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200607110952_RemoveExtraFieldFromFlightTicket")]
+    partial class RemoveExtraFieldFromFlightTicket
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,9 +83,6 @@ namespace Persistance.Migrations
                     b.Property<double>("CostPerDay")
                         .HasColumnType("float");
 
-                    b.Property<bool>("IsReserved")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
 
@@ -96,6 +95,12 @@ namespace Persistance.Migrations
                     b.Property<long?>("RentACarId")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime?>("ReservedFrom")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ReservedTo")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
@@ -104,40 +109,6 @@ namespace Persistance.Migrations
                     b.HasIndex("RentACarId");
 
                     b.ToTable("Car");
-                });
-
-            modelBuilder.Entity("Core.Entities.CarReservation", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime?>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("Discount")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime?>("From")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("OwnerEmail")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<long>("ReservedCarId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("To")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OwnerEmail");
-
-                    b.HasIndex("ReservedCarId");
-
-                    b.ToTable("CarReservations");
                 });
 
             modelBuilder.Entity("Core.Entities.Flight", b =>
@@ -406,19 +377,6 @@ namespace Persistance.Migrations
                     b.HasOne("Core.Entities.RentACar", null)
                         .WithMany("Cars")
                         .HasForeignKey("RentACarId");
-                });
-
-            modelBuilder.Entity("Core.Entities.CarReservation", b =>
-                {
-                    b.HasOne("Core.Entities.User", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerEmail");
-
-                    b.HasOne("Core.Entities.Car", "ReservedCar")
-                        .WithMany()
-                        .HasForeignKey("ReservedCarId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Core.Entities.Flight", b =>

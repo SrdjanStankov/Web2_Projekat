@@ -1,1 +1,1 @@
-{"version":3,"file":"flight-seat.js","sourceRoot":"","sources":["flight-seat.ts"],"names":[],"mappings":";;AAAA;IAAA;IAQA,CAAC;IAAD,iBAAC;AAAD,CAAC,AARD,IAQC;AARY,gCAAU"}
+{"version":3,"file":"flight-seat.js","sourceRoot":"","sources":["flight-seat.ts"],"names":[],"mappings":";;AAAA;IAAA;IAYA,CAAC;IAHC,sBAAI,kCAAU;aAAd;YACE,OAAO,CAAC,CAAC,IAAI,CAAC,YAAY,CAAC;QAC7B,CAAC;;;OAAA;IACH,iBAAC;AAAD,CAAC,AAZD,IAYC;AAZY,gCAAU"}

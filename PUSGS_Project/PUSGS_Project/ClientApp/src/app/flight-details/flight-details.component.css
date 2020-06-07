@@ -5,3 +5,9 @@
 section {
   margin-bottom: 2em;
 }
+
+.btn-reservation-sticky {
+  position: fixed;
+  bottom: 2em;
+  right: 2em;
+}

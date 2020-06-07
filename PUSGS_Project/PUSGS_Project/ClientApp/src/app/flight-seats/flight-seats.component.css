@@ -1,4 +1,17 @@
-.seat-container {
+.flight-seats-display {
+  display: flex;
+  flex-direction: row;
   margin-top: 1em;
-  margin-bottom: 1em;
+  margin-bottom: 2em;
+  justify-content: flex-start;
 }
+
+.seat-legend {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2em;
+}
+
+  .seat-legend > .btn {
+    margin-bottom: 0.5em;
+  }

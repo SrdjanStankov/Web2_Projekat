@@ -1,0 +1,78 @@
+<div *ngIf="flight">
+  <h2>Make reservation ({{currPageIndex+1}}/{{numPages}})</h2>
+  <div [hidden]="currPageIndex !== 0">
+    <p>Select seats to reserve</p>
+    <app-flight-seats [flightSeats]="flight.seats" [selectable]="true" (onSeatSelectedChange)="onSeatSelectedChange($event)"></app-flight-seats>
+    <button class="btn btn-primary" (click)="selectSeatPrep()" [disabled]="selectedSeats.length === 0">Next</button>
+  </div>
+
+  <div [hidden]="currPageIndex !== 1">
+    <form>
+      <div class="form-group row">
+        <label for="mySeat" class="col-form-label col-sm-2">Choose your seat </label>
+        <select [ngModel]="currUserSeatId" (ngModelChange)="onCurrUserSeatChange($event)" id="mySeat" name="currUserSeat">
+          <option [value]="seat.id" *ngFor="let seat of selectedSeats">{{seat.seatNumber}}</option>
+        </select>
+      </div>
+    </form>
+    <div class="btn-group" role="group">
+      <button class="btn btn-outline-secondary" (click)="back()">Back</button>
+      <button class="btn btn-primary" (click)="inviteFriendsPrep()" [disabled]="currUserTicket.flightSeatId <= 0" *ngIf="selectedSeats.length > 1">Next</button>
+      <button class="btn btn-success" (click)="submit()" [disabled]="currUserTicket.flightSeatId <= 0" *ngIf="selectedSeats.length === 1">Submit</button>
+    </div>
+  </div>
+
+  <div *ngIf="currPageIndex === 2">
+    <table class='table table-striped' aria-labelledby="Friend reservations">
+      <thead>
+        <tr>
+          <th>Seat Number</th>
+          <th>Friend email</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reservation of seatReservations">
+          <td>{{reservation.flightSeatNumber}}</td>
+          <td>{{reservation.ticketOwnerEmail}}</td>
+          <td>
+            <div class="card-item btn-group">
+              <button class="btn btn-primary" *ngIf="!reservation.ticketOwnerEmail" (click)="chooseFriend(friendModal, reservation)" [disabled]="availableFriendEmails.length === 0">Choose friend</button>
+              <button class="btn btn-outline-secondary" *ngIf="reservation.ticketOwnerEmail" (click)="freeFriend(reservation)">Free friend</button>
+              <button class="btn btn-danger" title="Cancels reservation for this seat" (click)="cancelReservation(reservation)">Cancel reservation</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr />
+    <div class="btn-group" role="group">
+      <button class="btn btn-outline-secondary" (click)="back()">Back</button>
+      <button class="btn btn-success" (click)="submit()" [disabled]="!allSeatsReserved()">Submit</button>
+    </div>
+  </div>
+</div>
+
+<!--Choose friend modal-->
+<ng-template #friendModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Choose Friend</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="modalFriend">Friend Email</label>
+        <select class="form-control" [ngModel]="modalFriendEmail" (ngModelChange)="onModalFriendEmailChange($event)" id="modalFriend" name="modalFriendEmail">
+          <option [value]="friendEmail" *ngFor="let friendEmail of availableFriendEmails">{{friendEmail}}</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" [disabled]="" class="btn btn-outline-dark" (click)="modal.close('Save click')">Submit</button>
+  </div>
+</ng-template>

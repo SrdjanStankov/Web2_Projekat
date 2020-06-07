@@ -1,4 +1,5 @@
-﻿using Core.Interfaces.Services;
+﻿using Core.Entities;
+using Core.Interfaces.Services;
 using Core.ViewModels.Aviation;
 using Core.ViewModels.Aviation.Requests;
 using Microsoft.AspNetCore.Mvc;
@@ -49,6 +50,20 @@ namespace PUSGS_Project.Controllers
         public Task<long> Post([FromBody]AddFlightRequestModel model)
         {
             return _flightService.AddAsync(model);
+        }
+
+        [HttpPost("ticket")]
+        public Task<long> MakeReservation([FromBody]FlightTicketModel model)
+        {
+            // TODO: Send confirmation mail that reservation has been made
+            return _flightService.MakeReservation(model);
+        }
+
+        [HttpPost("ticket-invitation")]
+        public Task InviteFriends([FromBody]InviteFriendsRequestModel request)
+        {
+            // TODO: Send email invitation to each friend
+            return _flightService.MakeFriendReservations(request.FlightTickets);
         }
     }
 }

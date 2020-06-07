@@ -41,8 +41,10 @@
   </div>
   <div class="row" *ngIf="!isReadOnly()">
     <div class="col-md">
-      <button class="btn btn-warning" (click)="open(content)">Edit</button>
-      <button class="btn btn-danger" (click)="onDelete()">Delete</button>
+      <div class="btn-group" role="group" aria-label="User profile actions">
+        <button class="btn btn-warning" (click)="open(content)">Edit</button>
+        <button class="btn btn-danger" (click)="onDelete()">Delete</button>
+      </div>
     </div>
   </div>
 </div>

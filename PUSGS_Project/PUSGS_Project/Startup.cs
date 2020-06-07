@@ -38,12 +38,14 @@ namespace PUSGS_Project
 
             // TODO: Add services here
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
+
             services.AddScoped<ICarRepository, CarRepository>();
             services.AddScoped<IRentACarRepository, RentACarRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAviationRepository, AviationRepository>();
             services.AddScoped<IFlightRepository, FlightRepository>();
             services.AddScoped<IFlightSeatRepository, FlightSeatRepository>();
+            services.AddScoped<IFlightTicketRepository, FlightTicketRepository>();
             services.AddScoped<IBranchRepository, BranchRepository>();
             services.AddScoped<ICarReservationRepository, CarReservationRepository>();
 
