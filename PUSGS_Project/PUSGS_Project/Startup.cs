@@ -48,6 +48,7 @@ namespace PUSGS_Project
             services.AddScoped<IFlightTicketRepository, FlightTicketRepository>();
             services.AddScoped<IBranchRepository, BranchRepository>();
             services.AddScoped<ICarReservationRepository, CarReservationRepository>();
+            services.AddScoped<IRatingRepository, RatingRepository>();
 
             services.AddScoped<IAviationService, AviationService>();
             services.AddScoped<IFlightService, FlightService>();

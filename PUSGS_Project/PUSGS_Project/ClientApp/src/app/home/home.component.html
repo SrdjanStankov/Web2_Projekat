@@ -149,15 +149,16 @@
               <th class="text-center" scope="col">Created on</th>
               <th class="text-center" scope="col">Reserved from</th>
               <th class="text-center" scope="col">Reserved to</th>
-              <th class="text-center" scope="col"></th>
+              <th class="text-center" scope="col">Ratings</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let reservation of carReservations">
-              <td class="">{{reservation.dateCreated | date: 'fullDate'}}</td>
-              <td>{{reservation.from | date: 'fullDate'}}</td>
-              <td>{{reservation.to | date: 'fullDate'}}</td>
-              <td *ngIf="checkDate(reservation.to)"><button class="btn btn-outline-primary" (click)="rateCar(reservation)">Rate!</button></td>
+              <td class="text-center">{{reservation.dateCreated | date: 'fullDate'}}</td>
+              <td class="text-center">{{reservation.from | date: 'fullDate'}}</td>
+              <td class="text-center">{{reservation.to | date: 'fullDate'}}</td>
+              <td class="text-center" *ngIf="!reservation.rating && checkDate(reservation.to)"><button class="btn btn-outline-primary" (click)="rateCar(content, reservation)">Rate!</button></td>
+              <td class="text-center" *ngIf="!!reservation.rating && checkDate(reservation.to)">{{reservation.rating}}</td>
             </tr>
           </tbody>
         </table>
@@ -174,3 +175,25 @@
 
   <div [ngbNavOutlet]="nav" class="ml-4"></div>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-add-rating">Rate car</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+      <div class="form-group">
+        <ngb-rating [formControl]="rating"></ngb-rating>
+        <div class="form-text small">
+          <div *ngIf="rating.valid" class="text-success">Thanks!</div>
+          <div *ngIf="rating.invalid" class="text-danger">Please rate us</div>
+        </div>
+      </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Submit</button>
+  </div>
+</ng-template>

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Core.Entities;
 using Core.Enumerations;
 using Core.Interfaces.Repositories;
+using Core.ViewModels.CarViewModels;
 using Core.ViewModels.RentACar;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -27,32 +28,14 @@ namespace PUSGS_Project.Controllers
         [HttpGet]
         public async Task<IEnumerable<RentACarModel>> GetAsync()
         {
-            var hashSet = new HashSet<RentACarModel>();
-
-            foreach (var item in (await repository.GetAllAsync()).Select(async s =>
-            {
-                return new RentACarModel(s)
-                {
-                    AverageRating = await repository.GetAverageRatingAsync(s.Id)
-                };
-            }))
-            {
-                hashSet.Add(await item);
-            }
-
-            return hashSet;
+			return new HashSet<RentACarModel>((await repository.GetAllAsync()).Select(s => new RentACarModel(s)));
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
         public async Task<RentACarModel> GetAsync(int id)
         {
-            var rentACar = await repository.GetAsync(id);
-            var rentACarModel = new RentACarModel(rentACar)
-            {
-                AverageRating = await repository.GetAverageRatingAsync(id)
-            };
-            return rentACarModel;
+			return new RentACarModel(await repository.GetAsync(id));
         }
 
         // POST api/<controller>
@@ -84,7 +67,7 @@ namespace PUSGS_Project.Controllers
         [HttpPost]
         [Route("AddCar")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<object> AddCar([FromBody] CarModel model)
+        public async Task<object> AddCar([FromBody] CarRentACarModel model)
         {
             var user = await GetLoginUserAsync();
 

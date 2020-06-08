@@ -10,6 +10,10 @@ import { Flight } from '../entities/flight';
 import { CarReservation } from '../entities/car-reservation';
 import { CarReservationService } from '../services/car-reservation.service';
 import { STORAGE_USER_ID_KEY } from '../constants/storage';
+import { FormControl, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Rating } from '../entities/rating';
+import { RatingService } from '../services/rating.service';
 
 @Component({
   selector: 'app-home',
@@ -28,8 +32,9 @@ export class HomeComponent {
   public searchFlight: string = "";
   public displayAgencies: boolean = true;
   public displayCompanies: boolean = true;
+  public rating = new FormControl(null, Validators.required);
 
-  constructor(private RACService: RentACarService, public backend: BackendService, private aviationService: AviationService, private router: Router, private carReservationService: CarReservationService) {
+  constructor(private RACService: RentACarService, public backend: BackendService, private aviationService: AviationService, private router: Router, private carReservationService: CarReservationService, private modalService: NgbModal, private ratingService: RatingService) {
     RACService.getAgencies().then(result => {
       this.rentACarAgencies = result;
     });
@@ -47,8 +52,18 @@ export class HomeComponent {
     return (new Date(Date.now()) >= new Date(to.toString()));
   }
 
-  rateCar(reservation: CarReservation) {
+  rateCar(content, reservation: CarReservation) {
     // TODO: Add modal for rating a car
+    this.modalService.open(content, { ariaLabelledBy: 'modal-add-rating' }).result.then(result => {
+      const rating = new Rating();
+      rating.value = Number.parseFloat(this.rating.value);
+      rating.userId = reservation.ownerEmail;
+      rating.carId = reservation.reservedCarId;
+      rating.reservationId = reservation.id;
+      this.ratingService.rateCar(rating).then(result => {
+        reservation.rating = rating.value;
+      });
+    });
   }
 
   details(id: number) {

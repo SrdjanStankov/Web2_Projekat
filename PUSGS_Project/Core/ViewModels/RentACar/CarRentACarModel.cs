@@ -2,7 +2,7 @@
 
 namespace Core.ViewModels.RentACar
 {
-    public class CarModel
+    public class CarRentACarModel
     {
         public long CarId { get; set; }
 

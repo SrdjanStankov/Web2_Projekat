@@ -6,5 +6,5 @@ export class CarReservation {
   dateCreated: Date;
   reservedCarId: number;
   ownerEmail: string;
-
+  rating: number;
 }
