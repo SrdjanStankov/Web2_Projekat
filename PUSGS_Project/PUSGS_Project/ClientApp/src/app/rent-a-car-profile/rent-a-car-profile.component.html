@@ -37,7 +37,11 @@
     </div>
     <div class="col-md-6">
       <div *ngFor="let car of rentACar.cars">
-        <p>{{car.name}}</p>
+        <p>
+          <span>{{car.name}}</span>
+          <br />
+          <span>Rating: {{car.averageRating}}</span>
+        </p>
       </div>
     </div>
   </div>
