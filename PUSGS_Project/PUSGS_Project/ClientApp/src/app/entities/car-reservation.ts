@@ -6,5 +6,6 @@ export class CarReservation {
   dateCreated: Date;
   reservedCarId: number;
   ownerEmail: string;
-
+  isRated: boolean;
+  rating: number;
 }
