@@ -1,7 +1,9 @@
 ﻿using Core.Entities;
 using Core.Enumerations;
 using Core.Interfaces.Repositories;
+using Core.Interfaces.Services;
 using Core.ViewModels.Apis;
+using Core.ViewModels.Aviation;
 using Core.ViewModels.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -26,11 +28,13 @@ namespace PUSGS_Project.Controllers
     {
         private readonly IUserRepository repository;
         private readonly ApplicationSettings settings;
+        private readonly IFlightService _flightService;
 
-        public UserController(IUserRepository userRepository, IOptions<ApplicationSettings> appSettings)
+        public UserController(IUserRepository userRepository, IOptions<ApplicationSettings> appSettings, IFlightService flightService)
         {
             repository = userRepository;
             settings = appSettings.Value;
+            _flightService = flightService;
         }
 
         // GET: api/User
@@ -70,6 +74,13 @@ namespace PUSGS_Project.Controllers
             return repository.DeleteUserByEmailAsync(id);
         }
 
+        [HttpGet]
+        [Route("{id}/flight-history")]
+        public Task<List<FlightTicketDetailsModel>> GetFlightTicketHistory(string id)
+        {
+            return _flightService.GetFlightTicketHistoryForUser(id);
+        }
+
         [HttpPost]
         [Route("Friend")]
         public Task MakeFriends([FromBody]FriendRequestModel request)
@@ -88,57 +99,15 @@ namespace PUSGS_Project.Controllers
         [Route("Register")]
         public async Task<object> Register([FromBody] User model)
         {
-            User user;
-            if (model.IsSystemAdmin)
-            {
-                user = new SystemAdministrator()
-                {
-                    City = model.City,
-                    Email = model.Email,
-                    LastName = model.LastName,
-                    Name = model.Name,
-                    Password = model.Password,
-                    Phone = model.Phone,
-                    IsSystemAdmin = model.IsSystemAdmin,
-                    IsRentACarAdmin = false
-                };
-            }
-            else if (model.IsRentACarAdmin)
-            {
-                user = new RentACarAdministrator()
-                {
-                    City = model.City,
-                    Email = model.Email,
-                    LastName = model.LastName,
-                    Name = model.Name,
-                    Password = model.Password,
-                    Phone = model.Phone,
-                    IsRentACarAdmin = model.IsRentACarAdmin,
-                    IsSystemAdmin = false
-                };
-            }
-            else
-            {
-                user = new User()
-                {
-                    City = model.City,
-                    Email = model.Email,
-                    LastName = model.LastName,
-                    Name = model.Name,
-                    Password = model.Password,
-                    Phone = model.Phone,
-                    IsSystemAdmin = false,
-                    IsRentACarAdmin = false
-                };
-            }
-
-            // TODO: validate user
+            User user = MapUser(model);
 
             if (!await repository.AddAsync(user))
             {
                 return BadRequest(new { message = "Already exist" });
             }
+
             await SendConfirmationEmailAsync(user.Email);
+
             return Ok();
         }
 
@@ -195,7 +164,7 @@ namespace PUSGS_Project.Controllers
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var securityToken = tokenHandler.CreateToken(tokenDescriptor);
                 var token = tokenHandler.WriteToken(securityToken);
-                return Ok(new { token, type = typeof(User).Name }); 
+                return Ok(new { token, type = typeof(User).Name });
             }
 
             return BadRequest(new { message = "Error loging in with google" });
@@ -257,6 +226,52 @@ namespace PUSGS_Project.Controllers
                 message.Priority = MailPriority.High;
 
                 await client.SendMailAsync(message);
+            }
+        }
+
+        private static User MapUser(User model)
+        {
+            if (model.IsSystemAdmin)
+            {
+                return new SystemAdministrator()
+                {
+                    City = model.City,
+                    Email = model.Email,
+                    LastName = model.LastName,
+                    Name = model.Name,
+                    Password = model.Password,
+                    Phone = model.Phone,
+                    IsSystemAdmin = model.IsSystemAdmin,
+                    IsRentACarAdmin = false
+                };
+            }
+            else if (model.IsRentACarAdmin)
+            {
+                return new RentACarAdministrator()
+                {
+                    City = model.City,
+                    Email = model.Email,
+                    LastName = model.LastName,
+                    Name = model.Name,
+                    Password = model.Password,
+                    Phone = model.Phone,
+                    IsRentACarAdmin = model.IsRentACarAdmin,
+                    IsSystemAdmin = false
+                };
+            }
+            else
+            {
+                return new User()
+                {
+                    City = model.City,
+                    Email = model.Email,
+                    LastName = model.LastName,
+                    Name = model.Name,
+                    Password = model.Password,
+                    Phone = model.Phone,
+                    IsSystemAdmin = false,
+                    IsRentACarAdmin = false
+                };
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using Core.Interfaces.Repositories;
+using Core.ViewModels.Aviation;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -47,6 +48,16 @@ namespace Persistance.Repositories
             var entity = await GetByIdAsync(flightTicket.Id);
             entity.Accepted = true;
             await _context.SaveChangesAsync();
+        }
+
+        public Task<List<FlightTicket>> GetDetailedTicketsByOwnerEmailAsync(string userEmail)
+        {
+            return _context.FlightTicket
+                .Include(t => t.Flight).ThenInclude(f => f.From)
+                .Include(t => t.Flight).ThenInclude(f => f.To)
+                .Include(t => t.FlightSeat)
+                .Where(t => t.TicketOwnerEmail == userEmail)
+                .ToListAsync();
         }
     }
 }
