@@ -13,7 +13,7 @@ namespace Core.ViewModels.Aviation
         {
             return new FlightSeatModel(seat)
             {
-                ReservedById = tickets.FirstOrDefault(t => t.FlightSeatId == seat.FlightId)?.Id
+                ReservedById = tickets.FirstOrDefault(t => t.FlightSeatId == seat.Id)?.Id
             };
         }
     }

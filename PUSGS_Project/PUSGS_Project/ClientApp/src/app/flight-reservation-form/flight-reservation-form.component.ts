@@ -74,9 +74,9 @@ export class FlightReservationFormComponent implements OnInit {
   }
 
   // Step 2
-  onCurrUserSeatChange(seatId: number) {
-    this.currUserSeatId = seatId.toString();
-    this.currUserTicket.flightSeatId = seatId;
+  onCurrUserSeatChange(seatId: string) {
+    this.currUserSeatId = seatId;
+    this.currUserTicket.flightSeatId = Number.parseInt(seatId);
   }
 
   inviteFriendsPrep() {
@@ -140,9 +140,11 @@ export class FlightReservationFormComponent implements OnInit {
     console.log("friendTickets", this.friendTickets);
     console.groupEnd();
 
-    this.friendTickets = this.seatReservations.filter(r => !!r.ticketOwnerEmail).map(r => this.makeFlightTicket(r));
-    if (this.friendTickets.length > 0) {
-      this.service.inviteFriends(this.friendTickets).then(() => console.log("Friend invitations sent"));
+    if (this.seatReservations) {
+      this.friendTickets = this.seatReservations.filter(r => !!r.ticketOwnerEmail).map(r => this.makeFlightTicket(r));
+      if (this.friendTickets.length > 0) {
+        this.service.inviteFriends(this.friendTickets).then(() => console.log("Friend invitations sent"));
+      }
     }
 
     this.service.makeReservation(this.currUserTicket).then(() => {

@@ -4,6 +4,7 @@ export class FlightTicket {
   flightSeatId: number;
   discount: number;
   canReject: boolean;
+  accepted: boolean;
 
   constructor({ ticketOwnerEmail = "", flightId = -1, flightSeatId = -1, discount = 0, canReject = true } = {}) {
     this.ticketOwnerEmail = ticketOwnerEmail;
