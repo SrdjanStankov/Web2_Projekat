@@ -59,8 +59,9 @@ export class HomeComponent {
       rating.value = Number.parseFloat(this.rating.value);
       rating.userId = reservation.ownerEmail;
       rating.carId = reservation.reservedCarId;
+      rating.reservationId = reservation.id;
       this.ratingService.rateCar(rating).then(result => {
-        reservation.isRated = true;
+        reservation.rating = rating.value;
       });
     });
   }

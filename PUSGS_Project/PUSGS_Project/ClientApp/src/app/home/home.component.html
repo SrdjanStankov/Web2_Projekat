@@ -151,16 +151,16 @@
               <th class="text-center" scope="col">Created on</th>
               <th class="text-center" scope="col">Reserved from</th>
               <th class="text-center" scope="col">Reserved to</th>
-              <th class="text-center" scope="col"></th>
+              <th class="text-center" scope="col">Ratings</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let reservation of carReservations">
-              <td class="">{{reservation.dateCreated | date: 'fullDate'}}</td>
-              <td>{{reservation.from | date: 'fullDate'}}</td>
-              <td>{{reservation.to | date: 'fullDate'}}</td>
-              <td *ngIf="!reservation.isRated && checkDate(reservation.to)"><button class="btn btn-outline-primary" (click)="rateCar(content, reservation)">Rate!</button></td>
-              <td *ngIf="reservation.isRated && checkDate(reservation.to)">{{reservation.rating}}</td>
+              <td class="text-center">{{reservation.dateCreated | date: 'fullDate'}}</td>
+              <td class="text-center">{{reservation.from | date: 'fullDate'}}</td>
+              <td class="text-center">{{reservation.to | date: 'fullDate'}}</td>
+              <td class="text-center" *ngIf="!reservation.rating && checkDate(reservation.to)"><button class="btn btn-outline-primary" (click)="rateCar(content, reservation)">Rate!</button></td>
+              <td class="text-center" *ngIf="!!reservation.rating && checkDate(reservation.to)">{{reservation.rating}}</td>
             </tr>
           </tbody>
         </table>
