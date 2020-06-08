@@ -115,5 +115,11 @@ namespace Core.Services
                 Accepted = accepted
             };
         }
+
+        public async Task<List<FlightTicketDetailsModel>> GetFlightTicketHistoryForUser(string userEmail)
+        {
+            var tickets = await _ticketRepository.GetDetailedTicketsByOwnerEmailAsync(userEmail);
+            return tickets.Select(t => new FlightTicketDetailsModel(t)).ToList();
+        }
     }
 }

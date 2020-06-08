@@ -33,6 +33,7 @@ import { FlightDetailsComponent } from './flight-details/flight-details.componen
 import { FlightSeatsComponent } from './flight-seats/flight-seats.component';
 import { FlightSeatComponent } from './flight-seat/flight-seat.component';
 import { FlightReservationFormComponent } from './flight-reservation-form/flight-reservation-form.component';
+import { TicketHistoryComponent } from './ticket-history/ticket-history.component';
 
 let config = new AuthServiceConfig([
   {
@@ -70,6 +71,7 @@ export function provideConfig() {
     FlightSeatsComponent,
     FlightSeatComponent,
     FlightReservationFormComponent,
+    TicketHistoryComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),

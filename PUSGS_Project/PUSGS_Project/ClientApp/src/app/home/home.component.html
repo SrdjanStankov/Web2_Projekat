@@ -53,7 +53,6 @@
             </div>
           </div>
         </div>
-
       </ng-template>
     </li>
 
@@ -136,7 +135,6 @@
             </div>
           </div>
         </div>
-
       </ng-template>
     </li>
 
@@ -167,6 +165,12 @@
       </ng-template>
     </li>
 
+    <li ngbNavItem="letovi" *ngIf="backend.isLogedIn()">
+      <a ngbNavLink>Istorija rezervacije letova</a>
+      <ng-template ngbNavContent>
+        <app-ticket-history></app-ticket-history>
+      </ng-template>
+    </li>
   </ul>
 
   <div [ngbNavOutlet]="nav" class="ml-4"></div>
