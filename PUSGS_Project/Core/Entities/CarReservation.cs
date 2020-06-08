@@ -9,6 +9,7 @@ namespace Core.Entities
 		public DateTime? To { get; set; }
 		public double Discount { get; set; }
 		public DateTime? DateCreated { get; set; }
+		public double? Rating { get; set; }
 
 		public long ReservedCarId { get; set; }
 		public Car ReservedCar { get; set; }

@@ -10,5 +10,6 @@ namespace Core.ViewModels.Rating
 		public double Value { get; set; }
 		public string UserId { get; set; }
 		public long CarId { get; set; }
+		public long ReservationId { get; set; }
 	}
 }

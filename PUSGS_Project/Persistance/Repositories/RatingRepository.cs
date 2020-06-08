@@ -26,6 +26,11 @@ namespace Persistance.Repositories
 
 			rating.RatingGiver = await context.User.FirstOrDefaultAsync(item => item.Email == ratingModel.UserId);
 			rating.Car = await context.Car.FirstOrDefaultAsync(item => item.Id == ratingModel.CarId);
+			if (rating.Car is object)
+			{
+				var carReservation = await context.CarReservations.FirstOrDefaultAsync(item => item.Id == ratingModel.ReservationId);
+				carReservation.Rating = rating.Value; 
+			}
 
 			// ovde dodaješ pronalaženje dodatnih polja ako ih dodaš u rating model
 
