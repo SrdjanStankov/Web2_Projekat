@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Core.Entities;
 using Core.Enumerations;
 using Core.Interfaces.Repositories;
+using Core.ViewModels.CarViewModels;
 using Core.ViewModels.RentACar;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -84,7 +85,7 @@ namespace PUSGS_Project.Controllers
         [HttpPost]
         [Route("AddCar")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<object> AddCar([FromBody] CarModel model)
+        public async Task<object> AddCar([FromBody] CarRentACarModel model)
         {
             var user = await GetLoginUserAsync();
 

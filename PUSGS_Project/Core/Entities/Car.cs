@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 
 namespace Core.Entities
 {
@@ -16,8 +14,6 @@ namespace Core.Entities
         public int BuildDate { get; set; }
 		public bool IsReserved { get; set; }
         public ICollection<Rating> Ratings { get; set; }
-        [NotMapped]
-		public double AverageRating { get => Ratings.DefaultIfEmpty(new Rating()).Average(item => item.Value); }
 
 		public Car()
         {
