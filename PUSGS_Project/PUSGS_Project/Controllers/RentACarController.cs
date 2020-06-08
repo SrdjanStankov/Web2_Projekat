@@ -28,32 +28,14 @@ namespace PUSGS_Project.Controllers
         [HttpGet]
         public async Task<IEnumerable<RentACarModel>> GetAsync()
         {
-            var hashSet = new HashSet<RentACarModel>();
-
-            foreach (var item in (await repository.GetAllAsync()).Select(async s =>
-            {
-                return new RentACarModel(s)
-                {
-                    AverageRating = await repository.GetAverageRatingAsync(s.Id)
-                };
-            }))
-            {
-                hashSet.Add(await item);
-            }
-
-            return hashSet;
+			return new HashSet<RentACarModel>((await repository.GetAllAsync()).Select(s => new RentACarModel(s)));
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
         public async Task<RentACarModel> GetAsync(int id)
         {
-            var rentACar = await repository.GetAsync(id);
-            var rentACarModel = new RentACarModel(rentACar)
-            {
-                AverageRating = await repository.GetAverageRatingAsync(id)
-            };
-            return rentACarModel;
+			return new RentACarModel(await repository.GetAsync(id));
         }
 
         // POST api/<controller>

@@ -63,11 +63,5 @@ namespace Persistance.Repositories
             context.Update(rentACar);
             await context.SaveChangesAsync();
         }
-
-        public async Task<double> GetAverageRatingAsync(long id)
-        {
-            var agencies = await GetAsync(id);
-            return agencies.Ratings.DefaultIfEmpty(new Rating()).Average(rating => rating.Value);
-        }
     }
 }

@@ -14,7 +14,7 @@ namespace Core.ViewModels.RentACar
         public ICollection<CarModel> Cars { get; set; }
         public ICollection<Branch> Branches { get; set; }
 
-        public double? AverageRating { get; set; }
+        public double AverageRating { get; set; }
 
         public RentACarModel(Entities.RentACar rentACar)
         {
@@ -24,6 +24,7 @@ namespace Core.ViewModels.RentACar
             Description = rentACar.Description;
             Cars = new HashSet<CarModel>(rentACar.Cars.Select(item => new CarModel(item)));
             Branches = new HashSet<Branch>(rentACar.Branches);
+            AverageRating = rentACar.Ratings.DefaultIfEmpty(new Entities.Rating()).Average(item => item.Value);
         }
     }
 }
