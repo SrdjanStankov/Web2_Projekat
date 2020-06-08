@@ -12,7 +12,7 @@ namespace Core.ViewModels.Aviation
         {
         }
 
-        public RatingModel(Rating rating)
+        public RatingModel(Entities.Rating rating)
         {
             if (rating == null)
                 return;

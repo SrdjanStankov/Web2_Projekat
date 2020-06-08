@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Core.Entities;
 
 namespace Core.ViewModels.CarViewModels
@@ -9,7 +8,7 @@ namespace Core.ViewModels.CarViewModels
         public long Id { get; set; }
         public string Name { get; set; }
         public int PassengerNumber { get; set; }
-        public ICollection<Rating> Ratings { get; set; }
+        public ICollection<Entities.Rating> Ratings { get; set; }
         public string Type { get; set; }
         public string Brand { get; set; }
         public string Model { get; set; }
@@ -20,7 +19,7 @@ namespace Core.ViewModels.CarViewModels
 
         public CarReservationDetailsModel()
         {
-            Ratings = new HashSet<Rating>();
+            Ratings = new HashSet<Entities.Rating>();
         }
 
         public CarReservationDetailsModel(Car car)
@@ -28,7 +27,7 @@ namespace Core.ViewModels.CarViewModels
             Id = car.Id;
             Name = car.Name;
             PassengerNumber = car.PassengerNumber;
-            Ratings = new HashSet<Rating>(car.Ratings);
+            Ratings = new HashSet<Entities.Rating>(car.Ratings);
             Type = car.Type;
             Brand = car.Brand;
             Model = car.Model;
