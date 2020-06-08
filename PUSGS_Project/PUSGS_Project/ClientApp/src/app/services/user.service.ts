@@ -2,6 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { User } from "../entities/user";
 import { HttpClient } from "@angular/common/http";
 import { STORAGE_USER_ID_KEY } from '../constants/storage';
+import { FlightTicketDetails } from '../entities/flight-ticket';
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +36,8 @@ export class UserService {
   }
   updateUser(user: User) {
     return this.http.put(this.userControllerUri + user.email, user).toPromise();
+  }
+  getFlightHistory(userId: string): Promise<FlightTicketDetails[]> {
+    return this.http.get<FlightTicketDetails[]>(this.userControllerUri + userId + "/flight-history").toPromise();
   }
 }

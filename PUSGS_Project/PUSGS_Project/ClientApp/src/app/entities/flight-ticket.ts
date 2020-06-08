@@ -1,3 +1,6 @@
+import { Flight } from "./flight";
+import { FlightSeat } from "./flight-seat";
+
 export class FlightTicket {
   ticketOwnerEmail: string;
   flightId: number;
@@ -13,4 +16,15 @@ export class FlightTicket {
     this.discount = discount;
     this.canReject = canReject;
   }
+}
+
+export class FlightTicketDetails {
+  id: number;
+  ticketOwnerEmail: string;
+  flight: Flight;
+  flightSeat: FlightSeat;
+  discount: number;
+  dateCreated: Date;
+  accepted: boolean;
+  canReject: boolean;
 }

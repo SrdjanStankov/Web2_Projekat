@@ -12,4 +12,10 @@ var FlightTicket = /** @class */ (function () {
     return FlightTicket;
 }());
 exports.FlightTicket = FlightTicket;
+var FlightTicketDetails = /** @class */ (function () {
+    function FlightTicketDetails() {
+    }
+    return FlightTicketDetails;
+}());
+exports.FlightTicketDetails = FlightTicketDetails;
 //# sourceMappingURL=flight-ticket.js.map

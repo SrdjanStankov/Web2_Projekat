@@ -18,5 +18,7 @@ namespace Core.Interfaces.Services
         Task<long> MakeReservation(FlightTicketModel model);
 
         Task MakeFriendReservations(IEnumerable<FlightTicketModel> models);
+
+        Task<List<FlightTicketDetailsModel>> GetFlightTicketHistoryForUser(string userEmail);
     }
 }
