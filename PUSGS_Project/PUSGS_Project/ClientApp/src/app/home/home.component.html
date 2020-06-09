@@ -25,7 +25,7 @@
               <div class="card-body">
                 <p class="card-text">{{company.description}}</p>
                 <p class="card-text">City: {{company.address.cityName}}</p>
-                <p *ngIf="!!company.averageRating" class="card-text">Average rating: {{company.averageRating}}</p>
+                <p *ngIf="!!company.averageRating" class="card-text">Average rating: {{company.averageRating.toPrecision(3)}}</p>
               </div>
 
               <div class="card-footer">
@@ -100,7 +100,7 @@
 
               <div class="card-footer">
                 <div>
-                  {{agency.averageRating}}
+                  {{agency.averageRating.toPrecision(3)}}
                 </div>
                 <div>
                   <button *ngIf="backend.getLogedInUserType() == 'RentACarAdmin' || backend.getLogedInUserType() == 'SystemAdmin'" class="btn btn-warning" (click)="details(agency.id)">Details</button>
@@ -126,7 +126,7 @@
 
               <div class="card-footer">
                 <div>
-                  {{car.averageRating}}
+                  {{car.averageRating.toPrecision(3)}}
                 </div>
                 <div>
                   <button *ngIf="backend.getLogedInUserType() == 'RentACarAdmin'" class="btn btn-warning" (click)="details(agency.id)">Details</button>
