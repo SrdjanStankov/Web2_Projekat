@@ -9,4 +9,6 @@ export class AddFlightRequest {
   numberOfChangeovers: number;
   from: Location;
   to: Location;
+  numberOfSeats = 20;
+  maxSeatsPerRow = 4;
 }

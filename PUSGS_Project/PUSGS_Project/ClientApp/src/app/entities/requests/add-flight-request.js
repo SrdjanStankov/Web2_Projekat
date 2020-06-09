@@ -4,6 +4,8 @@ var AddFlightRequest = /** @class */ (function () {
     function AddFlightRequest() {
         this.departureTime = new Date();
         this.arrivalTime = new Date();
+        this.numberOfSeats = 20;
+        this.maxSeatsPerRow = 4;
     }
     return AddFlightRequest;
 }());

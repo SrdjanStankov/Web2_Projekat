@@ -1,0 +1,59 @@
+<section class="container">
+  <form [formGroup]="flightGroup" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col">
+        <label for="fromCity">From City</label>
+        <input id="fromCity" type="text" name="fromCity" formControlName="fromCity"
+               class="form-control" [class.is-invalid]="isInvalid('fromCity')" />
+      </div>
+      <div class="col">
+        <label for="toCity">To City</label>
+        <input id="toCity" type="text" name="toCity" formControlName="toCity"
+               class="form-control" [class.is-invalid]="isInvalid('toCity')" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label for="departureTime">Departure Time</label>
+        <input id="departureTime" type="datetime-local" name="departureTime" formControlName="departureTime"
+               class="form-control" [class.is-invalid]="isInvalid('departureTime')" />
+      </div>
+      <div class="col">
+        <label for="arrivalTime">Arrival Time</label>
+        <input id="arrivalTime" type="datetime-local" name="arrivalTime" formControlName="arrivalTime"
+               class="form-control" [class.is-invalid]="isInvalid('arrivalTime')" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label for="travelLength">Travel length (km)</label>
+        <input id="travelLength" type="number" name="travelLength" formControlName="travelLength"
+               class="form-control" [class.is-invalid]="isInvalid('travelLength')" />
+      </div>
+      <div class="col">
+        <label for="ticketPrice">Ticket price ($)</label>
+        <input id="ticketPrice" type="number" name="ticketPrice" formControlName="ticketPrice"
+               class="form-control" [class.is-invalid]="isInvalid('ticketPrice')" />
+      </div>
+      <div class="col">
+        <label for="numberOfChangeovers">Number Of Changeovers</label>
+        <input id="numberOfChangeovers" type="number" name="numberOfChangeovers" formControlName="numberOfChangeovers"
+               class="form-control" [class.is-invalid]="isInvalid('numberOfChangeovers')" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label for="numberOfSeats">Number of Seats</label>
+        <input id="numberOfSeats" type="number" min="2" name="numberOfSeats" formControlName="numberOfSeats"
+               class="form-control" [class.is-invalid]="isInvalid('numberOfSeats')" />
+      </div>
+      <div class="col">
+        <label for="maxSeatsPerRow">Max seats per row</label>
+        <input id="maxSeatsPerRow" type="number" min="1" name="maxSeatsPerRow" formControlName="maxSeatsPerRow"
+               class="form-control" [class.is-invalid]="isInvalid('maxSeatsPerRow')" />
+      </div>
+    </div>
+    <br />
+    <button type="submit" [disabled]="!flightGroup.valid" class="btn btn-outline-dark">Submit</button>
+  </form>
+</section>
