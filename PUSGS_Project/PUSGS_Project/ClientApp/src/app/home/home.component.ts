@@ -53,7 +53,6 @@ export class HomeComponent {
   }
 
   rateCar(content, reservation: CarReservation) {
-    // TODO: Add modal for rating a car
     this.modalService.open(content, { ariaLabelledBy: 'modal-add-rating' }).result.then(result => {
       const rating = new Rating();
       rating.value = Number.parseFloat(this.rating.value);

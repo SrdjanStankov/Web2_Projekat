@@ -32,24 +32,34 @@ namespace PUSGS_Project.Controllers
         // GET api/<controller>/RentACar/5
         [HttpGet]
         [Route("RentACar/{id}")]
-        public async Task<IEnumerable<CarReservationDetailsModel>> GetCarsAsync(long id, [FromQuery] CarReservationModel model)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<object> GetCarsAsync(long id, [FromQuery] CarReservationModel model)
         {
-            var carsModel = new List<CarReservationDetailsModel>();
+            var user = await GetLoginUserAsync();
 
-            foreach (var item in await carRepository.GetCarsOfAgencyAsync(id))
-            {
-                if (item.PassengerNumber != model.PassengerNumber || model.MaxCost < item.CostPerDay || model.Type != item.Type || item.IsReserved)
-                {
-                    continue;
-                }
-                carsModel.Add(new CarReservationDetailsModel(item)
-                {
-                    AverageRating = await carRepository.GetAverageRatingAsync(item.Id),
-                    CostForRange = (model.ReturnDate - model.TakeDate).TotalDays * item.CostPerDay
-                });
-            }
+			if (user is User)
+			{
+				var carsModel = new List<CarReservationDetailsModel>();
 
-            return carsModel;
+				foreach (var item in await carRepository.GetCarsOfAgencyAsync(id))
+				{
+					if (item.PassengerNumber != model.PassengerNumber || model.MaxCost < item.CostPerDay || model.Type != item.Type || item.IsReserved)
+					{
+						continue;
+					}
+					carsModel.Add(new CarReservationDetailsModel(item)
+					{
+						AverageRating = await carRepository.GetAverageRatingAsync(item.Id),
+						CostForRange = (model.ReturnDate - model.TakeDate).TotalDays * item.CostPerDay
+					});
+				}
+
+				return carsModel; 
+			}
+			else
+			{
+                return Forbid();
+			}
         }
 
         // POST api/<controller>
