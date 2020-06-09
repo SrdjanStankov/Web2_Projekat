@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AviationCompany } from '../entities/aviation-company';
 import { AviationService } from '../services/aviation.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AddOrUpdateAviationCompanyRequest } from '../entities/requests/add-or-update-aviation-company-request';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -15,7 +15,8 @@ export class AviationProfileComponent implements OnInit {
   public company: AviationCompany;
   public id: number;
 
-  constructor(private service: AviationService, private route: ActivatedRoute, private modalService: NgbModal) {
+  constructor(private service: AviationService, private route: ActivatedRoute,
+    private router: Router, private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
@@ -63,5 +64,6 @@ export class AviationProfileComponent implements OnInit {
 
   // Add flight
   addFlight() {
+    this.router.navigateByUrl(`aviation/${this.id}/add-flight`);
   }
 }

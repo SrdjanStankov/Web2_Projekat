@@ -34,6 +34,8 @@ import { FlightSeatsComponent } from './flight-seats/flight-seats.component';
 import { FlightSeatComponent } from './flight-seat/flight-seat.component';
 import { FlightReservationFormComponent } from './flight-reservation-form/flight-reservation-form.component';
 import { TicketHistoryComponent } from './ticket-history/ticket-history.component';
+import { AddFlightFormComponent } from './add-flight-form/add-flight-form.component';
+import { AddFlightRequest } from "./entities/requests/add-flight-request";
 
 let config = new AuthServiceConfig([
   {
@@ -72,6 +74,7 @@ export function provideConfig() {
     FlightSeatComponent,
     FlightReservationFormComponent,
     TicketHistoryComponent,
+    AddFlightFormComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -87,6 +90,7 @@ export function provideConfig() {
       { path: "login", component: LoginComponent },
       { path: "profile", component: ProfileComponent },
       { path: "aviation/:id", component: AviationProfileComponent },
+      { path: "aviation/:id/add-flight", component: AddFlightFormComponent },
       { path: "rent-a-car/:id", component: RentACarProfileComponent },
       { path: "rent-a-car-edit/:id", component: RentACarProfileEditComponent, canActivate: [AuthGuard] },
       { path: "car-reservation", component: CarReservationComponent, canActivate: [AuthGuard] },
