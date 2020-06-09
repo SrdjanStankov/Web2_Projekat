@@ -1,4 +1,6 @@
 <div *ngIf="!!flight">
+  <!-- Flight info display -->
+
   <h1>Flight details</h1>
   <section class="container profile-display">
     <div class="row">
@@ -76,11 +78,13 @@
     </div>
     <div class="row">
       <div class="col-md">
-        <button class="btn btn-warning" disabled>Edit info</button>
+        <button class="btn btn-warning" (click)="openFlightModal(content)" [disabled]="!canEditFlight()">Edit info</button>
       </div>
     </div>
   </section>
   <hr />
+
+  <!-- Flight seats display-->
   <h3>Flight seats</h3>
   <section class="container">
     <app-flight-seats [flightSeats]="flight.seats"></app-flight-seats>
@@ -92,3 +96,47 @@
   <hr />
   <button class="btn-reservation-sticky btn btn-success" (click)="openReservationForm()" *ngIf="canMakeReservation()">Make reservation(s)</button>
 </div>
+
+<ng-template #content let-modal>
+
+  <!--Edit flight modal-->
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Flight update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="flightGroup">
+      <div class="form-group">
+        <label for="departureTime">Departure Time</label>
+        <input id="departureTime" type="datetime-local" name="departureTime" formControlName="departureTime"
+               class="form-control" [class.is-invalid]="isInvalid('departureTime')" />
+      </div>
+      <div class="form-group">
+        <label for="arrivalTime">Arrival Time</label>
+        <input id="arrivalTime" type="datetime-local" name="arrivalTime" formControlName="arrivalTime"
+               class="form-control" [class.is-invalid]="isInvalid('arrivalTime')" />
+      </div>
+      <div class="form-group">
+        <label for="travelLength">Travel length (km)</label>
+        <input id="travelLength" type="number" name="travelLength" formControlName="travelLength"
+               class="form-control" [class.is-invalid]="isInvalid('travelLength')" />
+      </div>
+      <div class="form-group">
+        <label for="ticketPrice">Ticket price ($)</label>
+        <input id="ticketPrice" type="number" name="ticketPrice" formControlName="ticketPrice"
+               class="form-control" [class.is-invalid]="isInvalid('ticketPrice')" />
+      </div>
+      <div class="form-group">
+        <label for="numberOfChangeovers">Number Of Changeovers</label>
+        <input id="numberOfChangeovers" type="number" name="numberOfChangeovers" formControlName="numberOfChangeovers"
+               class="form-control" [class.is-invalid]="isInvalid('numberOfChangeovers')" />
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" [disabled]="flightGroup.invalid" class="btn btn-outline-dark" (click)="modal.close('Save click')">Submit</button>
+  </div>
+</ng-template>
