@@ -8,6 +8,9 @@ import { Router } from '@angular/router';
 import { CarReservationService } from '../services/car-reservation.service';
 import { CarReservation } from '../entities/car-reservation';
 import { STORAGE_USER_ID_KEY } from '../constants/storage';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+
+const now: Date = new Date(Date.now());
 
 @Component({
   selector: 'app-car-reservation',
@@ -19,6 +22,7 @@ export class CarReservationComponent implements OnInit {
   public step: number;
   public rangeVal = 0;
   public search: string = "";
+  minDate: NgbDateStruct = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
 
   public allAgencies: RentACar[];
   public displayAgencies: RentACar[];
