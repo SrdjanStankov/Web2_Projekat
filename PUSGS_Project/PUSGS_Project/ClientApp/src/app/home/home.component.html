@@ -100,7 +100,7 @@
 
               <div class="card-footer">
                 <div>
-                  {{agency.averageRating}}
+                  {{agency.averageRating.toPrecision(3)}}
                 </div>
                 <div>
                   <button *ngIf="backend.getLogedInUserType() == 'RentACarAdmin' || backend.getLogedInUserType() == 'SystemAdmin'" class="btn btn-warning" (click)="details(agency.id)">Details</button>
