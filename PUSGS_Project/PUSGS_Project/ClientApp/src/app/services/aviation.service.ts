@@ -24,7 +24,7 @@ export class AviationService {
     return this.http.post(this.aviationControllerUri, request).toPromise();
   }
   update(request: AddOrUpdateAviationCompanyRequest) {
-    return this.http.post(this.aviationControllerUri + request.id, request).toPromise();
+    return this.http.put(this.aviationControllerUri + request.id, request).toPromise();
   }
   delete(id: number) {
     return this.http.delete(this.aviationControllerUri + id).toPromise();

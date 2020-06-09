@@ -1,4 +1,5 @@
 <div class="container profile-display" *ngIf="!!company">
+  <h2>Aviation profile</h2>
   <div class="row">
     <div class="col-md-6">
       <label>Name</label>
@@ -13,14 +14,6 @@
     </div>
     <div class="col-md-6">
       <p>{{company.description}}</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <label>Latitude, Longitude:</label>
-    </div>
-    <div class="col-md-6">
-      <p>{{company.address.x}}, {{company.address.y}}</p>
     </div>
   </div>
   <div class="row">
@@ -41,7 +34,53 @@
   </div>
   <div class="row">
     <div class="col-md">
-      <button class="btn btn-warning" disabled>Edit</button>
+      <button class="btn btn-warning" (click)="editProfile(aviationForm)">Edit</button>
     </div>
   </div>
+  <hr />
+  <div class="btn-group" role="group">
+    <button class="btn btn-primary" (click)="addFlight()">Add Flight</button>
+  </div>
 </div>
+
+<ng-template #aviationForm let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Aviation Form</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="aviationGroup">
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <div class="input-group">
+          <input [class.is-invalid]="aviationGroup.get('name').invalid && aviationGroup.get('name').touched" type="text" autocomplete="on" id="name" class="form-control" placeholder="name" name="name" formControlName="name" />
+        </div>
+        <div *ngIf="(aviationGroup.get('name').invalid && aviationGroup.get('name').touched) || aviationGroup.get('name').dirty">
+          <small *ngIf="aviationGroup.get('name').errors?.required" class="text-danger">Name is required</small>
+        </div>
+        <br />
+
+        <label for="description">Description</label>
+        <div class="input-group">
+          <input [class.is-invalid]="aviationGroup.get('description').invalid && aviationGroup.get('description').touched" type="text" autocomplete="on" id="description" class="form-control" placeholder="description" name="description" formControlName="description">
+        </div>
+        <div *ngIf="(aviationGroup.get('description').invalid && aviationGroup.get('description').touched) || aviationGroup.get('description').dirty">
+          <small *ngIf="aviationGroup.get('description').errors?.required" class="text-danger">Description is required</small>
+        </div>
+
+        <label for="cityName">City Name</label>
+        <div class="input-group">
+          <input [class.is-invalid]="aviationGroup.get('cityName').invalid && aviationGroup.get('cityName').touched" type="text" autocomplete="on" id="cityName" class="form-control" placeholder="cityName" name="cityName" formControlName="cityName">
+        </div>
+        <div *ngIf="(aviationGroup.get('cityName').invalid && aviationGroup.get('cityName').touched) || aviationGroup.get('cityName').dirty">
+          <small *ngIf="aviationGroup.get('cityName').errors?.required" class="text-danger">City Name is required</small>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" [disabled]="!aviationGroup.valid" class="btn btn-outline-dark" (click)="modal.close('Save click')">Submit</button>
+    </div>
+  </form>
+</ng-template>
