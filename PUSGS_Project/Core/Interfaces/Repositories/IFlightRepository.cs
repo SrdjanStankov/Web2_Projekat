@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Core.ViewModels.Aviation.Requests;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,6 +15,6 @@ namespace Core.Interfaces.Repositories
 
         Task RemoveAsync(long id);
 
-        Task UpdateAsync(Flight company);
+        Task UpdateAsync(long id, UpdateFlightRequestModel model);
     }
 }

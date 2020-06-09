@@ -46,6 +46,7 @@
     <None Remove="ClientApp\src\app\entities\RentACarAdmin.ts" />
     <None Remove="ClientApp\src\app\entities\requests\add-flight-request.ts" />
     <None Remove="ClientApp\src\app\entities\requests\add-or-update-aviation-company-request.ts" />
+    <None Remove="ClientApp\src\app\entities\requests\update-flight-request.ts" />
     <None Remove="ClientApp\src\app\flight-reservation-form\helpers\flight-seat-reservation.ts" />
   </ItemGroup>
 
@@ -61,6 +62,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\entities\RentACarAdmin.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\entities\requests\add-flight-request.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\entities\requests\add-or-update-aviation-company-request.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\entities\requests\update-flight-request.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\flight-reservation-form\helpers\flight-seat-reservation.ts" />
   </ItemGroup>
 

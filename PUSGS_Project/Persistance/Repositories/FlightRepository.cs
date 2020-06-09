@@ -1,7 +1,7 @@
 ﻿using Core.Entities;
 using Core.Interfaces.Repositories;
+using Core.ViewModels.Aviation.Requests;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -46,13 +46,34 @@ namespace Persistance.Repositories
         public async Task RemoveAsync(long id)
         {
             var flight = await GetByIdAsync(id);
+            _context.FlightTicket.RemoveRange(flight.Tickets);
+            _context.FlightSeats.RemoveRange(flight.Seats);
+            _context.Location.Remove(flight.From);
+            _context.Location.Remove(flight.To);
             _context.Flight.Remove(flight);
             await _context.SaveChangesAsync();
         }
 
-        public Task UpdateAsync(Flight company)
+        public async Task UpdateAsync(long id, UpdateFlightRequestModel model)
         {
-            throw new NotImplementedException();
+            var flight = await _context.Flight.SingleOrDefaultAsync(f => f.Id == id);
+
+            if (model.ArrivalTime != null)
+                flight.ArrivalTime = model.ArrivalTime;
+
+            if (model.DepartureTime != null)
+                flight.DepartureTime = model.DepartureTime;
+
+            if (model.TicketPrice != null)
+                flight.TicketPrice = model.TicketPrice.Value;
+
+            if (model.NumberOfChangeovers != null)
+                flight.NumberOfChangeovers = model.NumberOfChangeovers.Value;
+
+            if (model.TravelLength != null)
+                flight.TravelLength = model.TravelLength.Value;
+
+            await _context.SaveChangesAsync();
         }
     }
 }
