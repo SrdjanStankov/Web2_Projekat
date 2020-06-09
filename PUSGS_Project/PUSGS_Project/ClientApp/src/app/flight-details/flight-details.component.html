@@ -77,8 +77,9 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md">
+      <div class="btn-group">
         <button class="btn btn-warning" (click)="openFlightModal(content)" [disabled]="!canEditFlight()">Edit info</button>
+        <button class="btn btn-danger" (click)="deleteFlight()">Delete flight</button>
       </div>
     </div>
   </section>

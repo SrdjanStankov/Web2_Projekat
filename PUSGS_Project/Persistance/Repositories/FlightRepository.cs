@@ -46,6 +46,10 @@ namespace Persistance.Repositories
         public async Task RemoveAsync(long id)
         {
             var flight = await GetByIdAsync(id);
+            _context.FlightTicket.RemoveRange(flight.Tickets);
+            _context.FlightSeats.RemoveRange(flight.Seats);
+            _context.Location.Remove(flight.From);
+            _context.Location.Remove(flight.To);
             _context.Flight.Remove(flight);
             await _context.SaveChangesAsync();
         }

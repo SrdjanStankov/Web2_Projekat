@@ -26,6 +26,12 @@ export class FlightDetailsComponent implements OnInit {
     });
   }
 
+  deleteFlight() {
+    this.service.delete(this.id).then(() => {
+      this.router.navigateByUrl("");
+    })
+  }
+
   // Edit flight form
   flightGroup = new FormGroup({
     departureTime: new FormControl(new Date(), Validators.required),
