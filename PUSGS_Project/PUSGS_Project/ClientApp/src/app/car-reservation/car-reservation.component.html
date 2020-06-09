@@ -27,7 +27,7 @@
             {{branch.address}}
           </div>
         </td>
-        <td>{{agency.averageRating}}</td>
+        <td>{{agency.averageRating.toPrecision(3)}}</td>
         <td><button type="button" class="btn btn-primary" (click)="choosedAgency(agency)">Choose</button></td>
       </tr>
     </tbody>
@@ -116,7 +116,7 @@
         <td>{{car.buildDate}}</td>
         <td>{{car.passengerNumber}}</td>
         <td>{{car.type}}</td>
-        <td>{{car.averageRating}}</td>
+        <td>{{car.averageRating.toPrecision(3)}}</td>
         <td>${{car.costForRange}}</td>
         <td><button type="button" class="btn btn-primary" (click)="reserve(car)">Choose</button></td>
       </tr>
