@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Flight } from '../entities/flight';
 import { AddFlightRequest } from '../entities/requests/add-flight-request';
 import { FlightTicket } from '../entities/flight-ticket';
+import { UpdateFlightRequest } from '../entities/requests/update-flight-request';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,9 @@ export class FlightService {
   }
   delete(id: number) {
     return this.http.delete(this.flightControllerUri + id).toPromise();
+  }
+  update(id: number, request: UpdateFlightRequest) {
+    return this.http.put(this.flightControllerUri + id, request).toPromise();
   }
   makeReservation(ticket: FlightTicket) {
     return this.http.post(this.flightControllerUri + "ticket", ticket).toPromise();

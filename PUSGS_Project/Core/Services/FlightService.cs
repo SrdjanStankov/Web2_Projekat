@@ -3,7 +3,6 @@ using Core.Interfaces.Repositories;
 using Core.Interfaces.Services;
 using Core.ViewModels.Aviation;
 using Core.ViewModels.Aviation.Requests;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -120,6 +119,11 @@ namespace Core.Services
         {
             var tickets = await _ticketRepository.GetDetailedTicketsByOwnerEmailAsync(userEmail);
             return tickets.Select(t => new FlightTicketDetailsModel(t)).ToList();
+        }
+
+        public Task UpdateAsync(int id, UpdateFlightRequestModel model)
+        {
+            return _flightRepository.UpdateAsync(id, model);
         }
     }
 }

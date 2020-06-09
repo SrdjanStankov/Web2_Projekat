@@ -52,6 +52,12 @@ namespace PUSGS_Project.Controllers
             return _flightService.AddAsync(model);
         }
 
+        [HttpPut("{id}")]
+        public Task Put(int id, [FromBody] UpdateFlightRequestModel model)
+        {
+            return _flightService.UpdateAsync(id, model);
+        }
+
         [HttpPost("ticket")]
         public Task<long> MakeReservation([FromBody]FlightTicketModel model)
         {
