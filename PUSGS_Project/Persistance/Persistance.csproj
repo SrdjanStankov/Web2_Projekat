@@ -41,6 +41,10 @@
     <Compile Remove="Migrations\20200608170856_AddRatingToCarReservation.Designer.cs" />
     <Compile Remove="Migrations\20200608171718_AddRatingToCarReservation.cs" />
     <Compile Remove="Migrations\20200608171718_AddRatingToCarReservation.Designer.cs" />
+    <Compile Remove="Migrations\20200610122105_AddedUserFriendsTable.cs" />
+    <Compile Remove="Migrations\20200610122105_AddedUserFriendsTable.Designer.cs" />
+    <Compile Remove="Migrations\20200610122232_AddedUserFriendsTable.cs" />
+    <Compile Remove="Migrations\20200610122232_AddedUserFriendsTable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

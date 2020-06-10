@@ -1,8 +1,10 @@
 ﻿using Core.Entities;
 using Core.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Persistance.Repositories
@@ -16,14 +18,41 @@ namespace Persistance.Repositories
             context = applicationDbContext;
         }
 
-        public Task<List<User>> GetUsersAsync()
+        public async Task<List<User>> GetUsersAsync()
         {
-            return context.User.Include(u => u.Friends).ToListAsync();
+            var users = await context.User.ToListAsync();
+            var userFriends = await context.UserFriends
+                .Include(u => u.User)
+                .Include(u => u.Friend)
+                .ToListAsync();
+
+            foreach (var user in users)
+            {
+                user.Friends = userFriends
+                    .Where(x => x.UserEmail == user.Email || x.FriendEmail == user.Email)
+                    .Select(u => u.UserEmail == user.Email ? u.Friend : u.User)
+                    .ToList();
+            }
+
+            return users;
         }
 
-        public Task<User> GetUserByEmailAsync(string email)
+        public async Task<User> GetUserByEmailAsync(string email)
         {
-            return context.User.Include(u => u.Friends).FirstOrDefaultAsync(u => u.Email == email);
+            var user = await context.User.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user == null)
+                return null;
+
+            var friends = await context.UserFriends
+                .Include(x => x.User)
+                .Include(x => x.Friend)
+                .Where(x => x.UserEmail == user.Email || x.FriendEmail == user.Email)
+                .ToListAsync();
+
+            user.Friends = friends.Select(u => u.UserEmail == user.Email ? u.Friend : u.User).ToList();
+
+            return user;
         }
 
         public async Task<bool> AddAsync(User user)
@@ -42,6 +71,11 @@ namespace Persistance.Repositories
         public async Task DeleteUserByEmailAsync(string email)
         {
             var user = await GetUserByEmailAsync(email);
+
+            var userFriends = await context.UserFriends.Where(x => x.UserEmail == user.Email || x.FriendEmail == user.Email).ToListAsync();
+            context.UserFriends.RemoveRange(userFriends);
+            await context.SaveChangesAsync();
+
             context.User.Remove(user);
             await context.SaveChangesAsync();
         }
@@ -70,26 +104,24 @@ namespace Persistance.Repositories
 
         public async Task MakeFriendsAsync(string userId, string friendId)
         {
-            var user = await GetUserByEmailAsync(userId);
-            var friend = await GetUserByEmailAsync(friendId);
-
-            if (!user.Friends.Any(f => f.Email == friend.Email))
+            if (!context.UserFriends.Any(GetAreFriendsExpression(userId, friendId)))
             {
-                user.Friends.Add(friend);
-                friend.Friends.Add(user);
+                await context.UserFriends.AddAsync(new UserFriends(userId, friendId));
                 await context.SaveChangesAsync();
             }
         }
 
         public async Task UnfriendAsync(string userId, string friendId)
         {
-            var user = await GetUserByEmailAsync(userId);
-            var friend = await GetUserByEmailAsync(friendId);
-
-            user.Friends.Remove(friend);
-            friend.Friends.Remove(user);
+            var query = await context.UserFriends.Where(GetAreFriendsExpression(userId, friendId)).ToListAsync();
+            context.UserFriends.RemoveRange(query);
 
             await context.SaveChangesAsync();
+        }
+
+        private static Expression<Func<UserFriends, bool>> GetAreFriendsExpression(string userId, string friendId)
+        {
+            return x => (x.UserEmail == userId || x.FriendEmail == userId) && (x.UserEmail == friendId || x.FriendEmail == friendId);
         }
     }
 }
