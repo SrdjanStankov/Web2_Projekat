@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities
 {
@@ -16,7 +17,9 @@ namespace Core.Entities
 
         public bool RequirePasswordChange { get; set; }
 
+        [NotMapped]
         public ICollection<User> Friends { get; set; }
+
         public ICollection<FlightTicket> Tickets { get; set; }
 
         public User()

@@ -15,6 +15,8 @@ namespace Persistance
         }
 
         public DbSet<User> User { get; set; }
+        public DbSet<UserFriends> UserFriends { get; set; }
+
         public DbSet<Car> Car { get; set; }
         public DbSet<Flight> Flight { get; set; }
         public DbSet<FlightSeat> FlightSeats { get; set; }
@@ -24,6 +26,6 @@ namespace Persistance
         public DbSet<RentACar> RentACar { get; set; }
         public DbSet<AviationCompany> AviationCompany { get; set; }
         public DbSet<Branch> Branches { get; set; }
-		public DbSet<CarReservation> CarReservations { get; set; }
-	}
+        public DbSet<CarReservation> CarReservations { get; set; }
+    }
 }
