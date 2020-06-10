@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Core.Enumerations;
+using Core.Helpers;
+using System;
 
 namespace Core.Entities
 {

@@ -1,4 +1,6 @@
 ﻿using Core.Entities;
+using Core.Helpers;
+using System;
 
 namespace Core.ViewModels.Aviation
 {
@@ -14,7 +16,7 @@ namespace Core.ViewModels.Aviation
 
         public double Discount { get; set; }
 
-        public bool CanReject { get; set; } = true;
+        public bool CanCancel { get; set; } = true;
 
         public bool Accepted { get; set; }
 
@@ -22,7 +24,7 @@ namespace Core.ViewModels.Aviation
         {
         }
 
-        public FlightTicketModel(FlightTicket ticket)
+        public FlightTicketModel(FlightTicket ticket) : this()
         {
             if (ticket == null)
                 return;
@@ -33,6 +35,7 @@ namespace Core.ViewModels.Aviation
             FlightSeatId = ticket.FlightSeatId;
             Discount = ticket.Discount;
             Accepted = ticket.Accepted;
+            CanCancel = ticket.Flight?.CanCancelReservation() ?? true;
         }
     }
 }

@@ -19,4 +19,12 @@ export class TicketHistoryComponent implements OnInit {
       console.log(tickets);
     });
   }
+
+  onAcceptInvitation(ticket: FlightTicketDetails) {
+    console.log("accept ticket invitation pressed", ticket);
+  }
+
+  onCancelReservation(ticket: FlightTicketDetails) {
+    console.log("cancel ticket pressed", ticket);
+  }
 }

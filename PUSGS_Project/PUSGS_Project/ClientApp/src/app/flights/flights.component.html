@@ -40,8 +40,8 @@
     <tr *ngFor="let flight of displayedFlights">
       <td>{{flight.from.cityName}}</td>
       <td>{{flight.to.cityName}}</td>
-      <td>{{flight.departureTime}}</td>
-      <td>{{flight.arrivalTime}}</td>
+      <td>{{flight.departureTime | date :'short'}}</td>
+      <td>{{flight.arrivalTime | date :'short'}}</td>
       <td>{{flight.ticketPrice}}</td>
       <td>{{flight.travelLength}}</td>
       <td>{{flight.numberOfChangeovers}}</td>

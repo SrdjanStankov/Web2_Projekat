@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Core.Enumerations;
+using Core.Helpers;
+using System;
 using System.Collections.Generic;
 
 namespace Core.Entities
@@ -23,6 +25,12 @@ namespace Core.Entities
         public ICollection<Rating> Ratings { get; set; }
 
         public int MaxSeatsPerRow { get; set; } = 4;
+
+        public bool CanCancelReservation()
+        {
+            return DepartureTime == null
+                || DateTimeHelper.IsLessInHours(DateTime.Now, DepartureTime.Value, AppConsts.MinAllowedFlightTicketHourDiff);
+        }
 
         public Flight()
         {

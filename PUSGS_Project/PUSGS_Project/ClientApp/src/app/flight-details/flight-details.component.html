@@ -32,7 +32,7 @@
         <label>Departure Time</label>
       </div>
       <div class="col-md-6">
-        <p>{{flight.departureTime}}</p>
+        <p>{{flight.departureTime | date :'full'}}</p>
       </div>
     </div>
     <div class="row">
@@ -40,7 +40,7 @@
         <label>Arrival Time</label>
       </div>
       <div class="col-md-6">
-        <p>{{flight.arrivalTime}}</p>
+        <p>{{flight.arrivalTime | date :'full'}}</p>
       </div>
     </div>
     <div class="row">
