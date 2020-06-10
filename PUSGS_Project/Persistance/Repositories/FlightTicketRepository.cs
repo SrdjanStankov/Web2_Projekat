@@ -43,9 +43,9 @@ namespace Persistance.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task AcceptAsync(FlightTicket flightTicket)
+        public async Task AcceptAsync(long flightTicketId)
         {
-            var entity = await GetByIdAsync(flightTicket.Id);
+            var entity = await GetByIdAsync(flightTicketId);
             entity.Accepted = true;
             await _context.SaveChangesAsync();
         }

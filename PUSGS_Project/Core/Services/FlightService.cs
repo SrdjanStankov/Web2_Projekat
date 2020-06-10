@@ -86,12 +86,17 @@ namespace Core.Services
             return new FlightModel(flight);
         }
 
+        public Task UpdateAsync(long id, UpdateFlightRequestModel model)
+        {
+            return _flightRepository.UpdateAsync(id, model);
+        }
+
         public Task RemoveAsync(long id)
         {
             return _flightRepository.RemoveAsync(id);
         }
 
-        public Task<long> MakeReservation(FlightTicketModel model)
+        public Task<long> MakeReservationAsync(FlightTicketModel model)
         {
             var ticket = MapToTicket(model, accepted: true);
             return _ticketRepository.AddAsync(ticket);
@@ -115,15 +120,20 @@ namespace Core.Services
             };
         }
 
-        public async Task<List<FlightTicketDetailsModel>> GetFlightTicketHistoryForUser(string userEmail)
+        public async Task<List<FlightTicketDetailsModel>> GetFlightTicketHistoryForUserAsync(string userEmail)
         {
             var tickets = await _ticketRepository.GetDetailedTicketsByOwnerEmailAsync(userEmail);
             return tickets.Select(t => new FlightTicketDetailsModel(t)).ToList();
         }
 
-        public Task UpdateAsync(int id, UpdateFlightRequestModel model)
+        public Task CancelReservationAsync(long id)
         {
-            return _flightRepository.UpdateAsync(id, model);
+            return _ticketRepository.RemoveAsync(id);
+        }
+
+        public Task AcceptReservation(long id)
+        {
+            return _ticketRepository.AcceptAsync(id);
         }
     }
 }

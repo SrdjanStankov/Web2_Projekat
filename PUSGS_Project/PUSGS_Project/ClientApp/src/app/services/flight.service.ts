@@ -31,6 +31,12 @@ export class FlightService {
   update(id: number, request: UpdateFlightRequest) {
     return this.http.put(this.flightControllerUri + id, request).toPromise();
   }
+  acceptInvitation(flightTicketId: number) {
+    return this.http.get(this.flightControllerUri + `ticket/${flightTicketId}/accept`).toPromise();
+  }
+  cancelReservation(flightTicketId: number) {
+    return this.http.delete(this.flightControllerUri + `ticket/${flightTicketId}`).toPromise();
+  }
   makeReservation(ticket: FlightTicket) {
     return this.http.post(this.flightControllerUri + "ticket", ticket).toPromise();
   }

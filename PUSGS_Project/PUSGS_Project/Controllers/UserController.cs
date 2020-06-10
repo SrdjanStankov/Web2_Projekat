@@ -78,7 +78,7 @@ namespace PUSGS_Project.Controllers
         [Route("{id}/flight-history")]
         public Task<List<FlightTicketDetailsModel>> GetFlightTicketHistory(string id)
         {
-            return _flightService.GetFlightTicketHistoryForUser(id);
+            return _flightService.GetFlightTicketHistoryForUserAsync(id);
         }
 
         [HttpPost]
