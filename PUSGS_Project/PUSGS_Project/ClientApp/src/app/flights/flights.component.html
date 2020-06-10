@@ -10,6 +10,7 @@
       <th>Ticket Price ($)</th>
       <th>Travel Length (km)</th>
       <th>No. Changeovers</th>
+      <th>Aviation</th>
     </tr>
   </thead>
   <tbody>
@@ -21,6 +22,7 @@
       <td>{{flight.ticketPrice}}</td>
       <td>{{flight.travelLength}}</td>
       <td>{{flight.numberOfChangeovers}}</td>
+      <td>{{flight.aviationCompanyName}}</td>
       <td>
         <button (click)="flightDetails(flight.id)" class="btn btn-secondary">Details</button>
       </td>

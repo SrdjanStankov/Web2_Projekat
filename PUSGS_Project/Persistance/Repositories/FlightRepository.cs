@@ -28,6 +28,7 @@ namespace Persistance.Repositories
             return _context.Flight
                 .Include(f => f.From)
                 .Include(f => f.To)
+                .Include(f => f.AviationCompany)
                 .Include(f => f.Ratings).ToListAsync();
         }
 
