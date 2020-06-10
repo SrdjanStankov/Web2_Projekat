@@ -1,5 +1,28 @@
 <h1 id="usersLabel">Flights</h1>
 
+<form #filterForm="ngForm" (ngSubmit)="onApplyFilter()">
+  <div class=" form-row">
+    <div class="form-group col">
+      <input type="text" name="search" class="form-control" placeholder="Search by city, aviation, travel length, price..." [(ngModel)]="search">
+    </div>
+  </div>
+  <div class=" form-row">
+    <div class="form-group col">
+      <label>From</label>
+      <input type="datetime-local" name="from" class="form-control" [(ngModel)]="from">
+    </div>
+    <div class="form-group col">
+      <label>To</label>
+      <input type="datetime-local" name="to" class="form-control" [(ngModel)]="to">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group">
+      <input type="submit" class="form-control btn btn-primary" value="Apply filter" />
+    </div>
+  </div>
+</form>
+
 <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="displayedFlights">
   <thead>
     <tr>
@@ -10,6 +33,7 @@
       <th>Ticket Price ($)</th>
       <th>Travel Length (km)</th>
       <th>No. Changeovers</th>
+      <th>Aviation</th>
     </tr>
   </thead>
   <tbody>
@@ -21,6 +45,7 @@
       <td>{{flight.ticketPrice}}</td>
       <td>{{flight.travelLength}}</td>
       <td>{{flight.numberOfChangeovers}}</td>
+      <td>{{flight.aviationCompanyName}}</td>
       <td>
         <button (click)="flightDetails(flight.id)" class="btn btn-secondary">Details</button>
       </td>
