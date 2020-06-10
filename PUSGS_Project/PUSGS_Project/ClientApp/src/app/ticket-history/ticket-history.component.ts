@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { FlightTicketDetails } from '../entities/flight-ticket';
+import { FlightService } from '../services/flight.service';
 
 @Component({
   selector: 'app-ticket-history',
@@ -10,7 +11,7 @@ import { FlightTicketDetails } from '../entities/flight-ticket';
 export class TicketHistoryComponent implements OnInit {
   flightTickets: FlightTicketDetails[];
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private flightService: FlightService) { }
 
   ngOnInit(): void {
     const email = this.userService.getLoggedInUserId();
@@ -21,10 +22,15 @@ export class TicketHistoryComponent implements OnInit {
   }
 
   onAcceptInvitation(ticket: FlightTicketDetails) {
-    console.log("accept ticket invitation pressed", ticket);
+    this.flightService.acceptInvitation(ticket.id).then(() => {
+      // TODO: Navigate to optional car reservation
+      window.location.reload();
+    })
   }
 
   onCancelReservation(ticket: FlightTicketDetails) {
-    console.log("cancel ticket pressed", ticket);
+    this.flightService.cancelReservation(ticket.id).then(() => {
+      window.location.reload();
+    })
   }
 }

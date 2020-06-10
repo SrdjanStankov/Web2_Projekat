@@ -35,7 +35,7 @@ namespace PUSGS_Project.Controllers
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public async Task<object> Get(int id)
+        public async Task<object> Get(long id)
         {
             var flightModel = await _flightService.GetByIdAsync(id);
             if (flightModel is null)
@@ -53,16 +53,28 @@ namespace PUSGS_Project.Controllers
         }
 
         [HttpPut("{id}")]
-        public Task Put(int id, [FromBody] UpdateFlightRequestModel model)
+        public Task Put(long id, [FromBody] UpdateFlightRequestModel model)
         {
             return _flightService.UpdateAsync(id, model);
+        }
+
+        [HttpGet("ticket/{id}/accept")]
+        public Task AcceptReservation(long id)
+        {
+            return _flightService.AcceptReservation(id);
+        }
+
+        [HttpDelete("ticket/{id}")]
+        public Task CancelReservation(long id)
+        {
+            return _flightService.CancelReservationAsync(id);
         }
 
         [HttpPost("ticket")]
         public Task<long> MakeReservation([FromBody]FlightTicketModel model)
         {
             // TODO: Send confirmation mail that reservation has been made
-            return _flightService.MakeReservation(model);
+            return _flightService.MakeReservationAsync(model);
         }
 
         [HttpPost("ticket-invitation")]

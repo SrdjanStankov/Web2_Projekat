@@ -15,11 +15,16 @@ namespace Core.Interfaces.Services
 
         Task RemoveAsync(long id);
 
-        Task<long> MakeReservation(FlightTicketModel model);
+        Task<long> MakeReservationAsync(FlightTicketModel model);
 
         Task MakeFriendReservations(IEnumerable<FlightTicketModel> models);
 
-        Task<List<FlightTicketDetailsModel>> GetFlightTicketHistoryForUser(string userEmail);
-        Task UpdateAsync(int id, UpdateFlightRequestModel model);
+        Task<List<FlightTicketDetailsModel>> GetFlightTicketHistoryForUserAsync(string userEmail);
+
+        Task UpdateAsync(long id, UpdateFlightRequestModel model);
+
+        Task CancelReservationAsync(long id);
+
+        Task AcceptReservation(long id);
     }
 }

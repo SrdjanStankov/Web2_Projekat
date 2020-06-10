@@ -15,7 +15,7 @@ namespace Core.Interfaces.Repositories
 
         public Task RemoveAsync(long flightTicketId);
 
-        Task AcceptAsync(FlightTicket flightTicket);
+        Task AcceptAsync(long flightTicketId);
 
         Task<List<FlightTicket>> GetDetailedTicketsByOwnerEmailAsync(string userEmail);
     }
