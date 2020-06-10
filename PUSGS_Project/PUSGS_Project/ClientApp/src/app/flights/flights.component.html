@@ -3,7 +3,7 @@
 <form #filterForm="ngForm" (ngSubmit)="onApplyFilter()">
   <div class=" form-row">
     <div class="form-group col">
-      <input type="text" name="search" class="form-control" placeholder="Search by city, aviation, travel length, price..." [(ngModel)]="search">
+      <input type="text" name="search" class="form-control" placeholder="Search by from, to, price, travel length, aviation..." [(ngModel)]="search">
     </div>
   </div>
   <div class=" form-row">
@@ -32,7 +32,7 @@
       <th>Arrival Time</th>
       <th>Ticket Price ($)</th>
       <th>Travel Length (km)</th>
-      <th>No. Changeovers</th>
+      <th>Travel time</th>
       <th>Aviation</th>
     </tr>
   </thead>
@@ -40,11 +40,11 @@
     <tr *ngFor="let flight of displayedFlights">
       <td>{{flight.from.cityName}}</td>
       <td>{{flight.to.cityName}}</td>
-      <td>{{flight.departureTime}}</td>
-      <td>{{flight.arrivalTime}}</td>
+      <td>{{flight.departureTime | date :'short'}}</td>
+      <td>{{flight.arrivalTime | date :'short'}}</td>
       <td>{{flight.ticketPrice}}</td>
       <td>{{flight.travelLength}}</td>
-      <td>{{flight.numberOfChangeovers}}</td>
+      <td>{{getTravelTime(flight)}}</td>
       <td>{{flight.aviationCompanyName}}</td>
       <td>
         <button (click)="flightDetails(flight.id)" class="btn btn-secondary">Details</button>

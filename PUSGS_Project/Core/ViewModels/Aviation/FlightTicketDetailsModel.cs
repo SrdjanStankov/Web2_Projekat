@@ -17,7 +17,7 @@ namespace Core.ViewModels.Aviation
         public DateTime? DateCreated { get; set; }
 
         public bool Accepted { get; set; }
-        public bool CanReject { get; set; }
+        public bool CanCancel { get; set; }
 
         public FlightTicketDetailsModel(FlightTicket ticket)
         {
@@ -28,13 +28,7 @@ namespace Core.ViewModels.Aviation
             Discount = ticket.Discount;
             DateCreated = ticket.DateCreated;
             Accepted = ticket.Accepted;
-            CanReject = CalculateCanReject();
-        }
-
-        private bool CalculateCanReject()
-        {
-            // TODO: Check if DateCreated is 3 hours or longer before flight
-            return true;
+            CanCancel = ticket.Flight.CanCancelReservation();
         }
     }
 }

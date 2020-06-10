@@ -4,6 +4,7 @@
       <th class="text-center" scope="col">Created on</th>
       <th class="text-center" scope="col">From</th>
       <th class="text-center" scope="col">To</th>
+      <th class="text-center" scope="col">Departure Time</th>
       <th class="text-center" scope="col">Seat Number</th>
       <th></th>
     </tr>
@@ -13,11 +14,12 @@
       <td class="">{{ticket.dateCreated | date: 'fullDate'}}</td>
       <td class="">{{ticket.flight.from.cityName}}</td>
       <td class="">{{ticket.flight.to.cityName}}</td>
+      <td class="">{{ticket.flight.departureTime | date :'short'}}</td>
       <td class="text-center">{{ticket.flightSeat.seatNumber}}</td>
       <td>
         <div class="btn-group" role="group">
-          <button class="btn btn-success" *ngIf="!ticket.accepted" disabled>Accept</button>
-          <button class="btn btn-danger" *ngIf="ticket.canReject" disabled>Reject</button>
+          <button class="btn btn-success" *ngIf="!ticket.accepted" (click)="onAcceptInvitation(ticket)">Accept</button>
+          <button class="btn btn-danger" *ngIf="ticket.canCancel" (click)="onCancelReservation(ticket)">Cancel</button>
         </div>
       </td>
     </tr>

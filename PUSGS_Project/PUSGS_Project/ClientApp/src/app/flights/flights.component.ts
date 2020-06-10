@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FlightService } from '../services/flight.service';
 import { Flight } from '../entities/flight';
 import { Router } from '@angular/router';
+import { msToTimeString } from '../util/time';
 
 @Component({
   selector: 'app-flights',
@@ -29,14 +30,22 @@ export class FlightsComponent implements OnInit {
     this.router.navigateByUrl("flight/" + flightId);
   }
 
+  getTravelTime(flight: Flight): string {
+    const diff = new Date(flight.arrivalTime).valueOf() - new Date(flight.departureTime).valueOf();
+    return msToTimeString(Math.abs(diff));
+  }
+
   // Filter
   onApplyFilter() {
-    const search = this.search.toLowerCase().trim();
     let query = this.allFlights;
 
-    if (search) {
-      query = this.filterBySearchText(query, search);
-    }
+    this.search.split(',').forEach(str => {
+      const search = str.toLowerCase().trim();
+      if (search) {
+        query = this.filterBySearchText(query, search);
+      }
+    })
+
     if (this.from) {
       query = this.filterByFromDate(query, this.from);
     }
@@ -52,7 +61,6 @@ export class FlightsComponent implements OnInit {
       return flight.aviationCompanyName.toLowerCase().includes(search)
         || flight.from.cityName.toLowerCase().includes(search)
         || flight.to.cityName.toLowerCase().includes(search)
-        || flight.numberOfChangeovers.toString() === search
         || flight.ticketPrice.toString() === search
         || flight.travelLength.toString() === search;
     });
