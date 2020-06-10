@@ -18,13 +18,4 @@ export class Flight {
   tickets: FlightTicket[];
   ratings: Rating[];
   seats: FlightSeat[];
-
-  /**
-   * Returns difference between departure and arrival time in milliseconds
-   */
-  get travelTime(): string {
-    const diff = this.arrivalTime.valueOf() - this.departureTime.valueOf();
-    // Math.abs is used due to possible country date/time differences
-    return msToTimeString(Math.abs(diff));
-  }
 }
