@@ -4,6 +4,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BackendService } from '../services/backend.service';
 import { User } from '../entities/user';
 
+export function passwordMatchValidator(passwordControll: FormGroup) {
+  if (passwordControll.get('password').value !== passwordControll.get('passwordRepeated').value) {
+    return { passwordsMatch: true };
+  }
+  return null;
+}
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -51,11 +58,4 @@ export class RegisterComponent implements OnInit {
       }
     });
   }
-}
-
-export function passwordMatchValidator(passwordControll: FormGroup) {
-  if (passwordControll.get('password').value != passwordControll.get('passwordRepeated').value) {
-    return { passwordsMatch: true };
-  }
-  return null;
 }

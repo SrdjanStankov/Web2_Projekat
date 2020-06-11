@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BackendService } from '../services/backend.service';
-import { STORAGE_TOKEN_KEY, STORAGE_USER_ID_KEY, STORAGE_TYPE_KEY } from "../constants/storage"
+import { STORAGE_TOKEN_KEY, STORAGE_USER_ID_KEY, STORAGE_TYPE_KEY, STORAGE_PASSCHG_KEY } from "../constants/storage"
 import userTypes from "../constants/user-types";
 import { AuthService, GoogleLoginProvider } from 'angularx-social-login';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
 
   reason: string;
 
-  constructor(public activeModal: NgbActiveModal, private backend: BackendService, public oAuth: AuthService) { }
+  constructor(public activeModal: NgbActiveModal, private backend: BackendService, public oAuth: AuthService, private router: Router) { }
 
   ngOnInit(): void { }
 
@@ -28,6 +29,7 @@ export class LoginComponent implements OnInit {
     const password = this.loginGroup.get('password').value;
 
     this.backend.login(email, password).then((res: any) => {
+      localStorage.setItem(STORAGE_PASSCHG_KEY, res.requirePasswordChange);
       localStorage.setItem(STORAGE_TOKEN_KEY, res.token);
       localStorage.setItem(STORAGE_USER_ID_KEY, email);
       if (res.type === "SystemAdministrator") {
@@ -38,6 +40,10 @@ export class LoginComponent implements OnInit {
         localStorage.setItem(STORAGE_TYPE_KEY, userTypes.AviationAdmin);
       } else if (res.type === "User") {
         localStorage.setItem(STORAGE_TYPE_KEY, userTypes.User);
+      }
+
+      if (res.requirePasswordChange) {
+        this.router.navigate(['change-password']);
       }
       this.activeModal.close();
     }, err => {

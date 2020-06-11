@@ -40,4 +40,7 @@ export class UserService {
   getFlightHistory(userId: string): Promise<FlightTicketDetails[]> {
     return this.http.get<FlightTicketDetails[]>(this.userControllerUri + userId + "/flight-history").toPromise();
   }
+  changePassword(userId: string, newPassword: string) {
+    return this.http.post(this.userControllerUri + `${userId}/change-password`, { newPassword }).toPromise();
+  }
 }

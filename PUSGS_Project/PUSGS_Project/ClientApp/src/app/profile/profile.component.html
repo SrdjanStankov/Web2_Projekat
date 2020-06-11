@@ -39,8 +39,12 @@
       <p>{{user.city}}</p>
     </div>
   </div>
+  <hr />
   <div class="row" *ngIf="!isReadOnly()">
-    <div class="col-md">
+    <div class="col-md-6">
+      <button class="btn btn-primary" (click)="changePassword()">Change Password</button>
+    </div>
+    <div class="col-md-6">
       <div class="btn-group" role="group" aria-label="User profile actions">
         <button class="btn btn-warning" (click)="open(content)">Edit</button>
         <button class="btn btn-danger" (click)="onDelete()">Delete</button>
