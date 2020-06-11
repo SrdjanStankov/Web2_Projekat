@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BackendService } from '../services/backend.service';
-import { STORAGE_TOKEN_KEY, STORAGE_USER_ID_KEY } from "../constants/storage"
+import { STORAGE_TOKEN_KEY, STORAGE_USER_ID_KEY, STORAGE_TYPE_KEY } from "../constants/storage"
+import userTypes from "../constants/user-types";
 import { AuthService, GoogleLoginProvider } from 'angularx-social-login';
 
 @Component({
@@ -30,11 +31,13 @@ export class LoginComponent implements OnInit {
       localStorage.setItem(STORAGE_TOKEN_KEY, res.token);
       localStorage.setItem(STORAGE_USER_ID_KEY, email);
       if (res.type === "SystemAdministrator") {
-        localStorage.setItem('type', 'SystemAdmin');
+        localStorage.setItem(STORAGE_TYPE_KEY, userTypes.SystemAdmin);
       } else if (res.type === "RentACarAdministrator") {
-        localStorage.setItem('type', 'RentACarAdmin');
+        localStorage.setItem(STORAGE_TYPE_KEY, userTypes.RentACarAdmin);
+      } else if (res.type === "AviationAdministrator") {
+        localStorage.setItem(STORAGE_TYPE_KEY, userTypes.AviationAdmin);
       } else if (res.type === "User") {
-        localStorage.setItem('type', 'User');
+        localStorage.setItem(STORAGE_TYPE_KEY, userTypes.User);
       }
       this.activeModal.close();
     }, err => {
@@ -47,16 +50,15 @@ export class LoginComponent implements OnInit {
   loginWithGoogle() {
     this.oAuth.signIn(GoogleLoginProvider.PROVIDER_ID).
       then(user => {
-      this.backend.loginScial(user).then((res: any) => {
-        localStorage.setItem(STORAGE_TOKEN_KEY, res.token);
-        localStorage.setItem(STORAGE_USER_ID_KEY, user.email);
-        this.activeModal.close();
-      }, err => {
+        this.backend.loginScial(user).then((res: any) => {
+          localStorage.setItem(STORAGE_TOKEN_KEY, res.token);
+          localStorage.setItem(STORAGE_USER_ID_KEY, user.email);
+          this.activeModal.close();
+        }, err => {
           if (err.status === 400) {
             this.reason = err.error.message;
           }
+        })
       })
-    })
   }
-
 }

@@ -2,6 +2,9 @@
 {
     public class SystemAdministrator : User
     {
-
+        public SystemAdministrator() : base()
+        {
+            IsSystemAdmin = true;
+        }
     }
 }

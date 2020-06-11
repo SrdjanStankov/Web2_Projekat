@@ -1,7 +1,7 @@
 import { Injectable, Inject } from "@angular/core";
 import { User } from "../entities/user";
 import { HttpClient } from "@angular/common/http";
-import { STORAGE_TOKEN_KEY } from "../constants/storage"
+import { STORAGE_TOKEN_KEY, STORAGE_TYPE_KEY } from "../constants/storage"
 import { SocialUser } from "angularx-social-login";
 import { Router } from "@angular/router";
 import { RentACarAdmin } from "../entities/RentACarAdmin";
@@ -40,7 +40,7 @@ export class BackendService {
   }
 
   getLogedInUserType(): string {
-    return localStorage.getItem("type");
+    return localStorage.getItem(STORAGE_TYPE_KEY);
   }
 
   addRentACarAdmin(admin: RentACarAdmin) {

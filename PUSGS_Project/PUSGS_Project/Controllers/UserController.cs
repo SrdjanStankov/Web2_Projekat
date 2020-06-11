@@ -99,14 +99,17 @@ namespace PUSGS_Project.Controllers
         [Route("Register")]
         public async Task<object> Register([FromBody] User model)
         {
-            User user = MapUser(model);
+            User user = MapUser(model, settings.RequireEmailVerification);
 
             if (!await repository.AddAsync(user))
             {
                 return BadRequest(new { message = "Already exist" });
             }
 
-            await SendConfirmationEmailAsync(user.Email);
+            if (settings.RequireEmailVerification)
+            {
+                await SendConfirmationEmailAsync(user.Email);
+            }
 
             return Ok();
         }
@@ -229,50 +232,38 @@ namespace PUSGS_Project.Controllers
             }
         }
 
-        private static User MapUser(User model)
+        private static User MapUser(User model, bool requireEmailVerification = true)
         {
             if (model.IsSystemAdmin)
             {
-                return new SystemAdministrator()
-                {
-                    City = model.City,
-                    Email = model.Email,
-                    LastName = model.LastName,
-                    Name = model.Name,
-                    Password = model.Password,
-                    Phone = model.Phone,
-                    IsSystemAdmin = model.IsSystemAdmin,
-                    IsRentACarAdmin = false
-                };
+                return MapUser<SystemAdministrator>(model, requireEmailVerification);
             }
             else if (model.IsRentACarAdmin)
             {
-                return new RentACarAdministrator()
-                {
-                    City = model.City,
-                    Email = model.Email,
-                    LastName = model.LastName,
-                    Name = model.Name,
-                    Password = model.Password,
-                    Phone = model.Phone,
-                    IsRentACarAdmin = model.IsRentACarAdmin,
-                    IsSystemAdmin = false
-                };
+                return MapUser<RentACarAdministrator>(model, requireEmailVerification);
+            }
+            else if (model.IsAviationAdmin)
+            {
+                return MapUser<AviationAdministrator>(model, requireEmailVerification);
             }
             else
             {
-                return new User()
-                {
-                    City = model.City,
-                    Email = model.Email,
-                    LastName = model.LastName,
-                    Name = model.Name,
-                    Password = model.Password,
-                    Phone = model.Phone,
-                    IsSystemAdmin = false,
-                    IsRentACarAdmin = false
-                };
+                return MapUser<User>(model, requireEmailVerification);
             }
+        }
+
+        private static T MapUser<T>(User model, bool requireEmailVerification = true) where T : User, new()
+        {
+            return new T()
+            {
+                City = model.City,
+                Email = model.Email,
+                LastName = model.LastName,
+                Name = model.Name,
+                Password = model.Password,
+                Phone = model.Phone,
+                IsVerified = !requireEmailVerification
+            };
         }
     }
 }
