@@ -4,7 +4,7 @@ import { RentACar } from '../entities/rent-a-car';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Car } from '../entities/car';
 import { CarService } from '../services/car.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CarReservationService } from '../services/car-reservation.service';
 import { CarReservation } from '../entities/car-reservation';
 import { STORAGE_USER_ID_KEY } from '../constants/storage';
@@ -15,10 +15,10 @@ import { STORAGE_USER_ID_KEY } from '../constants/storage';
   styleUrls: ['./car-reservation.component.css']
 })
 export class CarReservationComponent implements OnInit {
-
   public step: number;
   public rangeVal = 0;
-  public search: string = "";
+  public search = "";
+  public addressFilter = "";
 
   public allAgencies: RentACar[];
   public displayAgencies: RentACar[];
@@ -40,13 +40,21 @@ export class CarReservationComponent implements OnInit {
   private searchAgency: RentACar;
   public foundCars: Car[] = [];
 
-  constructor(private rentACarService: RentACarService, private carService: CarService, private router: Router, private carReservationService: CarReservationService) { }
+  constructor(private rentACarService: RentACarService, private carService: CarService,
+    private route: ActivatedRoute,
+    private router: Router, private carReservationService: CarReservationService) { }
 
   ngOnInit(): void {
+    this.route.queryParamMap.subscribe(map => {
+      this.addressFilter = map.get("address") || "";
+      this.addressFilter = this.addressFilter.toLowerCase();
+    });
+
     this.rentACarService.getAgencies().then(result => {
       this.allAgencies = result;
-      this.displayAgencies = this.allAgencies;
+      this.onFilter();
     });
+
     this.step = 1;
     this.valueChanged(2000);
   }
@@ -83,9 +91,9 @@ export class CarReservationComponent implements OnInit {
     this.carReservationService.reserveCar(reservation).then(result => {
       location.reload(true);
     }, err => {
-        if (err.status === 400) {
-          alert(err.error.message);
-        }
+      if (err.status === 400) {
+        alert(err.error.message);
+      }
     });
   }
 
@@ -95,7 +103,15 @@ export class CarReservationComponent implements OnInit {
 
   onFilter() {
     const searchText = this.search.toLowerCase();
-    this.displayAgencies = this.allAgencies.filter((agency) => {
+    let query = this.allAgencies;
+
+    if (this.addressFilter) {
+      query = query.filter(agency => {
+        return agency.branches.some(branch => branch.address.toLowerCase().includes(this.addressFilter));
+      });
+    }
+
+    this.displayAgencies = query.filter((agency) => {
       if (agency.name.toLowerCase().includes(searchText)) {
         return true;
       }
@@ -105,5 +121,4 @@ export class CarReservationComponent implements OnInit {
       return false;
     })
   }
-
 }
