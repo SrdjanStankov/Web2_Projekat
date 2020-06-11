@@ -84,6 +84,7 @@ export class CarReservationComponent implements OnInit {
     reservation.to = new Date(ret.year, ret.month - 1, ret.day);
     reservation.ownerEmail = localStorage.getItem(STORAGE_USER_ID_KEY);
     reservation.reservedCarId = car.id;
+    reservation.costForRange = car.costForRange;
     this.carReservationService.reserveCar(reservation).then(result => {
       location.reload(true);
     }, err => {
