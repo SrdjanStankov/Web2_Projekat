@@ -15,6 +15,8 @@ namespace Core.Entities
         public bool IsSystemAdmin { get; set; }
         public bool IsRentACarAdmin { get; set; }
 
+        public double Points { get; set; }
+
         public bool RequirePasswordChange { get; set; }
 
         [NotMapped]
