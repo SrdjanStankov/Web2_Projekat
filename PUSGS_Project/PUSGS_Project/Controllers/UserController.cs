@@ -5,6 +5,8 @@ using Core.Interfaces.Services;
 using Core.ViewModels.Apis;
 using Core.ViewModels.Aviation;
 using Core.ViewModels.Users;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -24,13 +26,13 @@ namespace PUSGS_Project.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : Controller
+    public class UserController : ApiController
     {
         private readonly IUserRepository repository;
         private readonly ApplicationSettings settings;
         private readonly IFlightService _flightService;
 
-        public UserController(IUserRepository userRepository, IOptions<ApplicationSettings> appSettings, IFlightService flightService)
+        public UserController(IUserRepository userRepository, IOptions<ApplicationSettings> appSettings, IFlightService flightService) : base(userRepository)
         {
             repository = userRepository;
             settings = appSettings.Value;
@@ -39,6 +41,7 @@ namespace PUSGS_Project.Controllers
 
         // GET: api/User
         [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<List<UserModel>> Get()
         {
             var users = await repository.GetUsersAsync();
@@ -46,9 +49,8 @@ namespace PUSGS_Project.Controllers
         }
 
         // GET: api/User/5
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-
         [HttpGet("{id}", Name = "Get")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<object> Get(string id)
         {
             var user = await repository.GetUserByEmailAsync(id);
@@ -61,38 +63,92 @@ namespace PUSGS_Project.Controllers
 
         // PUT: api/User/5
         [HttpPut("{id}")]
-        public Task Put(string id, [FromBody] User user)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<object> Put(string id, [FromBody] User user)
         {
+            var currUser = await GetLoginUserAsync();
+            if (currUser.Email != id)
+            {
+                return this.Forbid();
+            }
             user.Email = id;
-            return repository.UpdateAsync(user);
+            await repository.UpdateAsync(user);
+            return Ok();
         }
 
         // DELETE: api/User/5
         [HttpDelete("{id}")]
-        public Task Delete(string id)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<object> Delete(string id)
         {
-            return repository.DeleteUserByEmailAsync(id);
+            var currUser = await GetLoginUserAsync();
+            if (currUser.Email != id)
+            {
+                return Forbid();
+            }
+            await repository.DeleteUserByEmailAsync(id);
+            return Ok();
         }
 
         [HttpGet]
         [Route("{id}/flight-history")]
-        public Task<List<FlightTicketDetailsModel>> GetFlightTicketHistory(string id)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<object> GetFlightTicketHistory(string id)
         {
-            return _flightService.GetFlightTicketHistoryForUserAsync(id);
+            var currUser = await GetLoginUserAsync();
+            if (currUser.Email != id)
+            {
+                return Forbid();
+            }
+
+            var ticketHistory = await _flightService.GetFlightTicketHistoryForUserAsync(id);
+            return Ok(ticketHistory);
+        }
+
+        [HttpPost("{id}/change-password")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<object> ChangePassword(string id, [FromBody]ChangePasswordRequestModel model)
+        {
+            var currUser = await GetLoginUserAsync();
+            var requestedUser = await repository.GetUserByEmailAsync(id);
+            if (currUser.Email != requestedUser.Email)
+            {
+                return Forbid();
+            }
+
+            requestedUser.Password = model.NewPassword;
+            requestedUser.RequirePasswordChange = false;
+            await repository.UpdateAsync(requestedUser);
+
+            return Ok();
         }
 
         [HttpPost]
         [Route("Friend")]
-        public Task MakeFriends([FromBody]FriendRequestModel request)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<object> MakeFriends([FromBody]FriendRequestModel request)
         {
-            return repository.MakeFriendsAsync(request.UserId, request.FriendId);
+            var currUser = await GetLoginUserAsync();
+            if (currUser.Email != request.UserId && currUser.Email != request.FriendId)
+            {
+                return Forbid();
+            }
+            await repository.MakeFriendsAsync(request.UserId, request.FriendId);
+            return Ok();
         }
 
         [HttpPost]
         [Route("Unfriend")]
-        public Task Unfriend([FromBody]FriendRequestModel request)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<object> Unfriend([FromBody]FriendRequestModel request)
         {
-            return repository.UnfriendAsync(request.UserId, request.FriendId);
+            var currUser = await GetLoginUserAsync();
+            if (currUser.Email != request.UserId && currUser.Email != request.FriendId)
+            {
+                return Forbid();
+            }
+            await repository.UnfriendAsync(request.UserId, request.FriendId);
+            return Ok();
         }
 
         [HttpPost]
