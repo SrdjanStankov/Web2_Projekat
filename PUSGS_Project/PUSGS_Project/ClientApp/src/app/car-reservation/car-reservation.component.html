@@ -27,7 +27,7 @@
             {{branch.address}}
           </div>
         </td>
-        <td>{{agency.averageRating}}</td>
+        <td>{{agency.averageRating.toPrecision(3)}}</td>
         <td><button type="button" class="btn btn-primary" (click)="choosedAgency(agency)">Choose</button></td>
       </tr>
     </tbody>
@@ -40,7 +40,7 @@
     <div class="input-group" formGroupName="take">
       <div class="row col-md-3">
         <label for="takeDate">Datum preuzimanja</label>
-        <input [class.is-invalid]="editGroup.get('take').get('date').invalid && editGroup.get('take').get('date').touched" class="form-control" id="takeDate" autocomplete="off" placeholder="yyyy-mm-dd" (click)="date.toggle()" ngbDatepicker #date="ngbDatepicker" formControlName="date">
+        <input [class.is-invalid]="editGroup.get('take').get('date').invalid && editGroup.get('take').get('date').touched" class="form-control" id="takeDate" autocomplete="off" placeholder="yyyy-mm-dd" (click)="date.toggle()" [minDate]="minDate" ngbDatepicker #date="ngbDatepicker" formControlName="date">
         <div *ngIf="(editGroup.get('take').get('date').invalid && editGroup.get('take').get('date').touched) || editGroup.get('take').get('date').dirty">
           <small *ngIf="editGroup.get('take').get('date').errors?.required" class="text-danger">Date is required</small>
         </div>
@@ -57,7 +57,7 @@
     <div class="input-group" formGroupName="return">
       <div class="row col-md-3">
         <label for="returnDate">Datum vracanja</label>
-        <input [class.is-invalid]="editGroup.get('return').get('date').invalid && editGroup.get('return').get('date').touched" class="form-control" id="returnDate" autocomplete="off" placeholder="yyyy-mm-dd" (click)="d.toggle()" ngbDatepicker #d="ngbDatepicker" formControlName="date">
+        <input [class.is-invalid]="editGroup.get('return').get('date').invalid && editGroup.get('return').get('date').touched" class="form-control" id="returnDate" autocomplete="off" placeholder="yyyy-mm-dd" (click)="d.toggle()" [minDate]="minDate" ngbDatepicker #d="ngbDatepicker" formControlName="date">
         <div *ngIf="(editGroup.get('return').get('date').invalid && editGroup.get('return').get('date').touched) || editGroup.get('return').get('date').dirty">
           <small *ngIf="editGroup.get('return').get('date').errors?.required" class="text-danger">Date is required</small>
         </div>
@@ -116,7 +116,7 @@
         <td>{{car.buildDate}}</td>
         <td>{{car.passengerNumber}}</td>
         <td>{{car.type}}</td>
-        <td>{{car.averageRating}}</td>
+        <td>{{car.averageRating.toPrecision(3)}}</td>
         <td>${{car.costForRange}}</td>
         <td><button type="button" class="btn btn-primary" (click)="reserve(car)">Choose</button></td>
       </tr>

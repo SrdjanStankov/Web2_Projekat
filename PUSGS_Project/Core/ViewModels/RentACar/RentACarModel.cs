@@ -24,7 +24,7 @@ namespace Core.ViewModels.RentACar
             Description = rentACar.Description;
             Cars = new HashSet<CarModel>(rentACar.Cars.Select(item => new CarModel(item)));
             Branches = new HashSet<Branch>(rentACar.Branches);
-            AverageRating = rentACar.Ratings.DefaultIfEmpty(new Entities.Rating()).Average(item => item.Value);
+            AverageRating = rentACar.Cars.DefaultIfEmpty(new Car()).Average(item=> item.Ratings.DefaultIfEmpty(new Entities.Rating()).Average(rating=>rating.Value));
         }
     }
 }

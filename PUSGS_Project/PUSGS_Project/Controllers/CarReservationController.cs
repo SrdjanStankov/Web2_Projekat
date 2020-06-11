@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -19,41 +20,42 @@ namespace PUSGS_Project.Controllers
 			this.carReservationRepository = carReservationRepository;
 		}
 
-		// GET: api/<CarReservationController>
-		//[HttpGet]
-		//public IEnumerable<string> Get()
-		//{
-		//	return new string[] { "value1", "value2" };
-		//}
-
 		// GET api/<CarReservationController>/5
 		[HttpGet("{id}")]
-		public async Task<IEnumerable<CarReservation>> Get(string id)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+		public async Task<object> Get(string id)
 		{
-			return await carReservationRepository.GetReservationsAsync(id);
+			var user = await GetLoginUserAsync();
+
+			if (user is User)
+			{
+				return await carReservationRepository.GetReservationsAsync(id); 
+			}
+			else
+			{
+				return Forbid();
+			}
 		}
 
 		// POST api/<CarReservationController>
 		[HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 		public async Task<object> Post([FromBody] CarReservation reservation)
 		{
-			if(!await carReservationRepository.AddCarReservationAsync(reservation))
+			var user = await GetLoginUserAsync();
+
+			if (user is User)
 			{
-				return BadRequest(new { message = "Already exist" });
+				if (!await carReservationRepository.AddCarReservationAsync(reservation))
+				{
+					return BadRequest(new { message = "Already exist" });
+				}
+				return Ok();
 			}
-			return Ok();
-		}
-
-		// PUT api/<CarReservationController>/5
-		[HttpPut("{id}")]
-		public void Put(int id, [FromBody] string value)
-		{
-		}
-
-		// DELETE api/<CarReservationController>/5
-		[HttpDelete("{id}")]
-		public void Delete(int id)
-		{
+			else
+			{
+				return Forbid();
+			}
 		}
 	}
 }
