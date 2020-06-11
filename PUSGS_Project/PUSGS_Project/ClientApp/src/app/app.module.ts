@@ -34,6 +34,7 @@ import { FlightReservationFormComponent } from './flight-reservation-form/flight
 import { TicketHistoryComponent } from './ticket-history/ticket-history.component';
 import { AddFlightFormComponent } from './add-flight-form/add-flight-form.component';
 import { AddFlightRequest } from "./entities/requests/add-flight-request";
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 let config = new AuthServiceConfig([
   {
@@ -71,6 +72,7 @@ export function provideConfig() {
     FlightReservationFormComponent,
     TicketHistoryComponent,
     AddFlightFormComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -82,16 +84,17 @@ export function provideConfig() {
     RouterModule.forRoot([
       { path: "", component: HomeComponent, pathMatch: "full" },
       { path: "login", component: LoginComponent },
-      { path: "profile", component: ProfileComponent },
+      { path: "profile", component: ProfileComponent, canActivate: [AuthGuard] },
       { path: "aviation/:id", component: AviationProfileComponent },
-      { path: "aviation/:id/add-flight", component: AddFlightFormComponent },
+      { path: "aviation/:id/add-flight", component: AddFlightFormComponent, canActivate: [AuthGuard] },
       { path: "rent-a-car/:id", component: RentACarProfileComponent },
       { path: "rent-a-car-edit/:id", component: RentACarProfileEditComponent, canActivate: [AuthGuard] },
       { path: "car-reservation", component: CarReservationComponent, canActivate: [AuthGuard] },
-      { path: "users", component: FriendsComponent },
+      { path: "users", component: FriendsComponent, canActivate: [AuthGuard] },
+      { path: "change-password", component: ChangePasswordComponent, canActivate: [AuthGuard] },
       { path: "flights", component: FlightsComponent },
       { path: "flight/:id", component: FlightDetailsComponent },
-      { path: "flight/:id/reservation", component: FlightReservationFormComponent },
+      { path: "flight/:id/reservation", component: FlightReservationFormComponent, canActivate: [AuthGuard] },
       { path: "ConfirmEmail/:email", component: MailConfirmationComponent },
       { path: "services", component: RegisterServicesComponent, canActivate: [AuthGuard] },
     ]),

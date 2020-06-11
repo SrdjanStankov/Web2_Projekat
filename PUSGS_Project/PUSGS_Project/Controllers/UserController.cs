@@ -296,11 +296,11 @@ namespace PUSGS_Project.Controllers
             }
             else if (model.IsRentACarAdmin)
             {
-                return MapUser<RentACarAdministrator>(model, requireEmailVerification);
+                return MapUser<RentACarAdministrator>(model, requireEmailVerification, requirePasswordChange: true);
             }
             else if (model.IsAviationAdmin)
             {
-                return MapUser<AviationAdministrator>(model, requireEmailVerification);
+                return MapUser<AviationAdministrator>(model, requireEmailVerification, requirePasswordChange: true);
             }
             else
             {
@@ -308,7 +308,7 @@ namespace PUSGS_Project.Controllers
             }
         }
 
-        private static T MapUser<T>(User model, bool requireEmailVerification = true) where T : User, new()
+        private static T MapUser<T>(User model, bool requireEmailVerification = true, bool requirePasswordChange = false) where T : User, new()
         {
             return new T()
             {
@@ -318,7 +318,8 @@ namespace PUSGS_Project.Controllers
                 Name = model.Name,
                 Password = model.Password,
                 Phone = model.Phone,
-                IsVerified = !requireEmailVerification
+                IsVerified = !requireEmailVerification,
+                RequirePasswordChange = requirePasswordChange
             };
         }
     }

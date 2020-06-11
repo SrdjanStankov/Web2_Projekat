@@ -4,6 +4,7 @@ import { UserService } from "../services/user.service";
 import { BackendService } from "../services/backend.service";
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, Validators, FormControl } from "@angular/forms";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-profile",
@@ -21,7 +22,7 @@ export class ProfileComponent implements OnInit {
     phone: new FormControl('', Validators.required),
   })
 
-  constructor(public userService: UserService, public authService: BackendService, private modalService: NgbModal) {
+  constructor(public userService: UserService, public authService: BackendService, private modalService: NgbModal, private router: Router) {
   }
 
   isReadOnly(): boolean {
@@ -52,6 +53,10 @@ export class ProfileComponent implements OnInit {
     this.userService.deleteUser(this.user.email).then(() => {
       this.authService.logout();
     })
+  }
+
+  changePassword() {
+    this.router.navigateByUrl('/change-password');
   }
 
   ngOnInit(): void {
