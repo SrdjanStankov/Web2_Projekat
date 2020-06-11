@@ -16,7 +16,6 @@ import { BackendService } from '../services/backend.service';
   styleUrls: ['./rent-a-car-profile-edit.component.css']
 })
 export class RentACarProfileEditComponent implements OnInit {
-
   rentACar: RentACar = new RentACar();
   editGroup: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -25,13 +24,13 @@ export class RentACarProfileEditComponent implements OnInit {
   });
 
   formGroup = new FormGroup({
-    name: new FormControl('', Validators.required),
-    passengerNumber: new FormControl(0, Validators.required),
-    type: new FormControl('', Validators.required),
-    brand: new FormControl('', Validators.required),
-    model: new FormControl('', Validators.required),
-    buildDate: new FormControl(0, Validators.required),
-    costPerDay: new FormControl(0, Validators.required),
+    name: new FormControl('Cool car', Validators.required),
+    passengerNumber: new FormControl(4, Validators.required),
+    type: new FormControl('Cool', Validators.required),
+    brand: new FormControl('Cool brand', Validators.required),
+    model: new FormControl('Cool model', Validators.required),
+    buildDate: new FormControl(1969, Validators.required),
+    costPerDay: new FormControl(69, Validators.required),
   });
 
   formGroupEditCar = new FormGroup({
@@ -45,8 +44,8 @@ export class RentACarProfileEditComponent implements OnInit {
   });
 
   formGroupAddBranch = new FormGroup({
-    name: new FormControl('', Validators.required),
-    address: new FormControl('', Validators.required),
+    name: new FormControl('Cool branch', Validators.required),
+    address: new FormControl('London', Validators.required),
   });
 
   agencyId: number;
@@ -61,7 +60,6 @@ export class RentACarProfileEditComponent implements OnInit {
         description: result.description,
       });
     });
-
   }
 
   ngOnInit(): void {
@@ -115,9 +113,9 @@ export class RentACarProfileEditComponent implements OnInit {
       this.carService.updateCar(car).then(() => {
         this.refreshAgency();
       }, err => {
-          if (err.status === 400) {
-            alert(err.error.message);
-          }
+        if (err.status === 400) {
+          alert(err.error.message);
+        }
       });
     }, err => { });
   }

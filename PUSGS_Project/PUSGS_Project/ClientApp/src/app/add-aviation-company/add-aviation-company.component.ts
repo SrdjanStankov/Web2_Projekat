@@ -11,11 +11,11 @@ import { AviationService } from '../services/aviation.service';
 })
 export class AddAviationCompanyComponent implements OnInit {
   aviationGroup = new FormGroup({
-    name: new FormControl('', Validators.required),
-    description: new FormControl('', Validators.required),
+    name: new FormControl('My aviation company', Validators.required),
+    description: new FormControl('This is the best aviation company of all time', Validators.required),
     x: new FormControl(0, Validators.required),
     y: new FormControl(0, Validators.required),
-    cityName: new FormControl('', Validators.required),
+    cityName: new FormControl('Belgrade', Validators.required),
   });
 
   reason: string;

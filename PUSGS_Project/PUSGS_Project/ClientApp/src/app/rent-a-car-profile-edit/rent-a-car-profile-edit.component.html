@@ -150,14 +150,13 @@
 
         <br />
 
-        <label for="costPerDay">Cost per day</label>
+        <label for="costPerDay">Cost per day ($)</label>
         <div class="input-group">
           <input [class.is-invalid]="formGroup.get('costPerDay').invalid && formGroup.get('costPerDay').touched" type="number" autocomplete="on" id="costPerDay" class="form-control" name="costPerDay" formControlName="costPerDay">
         </div>
         <div *ngIf="(formGroup.get('costPerDay').invalid && formGroup.get('costPerDay').touched) || formGroup.get('costPerDay').dirty">
           <small *ngIf="formGroup.get('costPerDay').errors?.required" class="text-danger">Cost per day is required</small>
         </div>
-
       </div>
     </form>
   </div>
@@ -244,7 +243,6 @@
         <div *ngIf="(formGroupEditCar.get('costPerDay').invalid && formGroupEditCar.get('costPerDay').touched) || formGroupEditCar.get('costPerDay').dirty">
           <small *ngIf="formGroupEditCar.get('costPerDay').errors?.required" class="text-danger">Cost per day is required</small>
         </div>
-
       </div>
     </form>
   </div>
@@ -281,7 +279,6 @@
         <div *ngIf="(formGroupAddBranch.get('address').invalid && formGroupAddBranch.get('address').touched) || formGroupAddBranch.get('address').dirty">
           <small *ngIf="formGroupAddBranch.get('address').errors?.required" class="text-danger">Name is required</small>
         </div>
-
       </div>
     </form>
   </div>
