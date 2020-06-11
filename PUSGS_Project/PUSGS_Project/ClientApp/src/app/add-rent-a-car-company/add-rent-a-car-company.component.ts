@@ -10,11 +10,10 @@ import { RentACar } from '../entities/rent-a-car';
   styleUrls: ['./add-rent-a-car-company.component.css']
 })
 export class AddRentACarCompanyComponent implements OnInit {
-
   rentACarGroup = new FormGroup({
-    name: new FormControl('', Validators.required),
-    address: new FormControl('', Validators.required),
-    description: new FormControl('', Validators.required),
+    name: new FormControl('My Car Company', Validators.required),
+    address: new FormControl('London', Validators.required),
+    description: new FormControl('This is the best car company ever', Validators.required),
   });
 
   reason: string;
@@ -33,5 +32,4 @@ export class AddRentACarCompanyComponent implements OnInit {
       this.activeModal.close();
     });
   }
-
 }

@@ -149,7 +149,7 @@ export class FlightReservationFormComponent implements OnInit {
 
     this.service.makeReservation(this.currUserTicket).then(() => {
       console.log("Successfully made reservation for current user");
-      this.router.navigateByUrl("");
+      this.router.navigate(['/car-reservation'], { queryParams: { address: this.flight.to.cityName } });
     });
   }
 

@@ -14,6 +14,9 @@ namespace Core.Entities
         public bool IsVerified { get; set; }
         public bool IsSystemAdmin { get; set; }
         public bool IsRentACarAdmin { get; set; }
+        public bool IsAviationAdmin { get; set; }
+
+        public double Points { get; set; }
 
         public bool RequirePasswordChange { get; set; }
 
