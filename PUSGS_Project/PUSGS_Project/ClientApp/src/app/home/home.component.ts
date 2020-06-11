@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RentACar } from '../entities/rent-a-car';
 import { RentACarService } from '../services/rent-a-car.service';
 import { BackendService } from '../services/backend.service';
@@ -14,12 +14,13 @@ import { FormControl, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Rating } from '../entities/rating';
 import { RatingService } from '../services/rating.service';
+import { getRequirePassChange } from '../util/storage';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   public aviationCompanies: AviationCompany[];
   public flightsToShow: Flight[];
   public rentACarAgencies: RentACar[];
@@ -34,17 +35,29 @@ export class HomeComponent {
   public displayCompanies: boolean = true;
   public rating = new FormControl(null, Validators.required);
 
-  constructor(private RACService: RentACarService, public backend: BackendService, private aviationService: AviationService, private router: Router, private carReservationService: CarReservationService, private modalService: NgbModal, private ratingService: RatingService) {
-    RACService.getAgencies().then(result => {
+  constructor(private RACService: RentACarService, public backend: BackendService, private aviationService: AviationService,
+    private router: Router, private carReservationService: CarReservationService, private modalService: NgbModal, private ratingService: RatingService) {
+  }
+
+  public ngOnInit(): void {
+    this.rerouteIfRequirePassChange();
+
+    this.RACService.getAgencies().then(result => {
       this.rentACarAgencies = result;
     });
-    aviationService.getAll().then(result => this.aviationCompanies = result);
-    this.displayAgencies = true;
-    this.displayCompanies = true;
-    if (backend.isLogedIn()) {
-      carReservationService.getReservations(localStorage.getItem(STORAGE_USER_ID_KEY)).then(result => {
+
+    this.aviationService.getAll().then(result => this.aviationCompanies = result);
+
+    if (this.backend.isLogedIn()) {
+      this.carReservationService.getReservations(localStorage.getItem(STORAGE_USER_ID_KEY)).then(result => {
         this.carReservations = result;
       });
+    }
+  }
+
+  private rerouteIfRequirePassChange() {
+    if (getRequirePassChange()) {
+      this.router.navigate(['change-password']);
     }
   }
 
@@ -119,5 +132,4 @@ export class HomeComponent {
       });
     });
   }
-
 }

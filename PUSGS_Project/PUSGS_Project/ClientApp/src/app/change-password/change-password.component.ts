@@ -3,6 +3,7 @@ import { UserService } from '../services/user.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { passwordMatchValidator } from '../register/register.component';
+import { STORAGE_PASSCHG_KEY } from '../constants/storage';
 
 @Component({
   selector: 'app-change-password',
@@ -34,6 +35,7 @@ export class ChangePasswordComponent implements OnInit {
     const newPassword = this.formGroup.get('password').value;
 
     this.userService.changePassword(this.currUserId, newPassword).then(() => {
+      localStorage.removeItem(STORAGE_PASSCHG_KEY);
       this.router.navigateByUrl('');
     });
   }

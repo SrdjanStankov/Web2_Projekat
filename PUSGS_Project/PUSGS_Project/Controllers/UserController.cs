@@ -199,7 +199,7 @@ namespace PUSGS_Project.Controllers
             var tokenHandler = new JwtSecurityTokenHandler();
             var securityToken = tokenHandler.CreateToken(tokenDescriptor);
             var token = tokenHandler.WriteToken(securityToken);
-            return Ok(new { token, type = user.GetType().Name });
+            return Ok(new { token, type = user.GetType().Name, requirePasswordChange = user.RequirePasswordChange });
         }
 
         [HttpPost]

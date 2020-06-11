@@ -92,7 +92,7 @@ export function provideConfig() {
       { path: "car-reservation", component: CarReservationComponent, canActivate: [AuthGuard] },
       { path: "users", component: FriendsComponent, canActivate: [AuthGuard] },
       { path: "change-password", component: ChangePasswordComponent, canActivate: [AuthGuard] },
-      { path: "flights", component: FlightsComponent },
+      { path: "flights", component: FlightsComponent, canActivate: [AuthGuard] },
       { path: "flight/:id", component: FlightDetailsComponent },
       { path: "flight/:id/reservation", component: FlightReservationFormComponent, canActivate: [AuthGuard] },
       { path: "ConfirmEmail/:email", component: MailConfirmationComponent },

@@ -49,6 +49,7 @@
     <None Remove="ClientApp\src\app\entities\requests\add-or-update-aviation-company-request.ts" />
     <None Remove="ClientApp\src\app\entities\requests\update-flight-request.ts" />
     <None Remove="ClientApp\src\app\flight-reservation-form\helpers\flight-seat-reservation.ts" />
+    <None Remove="ClientApp\src\app\util\storage.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -66,6 +67,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\entities\requests\add-or-update-aviation-company-request.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\entities\requests\update-flight-request.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\flight-reservation-form\helpers\flight-seat-reservation.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\util\storage.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
