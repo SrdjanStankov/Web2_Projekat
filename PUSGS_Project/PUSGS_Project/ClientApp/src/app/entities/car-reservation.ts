@@ -7,4 +7,5 @@ export class CarReservation {
   reservedCarId: number;
   ownerEmail: string;
   rating: number;
+  costForRange: number;
 }
