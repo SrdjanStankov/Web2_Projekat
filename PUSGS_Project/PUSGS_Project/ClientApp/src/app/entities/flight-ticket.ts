@@ -2,6 +2,7 @@ import { Flight } from "./flight";
 import { FlightSeat } from "./flight-seat";
 
 export class FlightTicket {
+  id: number;
   ticketOwnerEmail: string;
   flightId: number;
   flightSeatId: number;

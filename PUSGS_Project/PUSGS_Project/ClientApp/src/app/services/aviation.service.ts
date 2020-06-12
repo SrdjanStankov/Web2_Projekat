@@ -2,6 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { AviationCompany } from '../entities/aviation-company';
 import { AddOrUpdateAviationCompanyRequest } from '../entities/requests/add-or-update-aviation-company-request';
+import { FlightTicket, FlightTicketDetails } from '../entities/flight-ticket';
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +29,9 @@ export class AviationService {
   }
   delete(id: number) {
     return this.http.delete(this.aviationControllerUri + id).toPromise();
+  }
+
+  getAvailableQuickReservations(aviationId: number): Promise<FlightTicketDetails[]> {
+    return this.http.get<FlightTicketDetails[]>(this.aviationControllerUri + `${aviationId}/quick-reservations`).toPromise();
   }
 }

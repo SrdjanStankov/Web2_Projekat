@@ -1,0 +1,33 @@
+<div class="container">
+  <div>
+    <button class="btn btn-success" (click)="onAddClick()" *ngIf="isAdmin()">Add</button>
+  </div>
+  <div>
+    <table class="table table-striped table-bordered">
+      <thead class="thead-light">
+        <tr>
+          <th class="text-center" scope="col">From</th>
+          <th class="text-center" scope="col">To</th>
+          <th class="text-center" scope="col">Departure Time</th>
+          <th class="text-center" scope="col">Seat Number</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ticket of quickTickets">
+          <td class="">{{ticket.flight.from.cityName}}</td>
+          <td class="">{{ticket.flight.to.cityName}}</td>
+          <td class="">{{ticket.flight.departureTime | date :'short'}}</td>
+          <td class="">{{ticket.flight.arrivalTime | date :'short'}}</td>
+          <td class="text-center">{{ticket.flightSeat.seatNumber}}</td>
+          <td>
+            <div class="btn-group" role="group">
+              <button class="btn btn-primary" (click)="onReserve(ticket)">Reserve</button>
+              <button class="btn btn-danger" (click)="onRemove(ticket)" *ngIf="isAdmin()">Remove</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

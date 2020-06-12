@@ -35,6 +35,8 @@ import { TicketHistoryComponent } from './ticket-history/ticket-history.componen
 import { AddFlightFormComponent } from './add-flight-form/add-flight-form.component';
 import { AddFlightRequest } from "./entities/requests/add-flight-request";
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { QuickTicketReservationComponent } from './quick-ticket-reservation/quick-ticket-reservation.component';
+import { AddQuickTicketComponent } from './add-quick-ticket/add-quick-ticket.component';
 
 let config = new AuthServiceConfig([
   {
@@ -73,6 +75,8 @@ export function provideConfig() {
     TicketHistoryComponent,
     AddFlightFormComponent,
     ChangePasswordComponent,
+    QuickTicketReservationComponent,
+    AddQuickTicketComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -87,6 +91,7 @@ export function provideConfig() {
       { path: "profile", component: ProfileComponent, canActivate: [AuthGuard] },
       { path: "aviation/:id", component: AviationProfileComponent },
       { path: "aviation/:id/add-flight", component: AddFlightFormComponent, canActivate: [AuthGuard] },
+      { path: "aviation/:id/quick-reservations", component: QuickTicketReservationComponent, canActivate: [AuthGuard] },
       { path: "rent-a-car/:id", component: RentACarProfileComponent },
       { path: "rent-a-car-edit/:id", component: RentACarProfileEditComponent, canActivate: [AuthGuard] },
       { path: "car-reservation", component: CarReservationComponent, canActivate: [AuthGuard] },

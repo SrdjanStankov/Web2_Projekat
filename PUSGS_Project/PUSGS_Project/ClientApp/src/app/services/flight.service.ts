@@ -43,4 +43,10 @@ export class FlightService {
   inviteFriends(flightTickets: FlightTicket[]) {
     return this.http.post(this.flightControllerUri + "ticket-invitation", { flightTickets }).toPromise();
   }
+  makeQuickReservation(userEmail: string, flightTicketId: number) {
+    return this.http.post(this.flightControllerUri + "quick-reservation", { userEmail, flightTicketId }).toPromise();
+  }
+  cancelQuickReservation(flightTicketId: number) {
+    return this.http.delete(this.flightControllerUri + `quick-reservation/${flightTicketId}`).toPromise();
+  }
 }

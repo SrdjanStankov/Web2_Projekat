@@ -1,8 +1,11 @@
-﻿using Core.Interfaces.Services;
+﻿using Core.Entities;
+using Core.Interfaces.Repositories;
+using Core.Interfaces.Services;
 using Core.ViewModels.Aviation;
 using Core.ViewModels.Aviation.Requests;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PUSGS_Project.Controllers
@@ -12,10 +15,12 @@ namespace PUSGS_Project.Controllers
     public class AviationController : ControllerBase
     {
         private readonly IAviationService _aviationService;
+        private readonly IFlightTicketRepository _ticketRepository;
 
-        public AviationController(IAviationService aviationService)
+        public AviationController(IAviationService aviationService, IFlightTicketRepository ticketRepository)
         {
             _aviationService = aviationService;
+            _ticketRepository = ticketRepository;
         }
 
         // GET: api/<controller>
@@ -57,6 +62,13 @@ namespace PUSGS_Project.Controllers
         public Task Delete(long id)
         {
             return _aviationService.DeleteAviationCompanyAsync(id);
+        }
+
+        [HttpGet("{id}/quick-reservations")]
+        public async Task<List<FlightTicketDetailsModel>> GetTickets(long id)
+        {
+            var tickets = await _ticketRepository.GetAllByAviationIdAsync(id);
+            return tickets.Where(t => string.IsNullOrWhiteSpace(t.TicketOwnerEmail)).Select(t => new FlightTicketDetailsModel(t)).ToList();
         }
     }
 }

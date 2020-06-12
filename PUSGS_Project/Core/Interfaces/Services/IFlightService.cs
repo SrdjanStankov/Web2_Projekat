@@ -1,4 +1,5 @@
-﻿using Core.ViewModels.Aviation;
+﻿using Core.Entities;
+using Core.ViewModels.Aviation;
 using Core.ViewModels.Aviation.Requests;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -25,6 +26,10 @@ namespace Core.Interfaces.Services
 
         Task CancelReservationAsync(long id);
 
-        Task AcceptReservation(long id);
+        Task AcceptReservationAsync(long id);
+
+        Task MakeQuickReservationAsync(QuickReservationRequestModel model);
+
+        Task CancelQuickReservationAsync(long ticketId);
     }
 }

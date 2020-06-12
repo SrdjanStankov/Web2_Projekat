@@ -131,9 +131,23 @@ namespace Core.Services
             return _ticketRepository.RemoveAsync(id);
         }
 
-        public Task AcceptReservation(long id)
+        public Task AcceptReservationAsync(long id)
         {
             return _ticketRepository.AcceptAsync(id);
+        }
+
+        public async Task MakeQuickReservationAsync(QuickReservationRequestModel model)
+        {
+            var flightTicket = await _ticketRepository.GetByIdAsync(model.FlightTicketId);
+            flightTicket.TicketOwnerEmail = model.UserEmail;
+            await _ticketRepository.UpdateAsync(flightTicket);
+        }
+
+        public async Task CancelQuickReservationAsync(long ticketId)
+        {
+            var flightTicket = await _ticketRepository.GetByIdAsync(ticketId);
+            flightTicket.TicketOwnerEmail = null;
+            await _ticketRepository.UpdateAsync(flightTicket);
         }
     }
 }

@@ -62,7 +62,11 @@ export class AviationProfileComponent implements OnInit {
     this.aviationGroup.setValue({ name: item.name, description: item.description, cityName: item.address.cityName });
   }
 
-  // Add flight
+  // Button group
+  quickReservations() {
+    this.router.navigateByUrl(`aviation/${this.id}/quick-reservations`);
+  }
+
   addFlight() {
     this.router.navigateByUrl(`aviation/${this.id}/add-flight`);
   }
