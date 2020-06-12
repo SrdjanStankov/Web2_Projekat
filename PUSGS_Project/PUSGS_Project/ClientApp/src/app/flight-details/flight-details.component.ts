@@ -5,6 +5,8 @@ import { Flight } from '../entities/flight';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UpdateFlightRequest } from '../entities/requests/update-flight-request';
+import userTypes from '../constants/user-types';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-flight-details',
@@ -16,7 +18,7 @@ export class FlightDetailsComponent implements OnInit {
   id: number;
 
   constructor(private service: FlightService, private route: ActivatedRoute,
-    private router: Router, private modalService: NgbModal) {
+    private router: Router, private modalService: NgbModal, private userService: UserService) {
   }
 
   ngOnInit(): void {
@@ -30,6 +32,10 @@ export class FlightDetailsComponent implements OnInit {
     this.service.delete(this.id).then(() => {
       this.router.navigateByUrl("");
     })
+  }
+
+  isAdmin(): boolean {
+    return this.userService.getLoggedInUserType() === userTypes.AviationAdmin;
   }
 
   // Edit flight form

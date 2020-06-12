@@ -4,9 +4,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistance.Configurations
 {
-    public class RenACarAdministratorConfiguration : IEntityTypeConfiguration<RentACarAdministrator>
+
+    public class AviationAdministratorConfiguration : IEntityTypeConfiguration<AviationAdministrator>
     {
-        public void Configure(EntityTypeBuilder<RentACarAdministrator> builder)
+        public void Configure(EntityTypeBuilder<AviationAdministrator> builder)
         {
         }
     }

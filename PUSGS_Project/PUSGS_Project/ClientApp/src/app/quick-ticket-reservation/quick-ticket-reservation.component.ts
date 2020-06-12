@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FlightTicketDetails } from '../entities/flight-ticket';
 import { UserService } from '../services/user.service';
 import { FlightService } from '../services/flight.service';
+import userTypes from '../constants/user-types';
 
 @Component({
   selector: 'app-quick-ticket-reservation',
@@ -29,6 +30,10 @@ export class QuickTicketReservationComponent implements OnInit {
     });
   }
 
+  isAdmin(): boolean {
+    return this.userService.getLoggedInUserType() === userTypes.AviationAdmin;
+  }
+
   onReserve(ticket: FlightTicketDetails) {
     const userId = this.userService.getLoggedInUserId();
     this.flightService.makeQuickReservation(userId, ticket.id).then(() => {
@@ -42,9 +47,6 @@ export class QuickTicketReservationComponent implements OnInit {
     });
   }
 
-  isAdmin(): boolean {
-    return true;
-  }
   onAddClick() {
     this.router.navigateByUrl(`aviation/${this.aviationId}/add-quick-ticket`);
   }

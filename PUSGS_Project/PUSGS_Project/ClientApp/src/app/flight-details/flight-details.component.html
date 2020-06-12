@@ -76,7 +76,7 @@
         <p>{{flight.averageRating}}</p>
       </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="isAdmin()">
       <div class="btn-group">
         <button class="btn btn-warning" (click)="openFlightModal(content)" [disabled]="!canEditFlight()">Edit info</button>
         <button class="btn btn-danger" (click)="deleteFlight()">Delete flight</button>
@@ -89,7 +89,7 @@
   <h3>Flight seats</h3>
   <section class="container">
     <app-flight-seats [flightSeats]="flight.seats"></app-flight-seats>
-    <div class="btn-group" role="group" aria-label="Flight seat actions" hidden>
+    <div class="btn-group" role="group" aria-label="Flight seat actions" hidden *ngIf="isAdmin()">
       <button class="btn btn-primary" disabled>Add</button>
       <button class="btn btn-danger" disabled>Delete seat(s)</button>
     </div>
