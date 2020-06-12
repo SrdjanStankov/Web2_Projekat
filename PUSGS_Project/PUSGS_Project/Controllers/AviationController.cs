@@ -68,7 +68,7 @@ namespace PUSGS_Project.Controllers
         public async Task<List<FlightTicketDetailsModel>> GetTickets(long id)
         {
             var tickets = await _ticketRepository.GetAllByAviationIdAsync(id);
-            return tickets.Where(t => string.IsNullOrWhiteSpace(t.TicketOwnerEmail)).Select(t => new FlightTicketDetailsModel(t)).ToList();
+            return tickets.Where(t => t.TicketOwnerEmail == null).Select(t => new FlightTicketDetailsModel(t)).ToList();
         }
     }
 }

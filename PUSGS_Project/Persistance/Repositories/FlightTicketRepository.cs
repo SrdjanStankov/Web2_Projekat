@@ -20,6 +20,9 @@ namespace Persistance.Repositories
 
         public async Task<long> AddAsync(FlightTicket flightTicket)
         {
+            if (string.IsNullOrWhiteSpace(flightTicket.TicketOwnerEmail))
+                flightTicket.TicketOwnerEmail = null;
+
             var entry = await _context.FlightTicket.AddAsync(flightTicket);
             await _context.SaveChangesAsync();
             return entry.Entity.Id;

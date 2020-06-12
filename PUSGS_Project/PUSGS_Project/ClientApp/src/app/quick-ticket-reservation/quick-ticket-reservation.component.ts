@@ -12,7 +12,7 @@ import { FlightService } from '../services/flight.service';
 })
 export class QuickTicketReservationComponent implements OnInit {
   aviationId: number;
-  flightIdFilter: string;
+  flightIdFilter: string = "";
   quickTickets: FlightTicketDetails[];
 
   constructor(private userService: UserService, private aviationService: AviationService, private route: ActivatedRoute, private router: Router, private flightService: FlightService) { }
@@ -25,6 +25,7 @@ export class QuickTicketReservationComponent implements OnInit {
 
     this.aviationService.getAvailableQuickReservations(this.aviationId).then(tickets => {
       this.quickTickets = this.filterTickets(tickets);
+      console.log(tickets);
     });
   }
 
@@ -49,11 +50,10 @@ export class QuickTicketReservationComponent implements OnInit {
   }
 
   private filterTickets(tickets: FlightTicketDetails[]): FlightTicketDetails[] {
-    try {
-      const flightId = Number.parseInt(this.flightIdFilter)
+    if (this.flightIdFilter) {
+      const flightId = Number.parseInt(this.flightIdFilter);
       return tickets.filter(t => t.flight.id === flightId);
-    } catch{
-      return tickets;
     }
+    return tickets;
   }
 }
