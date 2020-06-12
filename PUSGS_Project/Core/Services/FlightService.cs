@@ -149,5 +149,12 @@ namespace Core.Services
             flightTicket.TicketOwnerEmail = null;
             await _ticketRepository.UpdateAsync(flightTicket);
         }
+
+        public async Task RateAsync(RateFlightRequestModel model)
+        {
+            var ticket = await _ticketRepository.GetByIdAsync(model.FlightTicketId);
+            ticket.Rating = model.Rating;
+            await _ticketRepository.UpdateAsync(ticket);
+        }
     }
 }

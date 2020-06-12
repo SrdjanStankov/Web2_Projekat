@@ -102,6 +102,12 @@ namespace PUSGS_Project.Controllers
             return _flightService.CancelQuickReservationAsync(id);
         }
 
+        [HttpPost("rate")]
+        public Task RateFlight([FromBody]RateFlightRequestModel model)
+        {
+            return _flightService.RateAsync(model);
+        }
+
         #endregion tickets
     }
 }

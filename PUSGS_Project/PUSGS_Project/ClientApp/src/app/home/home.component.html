@@ -5,54 +5,7 @@
     <li ngbNavItem="top">
       <a ngbNavLink>Avio kompanije</a>
       <ng-template ngbNavContent>
-
-        <form #filterForm="ngForm" (ngSubmit)="onFilterFlight()">
-          <div class="form-row">
-            <div class="form-group col">
-              <input type="text" name="search" class="form-control" placeholder="Search..." [(ngModel)]="searchFlight">
-            </div>
-            <div class="form-group col-md-2">
-              <input type="submit" class="form-control btn btn-primary" value="Apply filter" />
-            </div>
-          </div>
-        </form>
-
-        <div *ngIf="displayCompanies">
-          <div class="card-columns" id="collapsable" [ngbCollapse]="isCollapsed">
-            <div class="card" style="width: 18rem;" *ngFor="let company of aviationCompanies">
-              <h3 class="card-header">{{company.name}}</h3>
-
-              <div class="card-body">
-                <p class="card-text">{{company.description}}</p>
-                <p class="card-text">City: {{company.address.cityName}}</p>
-                <p *ngIf="!!company.averageRating" class="card-text">Average rating: {{company.averageRating.toPrecision(3)}}</p>
-              </div>
-
-              <div class="card-footer">
-                <button class="btn btn-primary" (click)="aviationDetails(company.id)">Details</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div *ngIf="!displayCompanies">
-          <div class="card-columns" id="collapsable" [ngbCollapse]="isCollapsed">
-            <div class="card" style="width: 18rem;" *ngFor="let flight of flightsToShow">
-              <h3 class="card-header">{{flight.aviationCompanyName}}</h3>
-
-              <div class="card-body">
-                <p class="card-text">From city: {{flight.from.cityName}}</p>
-                <p class="card-text">To city: {{flight.to.cityName}}</p>
-                <p class="card-text">Number of changeovers: {{flight.numberOfChangeovers}}</p>
-                <p class="card-text">Ticket price: {{flight.ticketPrice}}</p>
-              </div>
-
-              <div class="card-footer">
-                <button class="btn btn-primary" (click)="aviationDetails(company.id)">Details</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <app-aviation-companies></app-aviation-companies>
       </ng-template>
     </li>
 

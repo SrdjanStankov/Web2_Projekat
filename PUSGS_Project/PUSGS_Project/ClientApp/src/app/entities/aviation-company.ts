@@ -1,6 +1,5 @@
 import { Location } from "./location";
 import { Flight } from "./flight";
-import { Rating } from "./rating";
 
 export class AviationCompany {
   id: number;
@@ -8,9 +7,5 @@ export class AviationCompany {
   description: string;
   address: Location = new Location();
   flights: Flight[];
-  ratings: Rating[];
-
-  get averageRating(): number {
-    return 5;
-  }
+  averageRating = 0;
 }

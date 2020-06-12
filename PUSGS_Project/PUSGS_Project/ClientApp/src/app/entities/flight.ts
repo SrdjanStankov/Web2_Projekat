@@ -1,6 +1,4 @@
-import { msToTimeString } from "../util/time";
 import { FlightTicket } from "./flight-ticket";
-import { Rating } from "./rating";
 import { FlightSeat } from "./flight-seat";
 import { Location } from "./location";
 
@@ -16,6 +14,6 @@ export class Flight {
   from: Location;
   to: Location;
   tickets: FlightTicket[];
-  ratings: Rating[];
   seats: FlightSeat[];
+  averageRating = 0;
 }

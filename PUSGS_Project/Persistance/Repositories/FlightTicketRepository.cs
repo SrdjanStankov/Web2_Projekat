@@ -82,6 +82,7 @@ namespace Persistance.Repositories
             var ticket = await GetByIdAsync(flightTicket.Id);
             ticket.TicketOwnerEmail = flightTicket.TicketOwnerEmail;
             ticket.Discount = flightTicket.Discount;
+            ticket.Rating = flightTicket.Rating;
             await _context.SaveChangesAsync();
         }
     }

@@ -1,6 +1,4 @@
-﻿using Core.Enumerations;
-using Core.Helpers;
-using System;
+﻿using System;
 
 namespace Core.Entities
 {
@@ -22,5 +20,7 @@ namespace Core.Entities
         public DateTime? DateCreated { get; set; } = DateTime.Now;
 
         public bool Accepted { get; set; }
+
+        public double Rating { get; set; }
     }
 }
