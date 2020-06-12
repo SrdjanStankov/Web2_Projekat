@@ -20,6 +20,9 @@ namespace Persistance.Repositories
 
         public async Task<long> AddAsync(FlightTicket flightTicket)
         {
+            if (string.IsNullOrWhiteSpace(flightTicket.TicketOwnerEmail))
+                flightTicket.TicketOwnerEmail = null;
+
             var entry = await _context.FlightTicket.AddAsync(flightTicket);
             await _context.SaveChangesAsync();
             return entry.Entity.Id;
@@ -29,6 +32,20 @@ namespace Persistance.Repositories
         {
             await _context.FlightTicket.AddRangeAsync(flightTickets);
             await _context.SaveChangesAsync();
+        }
+
+        public Task<List<FlightTicket>> GetAllByAviationIdAsync(long aviationId)
+        {
+            return _context.FlightTicket
+                .Include(t => t.FlightSeat)
+                .Include(t => t.Flight)
+                .ThenInclude(f => f.AviationCompany)
+                .Include(t => t.Flight)
+                .ThenInclude(f => f.From)
+                .Include(t => t.Flight)
+                .ThenInclude(f => f.To)
+                .Where(t => t.Flight.AviationCompanyId == aviationId)
+                .ToListAsync();
         }
 
         public Task<FlightTicket> GetByIdAsync(long ticketId)
@@ -58,6 +75,14 @@ namespace Persistance.Repositories
                 .Include(t => t.FlightSeat)
                 .Where(t => t.TicketOwnerEmail == userEmail)
                 .ToListAsync();
+        }
+
+        public async Task UpdateAsync(FlightTicket flightTicket)
+        {
+            var ticket = await GetByIdAsync(flightTicket.Id);
+            ticket.TicketOwnerEmail = flightTicket.TicketOwnerEmail;
+            ticket.Discount = flightTicket.Discount;
+            await _context.SaveChangesAsync();
         }
     }
 }

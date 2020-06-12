@@ -1,0 +1,48 @@
+<div>
+  <h2>Add quick reservation ({{currPageIndex+1}}/{{numPages}})</h2>
+  <div [hidden]="currPageIndex !== 0">
+    <h3>Select a flight</h3>
+    <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="flights">
+      <thead>
+        <tr>
+          <th>From</th>
+          <th>To</th>
+          <th>Departure Time</th>
+          <th>Arrival Time</th>
+          <th>Ticket Price ($)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let flight of flights">
+          <td>{{flight.from.cityName}}</td>
+          <td>{{flight.to.cityName}}</td>
+          <td>{{flight.departureTime | date :'short'}}</td>
+          <td>{{flight.arrivalTime | date :'short'}}</td>
+          <td>{{flight.ticketPrice}}</td>
+          <td>
+            <button (click)="chooseFlight(flight)" class="btn btn-secondary">Choose</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="currPageIndex === 1">
+    <form>
+      <div class="form-group row">
+        <label for="mySeat" class="col-form-label col-sm-2">Choose seat</label>
+        <select [ngModel]="selectedSeatId" class="form-control col-sm-2" (ngModelChange)="onSeatSelectChange($event)" id="mySeat" name="selectedSeatId">
+          <option [value]="seat.id" *ngFor="let seat of flightSeats">{{seat.seatNumber}}</option>
+        </select>
+      </div>
+      <div class="form-group row">
+        <label for="discount" class="col-form-label col-sm-2">Discount ({{discount}}%)</label>
+        <input [ngModel]="discount" class="form-control custom-range col-sm-6" id="discount" type="range" min="0" max="100" (input)="onDiscountChange($event.target.value)" name="discount" />
+      </div>
+    </form>
+    <div class="btn-group" role="group">
+      <button class="btn btn-outline-secondary" (click)="back()">Back</button>
+      <button class="btn btn-success" (click)="submit()" [disabled]="!canSubmit()">Submit</button>
+    </div>
+  </div>
+</div>

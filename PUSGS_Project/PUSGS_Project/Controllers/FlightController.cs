@@ -19,6 +19,8 @@ namespace PUSGS_Project.Controllers
             _flightService = flightService;
         }
 
+        #region flight
+
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
         public Task Delete(long id)
@@ -58,10 +60,14 @@ namespace PUSGS_Project.Controllers
             return _flightService.UpdateAsync(id, model);
         }
 
+        #endregion flight
+
+        #region tickets
+
         [HttpGet("ticket/{id}/accept")]
         public Task AcceptReservation(long id)
         {
-            return _flightService.AcceptReservation(id);
+            return _flightService.AcceptReservationAsync(id);
         }
 
         [HttpDelete("ticket/{id}")]
@@ -83,5 +89,19 @@ namespace PUSGS_Project.Controllers
             // TODO: Send email invitation to each friend
             return _flightService.MakeFriendReservations(request.FlightTickets);
         }
+
+        [HttpPost("quick-reservation")]
+        public Task MakeQuickReservation([FromBody]QuickReservationRequestModel model)
+        {
+            return _flightService.MakeQuickReservationAsync(model);
+        }
+
+        [HttpDelete("quick-reservation/{id}")]
+        public Task CancelQuickReservation(long id)
+        {
+            return _flightService.CancelQuickReservationAsync(id);
+        }
+
+        #endregion tickets
     }
 }
