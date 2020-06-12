@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AddOrUpdateAviationCompanyRequest } from '../entities/requests/add-or-update-aviation-company-request';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserService } from '../services/user.service';
+import userTypes from '../constants/user-types';
 
 @Component({
   selector: 'app-aviation-profile',
@@ -16,7 +18,7 @@ export class AviationProfileComponent implements OnInit {
   public id: number;
 
   constructor(private service: AviationService, private route: ActivatedRoute,
-    private router: Router, private modalService: NgbModal) {
+    private router: Router, private modalService: NgbModal, private userService: UserService) {
   }
 
   ngOnInit(): void {
@@ -24,6 +26,10 @@ export class AviationProfileComponent implements OnInit {
     this.service.get(this.id).then(result => {
       this.company = result;
     });
+  }
+
+  isAdmin(): boolean {
+    return this.userService.getLoggedInUserType() === userTypes.AviationAdmin;
   }
 
   // Edit aviation form

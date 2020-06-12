@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { User } from "../entities/user";
 import { HttpClient } from "@angular/common/http";
-import { STORAGE_USER_ID_KEY } from '../constants/storage';
+import { STORAGE_USER_ID_KEY, STORAGE_TYPE_KEY } from '../constants/storage';
 import { FlightTicketDetails } from '../entities/flight-ticket';
 
 @Injectable({
@@ -20,6 +20,9 @@ export class UserService {
   }
   getLoggedInUserId(): string {
     return localStorage.getItem(STORAGE_USER_ID_KEY);
+  }
+  getLoggedInUserType(): string {
+    return localStorage.getItem(STORAGE_TYPE_KEY);
   }
   getLoggedInUser(): Promise<User> {
     const email = localStorage.getItem(STORAGE_USER_ID_KEY);

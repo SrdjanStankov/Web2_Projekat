@@ -26,13 +26,13 @@
   </div>
   <div class="row">
     <div class="col-md-6">
-      <label>TODO</label>
+      <label>Average rating</label>
     </div>
     <div class="col-md-6">
-      <p>Rating display</p>
+      <p>{{company.averageRating}}</p>
     </div>
   </div>
-  <div class="row">
+  <div class="row" *ngIf="isAdmin()">
     <div class="col-md">
       <button class="btn btn-warning" (click)="editProfile(aviationForm)">Edit</button>
     </div>
@@ -40,7 +40,7 @@
   <hr />
   <div class="btn-group" role="group">
     <button class="btn btn-outline-primary" (click)="quickReservations()">Quick reservations</button>
-    <button class="btn btn-primary" (click)="addFlight()">Add Flight</button>
+    <button class="btn btn-primary" (click)="addFlight()" *ngIf="isAdmin()">Add Flight</button>
   </div>
 </div>
 
