@@ -49,4 +49,7 @@ export class FlightService {
   cancelQuickReservation(flightTicketId: number) {
     return this.http.delete(this.flightControllerUri + `quick-reservation/${flightTicketId}`).toPromise();
   }
+  rate(flightTicketId: number, rating: number) {
+    return this.http.post(this.flightControllerUri + "rate", { flightTicketId, rating }).toPromise();
+  }
 }

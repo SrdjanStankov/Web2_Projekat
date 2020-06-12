@@ -6,6 +6,7 @@
       <th class="text-center" scope="col">To</th>
       <th class="text-center" scope="col">Departure Time</th>
       <th class="text-center" scope="col">Seat Number</th>
+      <th class="text-center" scope="col">Rating</th>
       <th></th>
     </tr>
   </thead>
@@ -16,12 +17,37 @@
       <td class="">{{ticket.flight.to.cityName}}</td>
       <td class="">{{ticket.flight.departureTime | date :'short'}}</td>
       <td class="text-center">{{ticket.flightSeat.seatNumber}}</td>
+      <td class="text-center" *ngIf="ticket.canRate">{{ticket.rating}}</td>
+      <td *ngIf="!ticket.canRate">Not available</td>
       <td>
         <div class="btn-group" role="group">
           <button class="btn btn-success" *ngIf="!ticket.accepted" (click)="onAcceptInvitation(ticket)">Accept</button>
+          <button class="btn btn-primary" *ngIf="ticket.canRate" (click)="onRate(ratemodal, ticket)">Rate</button>
           <button class="btn btn-danger" *ngIf="ticket.canCancel" (click)="onCancelReservation(ticket)">Cancel</button>
         </div>
       </td>
     </tr>
   </tbody>
 </table>
+
+<ng-template #ratemodal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-add-rating">Rate flight</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="form-group">
+      <ngb-rating [formControl]="rating"></ngb-rating>
+      <div class="form-text small">
+        <div *ngIf="rating.valid" class="text-success">Thanks!</div>
+        <div *ngIf="rating.invalid" class="text-danger">Please rate us</div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Submit</button>
+  </div>
+</ng-template>

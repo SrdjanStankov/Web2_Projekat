@@ -16,8 +16,11 @@ namespace Core.ViewModels.Aviation
 
         public DateTime? DateCreated { get; set; }
 
+        public double Rating { get; set; }
+
         public bool Accepted { get; set; }
         public bool CanCancel { get; set; }
+        public bool CanRate { get; set; }
 
         public FlightTicketDetailsModel(FlightTicket ticket)
         {
@@ -28,7 +31,9 @@ namespace Core.ViewModels.Aviation
             Discount = ticket.Discount;
             DateCreated = ticket.DateCreated;
             Accepted = ticket.Accepted;
+            Rating = ticket.Rating;
             CanCancel = ticket.Flight.CanCancelReservation();
+            CanRate = ticket.Flight.CanRate();
         }
     }
 }

@@ -31,5 +31,6 @@ namespace Core.Interfaces.Services
         Task MakeQuickReservationAsync(QuickReservationRequestModel model);
 
         Task CancelQuickReservationAsync(long ticketId);
+        Task RateAsync(RateFlightRequestModel model);
     }
 }

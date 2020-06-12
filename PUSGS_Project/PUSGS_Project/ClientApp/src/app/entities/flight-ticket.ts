@@ -9,6 +9,7 @@ export class FlightTicket {
   discount: number;
   canCancel: boolean;
   accepted: boolean;
+  rating: number;
 
   constructor({ ticketOwnerEmail = "", flightId = -1, flightSeatId = -1, discount = 0, canCancel = true } = {}) {
     this.ticketOwnerEmail = ticketOwnerEmail;
@@ -28,4 +29,5 @@ export class FlightTicketDetails {
   dateCreated: Date;
   accepted: boolean;
   canCancel: boolean;
+  rating: number;
 }

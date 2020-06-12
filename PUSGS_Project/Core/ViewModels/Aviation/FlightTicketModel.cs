@@ -17,8 +17,11 @@ namespace Core.ViewModels.Aviation
         public double Discount { get; set; }
 
         public bool CanCancel { get; set; } = true;
+        public bool CanRate { get; set; } = true;
 
         public bool Accepted { get; set; }
+
+        public double Rating { get; set; }
 
         public FlightTicketModel()
         {
@@ -35,7 +38,9 @@ namespace Core.ViewModels.Aviation
             FlightSeatId = ticket.FlightSeatId;
             Discount = ticket.Discount;
             Accepted = ticket.Accepted;
+            Rating = ticket.Rating;
             CanCancel = ticket.Flight?.CanCancelReservation() ?? true;
+            CanRate = ticket.Flight?.CanRate() ?? true;
         }
     }
 }

@@ -1,7 +1,7 @@
 <form #filterForm="ngForm" (ngSubmit)="onApplyFilter()">
   <div class="form-row">
     <div class="form-group col-sm-10">
-      <input type="text" name="search" class="form-control" placeholder="Search by from, to, price, travel length, aviation..." [(ngModel)]="search">
+      <input type="text" name="search" class="form-control" placeholder="Search by name, city, description..." [(ngModel)]="search">
     </div>
     <div class="form-group col-sm-2">
       <input type="submit" class="form-control btn btn-primary" value="Apply filter" />

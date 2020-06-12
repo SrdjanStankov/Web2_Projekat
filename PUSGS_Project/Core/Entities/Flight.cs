@@ -32,6 +32,12 @@ namespace Core.Entities
                 || DateTimeHelper.IsLessInHours(DateTime.Now, DepartureTime.Value, AppConsts.MinAllowedFlightTicketHourDiff);
         }
 
+        public bool CanRate()
+        {
+            return DepartureTime == null
+                || !DateTimeHelper.IsLessInHours(DateTime.Now, DepartureTime.Value, 0);
+        }
+
         public Flight()
         {
             Tickets = new HashSet<FlightTicket>();

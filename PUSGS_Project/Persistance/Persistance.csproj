@@ -45,6 +45,8 @@
     <Compile Remove="Migrations\20200610122105_AddedUserFriendsTable.Designer.cs" />
     <Compile Remove="Migrations\20200610122232_AddedUserFriendsTable.cs" />
     <Compile Remove="Migrations\20200610122232_AddedUserFriendsTable.Designer.cs" />
+    <Compile Remove="Migrations\20200612182511_AddRatingColumnToFlightTicketTable.cs" />
+    <Compile Remove="Migrations\20200612182511_AddRatingColumnToFlightTicketTable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
