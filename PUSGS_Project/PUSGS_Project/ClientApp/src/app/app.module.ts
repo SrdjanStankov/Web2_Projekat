@@ -92,6 +92,7 @@ export function provideConfig() {
       { path: "aviation/:id", component: AviationProfileComponent },
       { path: "aviation/:id/add-flight", component: AddFlightFormComponent, canActivate: [AuthGuard] },
       { path: "aviation/:id/quick-reservations", component: QuickTicketReservationComponent, canActivate: [AuthGuard] },
+      { path: "aviation/:id/add-quick-ticket", component: AddQuickTicketComponent, canActivate: [AuthGuard] },
       { path: "rent-a-car/:id", component: RentACarProfileComponent },
       { path: "rent-a-car-edit/:id", component: RentACarProfileEditComponent, canActivate: [AuthGuard] },
       { path: "car-reservation", component: CarReservationComponent, canActivate: [AuthGuard] },
