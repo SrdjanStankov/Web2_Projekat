@@ -1,0 +1,26 @@
+<form #filterForm="ngForm" (ngSubmit)="onApplyFilter()">
+  <div class="form-row">
+    <div class="form-group col-sm-10">
+      <input type="text" name="search" class="form-control" placeholder="Search by from, to, price, travel length, aviation..." [(ngModel)]="search">
+    </div>
+    <div class="form-group col-sm-2">
+      <input type="submit" class="form-control btn btn-primary" value="Apply filter" />
+    </div>
+  </div>
+</form>
+
+<div class="card-columns">
+  <div class="card" style="width: 18rem;" *ngFor="let company of displayedCompanies">
+    <h3 class="card-header">{{company.name}}</h3>
+
+    <div class="card-body">
+      <p class="card-text">{{company.description}}</p>
+      <p class="card-text">City: {{company.address.cityName}}</p>
+      <p *ngIf="!!company.averageRating" class="card-text">Average rating: {{company.averageRating.toPrecision(3)}}</p>
+    </div>
+
+    <div class="card-footer">
+      <button class="btn btn-primary" (click)="aviationDetails(company.id)">Details</button>
+    </div>
+  </div>
+</div>

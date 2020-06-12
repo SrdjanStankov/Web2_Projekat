@@ -21,21 +21,17 @@ import { getRequirePassChange } from '../util/storage';
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
-  public aviationCompanies: AviationCompany[];
-  public flightsToShow: Flight[];
   public rentACarAgencies: RentACar[];
   public carReservations: CarReservation[];
   public carsToShow: Car[];
   public isCollapsedCarResHistory: boolean;
   public isCollapsedRAC: boolean;
   public isCollapsed: boolean;
-  public search: string = "";
-  public searchFlight: string = "";
-  public displayAgencies: boolean = true;
-  public displayCompanies: boolean = true;
+  public search = "";
+  public displayAgencies = true;
   public rating = new FormControl(null, Validators.required);
 
-  constructor(private RACService: RentACarService, public backend: BackendService, private aviationService: AviationService,
+  constructor(private RACService: RentACarService, public backend: BackendService,
     private router: Router, private carReservationService: CarReservationService, private modalService: NgbModal, private ratingService: RatingService) {
   }
 
@@ -45,8 +41,6 @@ export class HomeComponent implements OnInit {
     this.RACService.getAgencies().then(result => {
       this.rentACarAgencies = result;
     });
-
-    this.aviationService.getAll().then(result => this.aviationCompanies = result);
 
     if (this.backend.isLogedIn()) {
       this.carReservationService.getReservations(localStorage.getItem(STORAGE_USER_ID_KEY)).then(result => {
@@ -81,9 +75,6 @@ export class HomeComponent implements OnInit {
   details(id: number) {
     this.router.navigateByUrl("rent-a-car/" + id);
   }
-  aviationDetails(id: number) {
-    this.router.navigateByUrl("aviation/" + id);
-  }
 
   onFilterCar() {
     const searchText = this.search.toLowerCase();
@@ -107,27 +98,6 @@ export class HomeComponent implements OnInit {
         }
         else if (car.model.toLowerCase().includes(searchText)) {
           this.carsToShow.push(car);
-        }
-      });
-    });
-  }
-
-  onFilterFlight() {
-    const searchText = this.searchFlight.toLowerCase();
-    if (searchText.trim() == "") {
-      this.displayCompanies = true;
-    }
-    else {
-      this.displayCompanies = false;
-    }
-    this.flightsToShow = [];
-    this.aviationCompanies.filter(company => {
-      company.flights.filter(flight => {
-        if (flight.from.cityName.toLowerCase().includes(searchText)) {
-          this.flightsToShow.push(flight);
-        }
-        else if (flight.to.cityName.toLowerCase().includes(searchText)) {
-          this.flightsToShow.push(flight);
         }
       });
     });
