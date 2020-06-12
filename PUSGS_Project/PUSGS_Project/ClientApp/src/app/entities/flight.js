@@ -4,6 +4,7 @@ var Flight = /** @class */ (function () {
     function Flight() {
         this.departureTime = new Date();
         this.arrivalTime = new Date();
+        this.averageRating = 0;
     }
     return Flight;
 }());

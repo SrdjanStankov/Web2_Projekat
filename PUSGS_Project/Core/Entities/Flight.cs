@@ -2,6 +2,7 @@
 using Core.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Core.Entities
 {
@@ -36,6 +37,11 @@ namespace Core.Entities
         {
             return DepartureTime == null
                 || !DateTimeHelper.IsLessInHours(DateTime.Now, DepartureTime.Value, 0);
+        }
+
+        public double GetAverageRating()
+        {
+            return Tickets.Where(t => t.Rating > 0).Select(t => t.Rating).DefaultIfEmpty().Average();
         }
 
         public Flight()

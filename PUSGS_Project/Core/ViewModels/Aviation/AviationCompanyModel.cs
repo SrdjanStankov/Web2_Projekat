@@ -12,7 +12,8 @@ namespace Core.ViewModels.Aviation
         public LocationModel Address { get; set; }
 
         public ICollection<FlightModel> Flights { get; set; }
-        public ICollection<RatingModel> Ratings { get; set; }
+
+        public double AverageRating { get; set; }
 
         public AviationCompanyModel()
         {
@@ -28,7 +29,8 @@ namespace Core.ViewModels.Aviation
             Description = aviation.Description;
             Address = new LocationModel(aviation.Address);
             Flights = aviation.Flights.Select(f => new FlightModel(f)).ToList();
-            Ratings = aviation.Ratings.Select(r => new RatingModel(r)).ToList();
+
+            AverageRating = Flights.Where(f => f.AverageRating > 0).Select(f => f.AverageRating).DefaultIfEmpty().Average();
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Persistance.Repositories
             return context.AviationCompany
                 .Include(c => c.Address)
                 .Include(c => c.Flights)
-                .Include(c => c.Ratings)
+                .ThenInclude(f => f.Tickets)
                 .ToListAsync();
         }
 
@@ -41,7 +41,7 @@ namespace Persistance.Repositories
                 .Include(c => c.Address)
                 .Include(c => c.Flights).ThenInclude(f => f.From)
                 .Include(c => c.Flights).ThenInclude(f => f.To)
-                .Include(c => c.Flights).ThenInclude(f => f.Ratings)
+                .Include(c => c.Flights).ThenInclude(f => f.Tickets)
                 .SingleOrDefaultAsync(c => c.Id == id);
         }
 

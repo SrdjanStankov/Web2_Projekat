@@ -1,1 +1,1 @@
-{"version":3,"file":"flight.js","sourceRoot":"","sources":["flight.ts"],"names":[],"mappings":";;AAMA;IAAA;QAIE,kBAAa,GAAS,IAAI,IAAI,EAAE,CAAC;QACjC,gBAAW,GAAS,IAAI,IAAI,EAAE,CAAC;IASjC,CAAC;IAAD,aAAC;AAAD,CAAC,AAdD,IAcC;AAdY,wBAAM"}
+{"version":3,"file":"flight.js","sourceRoot":"","sources":["flight.ts"],"names":[],"mappings":";;AAIA;IAAA;QAIE,kBAAa,GAAS,IAAI,IAAI,EAAE,CAAC;QACjC,gBAAW,GAAS,IAAI,IAAI,EAAE,CAAC;QAQ/B,kBAAa,GAAG,CAAC,CAAC;IACpB,CAAC;IAAD,aAAC;AAAD,CAAC,AAdD,IAcC;AAdY,wBAAM"}

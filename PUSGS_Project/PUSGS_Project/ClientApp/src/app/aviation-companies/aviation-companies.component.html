@@ -16,7 +16,7 @@
     <div class="card-body">
       <p class="card-text">{{company.description}}</p>
       <p class="card-text">City: {{company.address.cityName}}</p>
-      <p *ngIf="!!company.averageRating" class="card-text">Average rating: {{company.averageRating.toPrecision(3)}}</p>
+      <p class="card-text">Average rating: {{company.averageRating}}</p>
     </div>
 
     <div class="card-footer">
