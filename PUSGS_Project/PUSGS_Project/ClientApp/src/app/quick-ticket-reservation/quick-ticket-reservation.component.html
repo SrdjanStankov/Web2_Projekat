@@ -11,6 +11,7 @@
           <th class="text-center" scope="col">Departure Time</th>
           <th class="text-center" scope="col">Arrival Time</th>
           <th class="text-center" scope="col">Seat Number</th>
+          <th class="text-center" scope="col">Discount</th>
           <th></th>
         </tr>
       </thead>
@@ -21,6 +22,7 @@
           <td class="">{{ticket.flight.departureTime | date :'short'}}</td>
           <td class="">{{ticket.flight.arrivalTime | date :'short'}}</td>
           <td class="text-center">{{ticket.flightSeat.seatNumber}}</td>
+          <td class="text-center">{{ticket.discount}}%</td>
           <td>
             <div class="btn-group" role="group">
               <button class="btn btn-primary" (click)="onReserve(ticket)" *ngIf="ticket.canCancel">Reserve</button>
