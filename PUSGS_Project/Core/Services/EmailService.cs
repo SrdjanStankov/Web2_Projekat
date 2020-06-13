@@ -1,6 +1,8 @@
 ﻿using Core.Entities;
 using Core.Interfaces.Services;
 using Microsoft.Extensions.Options;
+using System;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
@@ -40,7 +42,14 @@ namespace Core.Services
                 message.IsBodyHtml = true;
                 message.Priority = MailPriority.High;
 
-                await client.SendMailAsync(message);
+                try
+                {
+                    await client.SendMailAsync(message);
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError(ex.Message);
+                }
             }
         }
     }

@@ -3,6 +3,7 @@ using Core.Interfaces.Repositories;
 using Core.Interfaces.Services;
 using Core.ViewModels.Aviation;
 using Core.ViewModels.Aviation.Requests;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -102,10 +103,11 @@ namespace Core.Services
             return _ticketRepository.AddAsync(ticket);
         }
 
-        public Task MakeFriendReservations(IEnumerable<FlightTicketModel> models)
+        public async Task<List<FlightTicket>> MakeFriendReservations(IEnumerable<FlightTicketModel> models)
         {
-            var tickets = models.Select(m => MapToTicket(m, accepted: false));
-            return _ticketRepository.AddRangeAsync(tickets);
+            var tickets = models.Select(m => MapToTicket(m, accepted: false)).ToList();
+            await _ticketRepository.AddRangeAsync(tickets);
+            return tickets;
         }
 
         private static FlightTicket MapToTicket(FlightTicketModel model, bool accepted = true)
