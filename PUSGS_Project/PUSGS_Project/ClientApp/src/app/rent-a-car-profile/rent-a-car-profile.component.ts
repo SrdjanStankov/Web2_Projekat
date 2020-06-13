@@ -32,4 +32,8 @@ export class RentACarProfileComponent implements OnInit {
     })
   }
 
+  quickReservation() {
+    this.router.navigateByUrl("rent-a-car/" + this.id + "/quick-reservations");
+  }
+
 }

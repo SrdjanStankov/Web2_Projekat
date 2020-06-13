@@ -37,6 +37,7 @@ import { AddFlightRequest } from "./entities/requests/add-flight-request";
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { QuickTicketReservationComponent } from './quick-ticket-reservation/quick-ticket-reservation.component';
 import { AddQuickTicketComponent } from './add-quick-ticket/add-quick-ticket.component';
+import { QuickCarReservationComponent } from './quick-car-reservation/quick-car-reservation.component';
 import { AviationCompaniesComponent } from './aviation-companies/aviation-companies.component';
 import { AcceptInvitationComponent } from './accept-invitation/accept-invitation.component';
 
@@ -81,6 +82,7 @@ export function provideConfig() {
     AddQuickTicketComponent,
     AviationCompaniesComponent,
     AcceptInvitationComponent,
+    QuickCarReservationComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -98,6 +100,7 @@ export function provideConfig() {
       { path: "aviation/:id/quick-reservations", component: QuickTicketReservationComponent, canActivate: [AuthGuard] },
       { path: "aviation/:id/add-quick-ticket", component: AddQuickTicketComponent, canActivate: [AuthGuard] },
       { path: "rent-a-car/:id", component: RentACarProfileComponent },
+      { path: "rent-a-car/:id/quick-reservations", component: QuickCarReservationComponent },
       { path: "rent-a-car-edit/:id", component: RentACarProfileEditComponent, canActivate: [AuthGuard] },
       { path: "car-reservation", component: CarReservationComponent, canActivate: [AuthGuard] },
       { path: "users", component: FriendsComponent, canActivate: [AuthGuard] },
