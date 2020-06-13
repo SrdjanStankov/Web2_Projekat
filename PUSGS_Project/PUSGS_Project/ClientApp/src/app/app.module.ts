@@ -39,6 +39,7 @@ import { QuickTicketReservationComponent } from './quick-ticket-reservation/quic
 import { AddQuickTicketComponent } from './add-quick-ticket/add-quick-ticket.component';
 import { AviationCompaniesComponent } from './aviation-companies/aviation-companies.component';
 import { AcceptInvitationComponent } from './accept-invitation/accept-invitation.component';
+import { AddAviationAdministratorComponent } from './add-aviation-administrator/add-aviation-administrator.component';
 
 let config = new AuthServiceConfig([
   {
@@ -81,6 +82,7 @@ export function provideConfig() {
     AddQuickTicketComponent,
     AviationCompaniesComponent,
     AcceptInvitationComponent,
+    AddAviationAdministratorComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),

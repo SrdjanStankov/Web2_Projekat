@@ -5,6 +5,7 @@ import { STORAGE_TOKEN_KEY, STORAGE_TYPE_KEY } from "../constants/storage"
 import { SocialUser } from "angularx-social-login";
 import { Router } from "@angular/router";
 import { RentACarAdmin } from "../entities/RentACarAdmin";
+import { AviationAdmin } from "../entities/AviationAdmin";
 
 @Injectable({
   providedIn: "root",
@@ -44,6 +45,10 @@ export class BackendService {
   }
 
   addRentACarAdmin(admin: RentACarAdmin) {
+    return this.http.post(this.userControllerUri + "Register", admin).toPromise();
+  }
+
+  addAviationAdmin(admin: AviationAdmin) {
     return this.http.post(this.userControllerUri + "Register", admin).toPromise();
   }
 
