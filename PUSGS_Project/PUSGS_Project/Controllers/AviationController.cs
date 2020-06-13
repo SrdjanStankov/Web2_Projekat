@@ -3,6 +3,8 @@ using Core.Interfaces.Repositories;
 using Core.Interfaces.Services;
 using Core.ViewModels.Aviation;
 using Core.ViewModels.Aviation.Requests;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +46,7 @@ namespace PUSGS_Project.Controllers
 
         // POST api/<controller>
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public Task<long> Post([FromBody]AddOrUpdateAviationCompanyRequestModel model)
         {
             return _aviationService.AddAviationCompanyAsync(model);
@@ -51,6 +54,7 @@ namespace PUSGS_Project.Controllers
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public Task Put(long id, [FromBody]AddOrUpdateAviationCompanyRequestModel model)
         {
             model.Id = id;
@@ -59,6 +63,7 @@ namespace PUSGS_Project.Controllers
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public Task Delete(long id)
         {
             return _aviationService.DeleteAviationCompanyAsync(id);

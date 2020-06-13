@@ -2,11 +2,14 @@
 using Core.Interfaces.Services;
 using Core.ViewModels.Aviation;
 using Core.ViewModels.Aviation.Requests;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace PUSGS_Project.Controllers
@@ -30,6 +33,7 @@ namespace PUSGS_Project.Controllers
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public Task Delete(long id)
         {
             return _flightService.RemoveAsync(id);
@@ -56,12 +60,14 @@ namespace PUSGS_Project.Controllers
 
         // POST api/<controller>
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public Task<long> Post([FromBody]AddFlightRequestModel model)
         {
             return _flightService.AddAsync(model);
         }
 
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public Task Put(long id, [FromBody] UpdateFlightRequestModel model)
         {
             return _flightService.UpdateAsync(id, model);
@@ -78,12 +84,14 @@ namespace PUSGS_Project.Controllers
         }
 
         [HttpDelete("ticket/{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public Task CancelReservation(long id)
         {
             return _flightService.CancelReservationAsync(id);
         }
 
         [HttpPost("ticket")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<long> MakeReservation([FromBody]FlightTicketModel model)
         {
             var ticketId = await _flightService.MakeReservationAsync(model);
@@ -104,6 +112,7 @@ namespace PUSGS_Project.Controllers
         }
 
         [HttpPost("ticket-invitation")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task InviteFriends([FromBody]InviteFriendsRequestModel request)
         {
             var friendTickets = await _flightService.MakeFriendReservations(request.FlightTickets);
@@ -124,18 +133,21 @@ namespace PUSGS_Project.Controllers
         }
 
         [HttpPost("quick-reservation")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public Task MakeQuickReservation([FromBody]QuickReservationRequestModel model)
         {
             return _flightService.MakeQuickReservationAsync(model);
         }
 
         [HttpDelete("quick-reservation/{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public Task CancelQuickReservation(long id)
         {
             return _flightService.CancelQuickReservationAsync(id);
         }
 
         [HttpPost("rate")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public Task RateFlight([FromBody]RateFlightRequestModel model)
         {
             return _flightService.RateAsync(model);
