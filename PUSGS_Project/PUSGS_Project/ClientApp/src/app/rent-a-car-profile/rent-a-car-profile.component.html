@@ -25,14 +25,6 @@
   </div>
   <div class="row">
     <div class="col-md-6">
-      <label>Cenovnik</label>
-    </div>
-    <div class="col-md-6">
-      <p>TODO</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
       <label>Cars</label>
     </div>
     <div class="col-md-6">
@@ -40,7 +32,7 @@
         <p>
           <span>{{car.name}}</span>
           <br />
-          <span>Rating: {{car.averageRating.toPrecision(3)}}</span>
+          <span *ngIf="backend.getLogedInUserType() == 'SystemAdmin' || backend.getLogedInUserType() == 'RentACarAdmin'">Rating: {{car.averageRating.toPrecision(3)}}</span>
         </p>
       </div>
     </div>
@@ -59,6 +51,7 @@
     <div class="col-md">
       <button *ngIf="backend.getLogedInUserType() == 'RentACarAdmin'" class="btn btn-warning" (click)="edit(rentACar.id)">Edit</button>
       <button *ngIf="backend.getLogedInUserType() == 'SystemAdmin'" class="btn btn-danger" (click)="remove(rentACar.id)">Remove</button>
+      <button *ngIf="backend.isLogedIn()" class="btn btn-outline-primary" (click)="quickReservation()">Quick reservations</button>
     </div>
   </div>
 </div>

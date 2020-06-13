@@ -56,7 +56,7 @@
                   {{agency.averageRating.toPrecision(3)}}
                 </div>
                 <div>
-                  <button *ngIf="backend.getLogedInUserType() == 'RentACarAdmin' || backend.getLogedInUserType() == 'SystemAdmin'" class="btn btn-warning" (click)="details(agency.id)">Details</button>
+                  <button *ngIf="backend.isLogedIn()" class="btn btn-primary" (click)="details(agency.id)">Details</button>
                 </div>
               </div>
             </div>

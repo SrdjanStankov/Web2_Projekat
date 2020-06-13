@@ -33,7 +33,7 @@ namespace PUSGS_Project.Controllers
         [HttpGet]
         [Route("RentACar/{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<object> GetCarsAsync(long id, [FromQuery] CarReservationModel model)
+        public async Task<object> GetCarsAsync(long id, [FromQuery] CarReservationModel model, [FromQuery] bool all)
         {
             var user = await GetLoginUserAsync();
 
@@ -43,9 +43,16 @@ namespace PUSGS_Project.Controllers
 
 				foreach (var item in await carRepository.GetCarsOfAgencyAsync(id))
 				{
-					if (item.PassengerNumber != model.PassengerNumber || model.MaxCost < item.CostPerDay || model.Type != item.Type || item.IsReserved)
+					if (!all)
 					{
-						continue;
+						if (item.PassengerNumber != model.PassengerNumber || model.MaxCost < item.CostPerDay || model.Type != item.Type || item.IsReserved)
+						{
+							continue;
+						} 
+					}
+					if (all && item.IsReserved)
+					{
+                        continue;
 					}
 					carsModel.Add(new CarReservationDetailsModel(item)
 					{

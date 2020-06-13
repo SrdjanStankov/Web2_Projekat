@@ -6,12 +6,12 @@ namespace Core.Interfaces.Repositories
 {
 	public interface ICarReservationRepository
 	{
-        Task<CarReservation> GetReservationAsync(long id);
+        Task<IEnumerable<CarReservation>> GetReservationAsync(long rentACarAgencyId);
 
         Task<IEnumerable<CarReservation>> GetReservationsAsync(string userEmail);
 
         Task<bool> AddCarReservationAsync(CarReservation reservation);
-
-        Task DeleteAsync(long id);
+		
+		Task UpdateReservationAsync(CarReservation reservation);
 	}
 }
