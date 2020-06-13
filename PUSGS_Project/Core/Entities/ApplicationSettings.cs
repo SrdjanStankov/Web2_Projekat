@@ -8,5 +8,7 @@
         public string NetworkCredentialUsername { get; set; }
         public string NetworkCredentialPassword { get; set; }
         public bool RedirectEmailToCredentialUsername { get; set; } = true;
+        public string SmtpClientHost { get; set; }
+        public int SmtpClientPort { get; set; }
     }
 }

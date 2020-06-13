@@ -18,7 +18,7 @@ namespace Core.Services
 
         public async Task SendMailAsync(string to, string subject, string body, string from = "noreply@gmail.com")
         {
-            var client = new SmtpClient("smtp.gmail.com", 25)
+            var client = new SmtpClient(_settings.SmtpClientHost, _settings.SmtpClientPort)
             {
                 EnableSsl = true,
                 Credentials = new NetworkCredential(_settings.NetworkCredentialUsername, _settings.NetworkCredentialPassword)
@@ -40,7 +40,7 @@ namespace Core.Services
                 message.IsBodyHtml = true;
                 message.Priority = MailPriority.High;
 
-                await client.SendMailAsync(message).ConfigureAwait(false);
+                await client.SendMailAsync(message);
             }
         }
     }
