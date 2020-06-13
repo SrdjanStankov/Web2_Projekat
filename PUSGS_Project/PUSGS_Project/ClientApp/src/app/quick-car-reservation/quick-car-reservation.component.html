@@ -17,7 +17,7 @@
         <tr *ngFor="let ticket of quickTickets">
           <td class="">{{ticket.from | date :'short'}}</td>
           <td class="">{{ticket.to | date :'short'}}</td>
-          <td class="">{{ticket.discout}}</td>
+          <td class="">{{ticket.discount}}%</td>
           <td class="">{{ticket.costForRange}}</td>
           <td>
             <div class="btn-group" role="group">
@@ -42,31 +42,41 @@
     <form [formGroup]="editGroup" (ngSubmit)="onSubmit()">
 
       <div class="input-group" formGroupName="take">
-        <div class="row col-md-3">
           <label for="takeDate">Datum preuzimanja</label>
+          <br />
           <input [class.is-invalid]="editGroup.get('take').get('date').invalid && editGroup.get('take').get('date').touched" class="form-control" id="takeDate" autocomplete="off" placeholder="yyyy-mm-dd" (click)="date.toggle()" [minDate]="minDate" ngbDatepicker #date="ngbDatepicker" formControlName="date">
           <div *ngIf="(editGroup.get('take').get('date').invalid && editGroup.get('take').get('date').touched) || editGroup.get('take').get('date').dirty">
             <small *ngIf="editGroup.get('take').get('date').errors?.required" class="text-danger">Date is required</small>
           </div>
-        </div>
       </div>
 
       <div class="input-group" formGroupName="return">
-        <div class="row col-md-3">
           <label for="returnDate">Datum vracanja</label>
+          <br />
           <input [class.is-invalid]="editGroup.get('return').get('date').invalid && editGroup.get('return').get('date').touched" class="form-control" id="returnDate" autocomplete="off" placeholder="yyyy-mm-dd" (click)="d.toggle()" [minDate]="minDate" ngbDatepicker #d="ngbDatepicker" formControlName="date">
           <div *ngIf="(editGroup.get('return').get('date').invalid && editGroup.get('return').get('date').touched) || editGroup.get('return').get('date').dirty">
             <small *ngIf="editGroup.get('return').get('date').errors?.required" class="text-danger">Date is required</small>
           </div>
+      </div>
+
+      <div class="input-group">
+        <label for="cost">Discount</label>
+        <input class="form-control custom-range" id="cost" type="range" min="0" max="100" formControlName="discount" (input)="valueChanged($event.target.value)" />
+        <label>{{rangeVal}}%</label>
+      </div>
+
+      <div class="input-group">
+        <div ngbDropdown class="d-inline-block">
+          <button type="button" class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>Cars</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button type="button" ngbDropdownItem *ngFor="let car of cars" (click)="selectCar(car)">{{car.name}}</button>
+          </div>
+          <label *ngIf="selectedCar">&nbsp;{{selectedCar.name}}</label>
         </div>
       </div>
-      <div class="row">
-        <label>discount</label>
-        <input class="form-control custom-range" id="cost" type="range" min="0" max="100" formControlName="discount" (input)="valueChanged($event.target.value)" />
-        <label>${{rangeVal}}</label>
-      </div>
+
       <div class="modal-footer">
-        <input type="submit" [disabled]="!editGroup.valid" class="btn btn-primary" value="Submit" />
+        <input type="submit" [disabled]="!editGroup.valid || !selectedCar" class="btn btn-primary" value="Submit" />
       </div>
     </form>
   </div>

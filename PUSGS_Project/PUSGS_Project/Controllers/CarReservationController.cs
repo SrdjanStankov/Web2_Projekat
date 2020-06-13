@@ -64,7 +64,29 @@ namespace PUSGS_Project.Controllers
 		[Route("QuickReservation/{id}")]
 		public async Task<object> GetQuickReservationAsync(long id)
 		{
-			return (await carReservationRepository.GetReservationAsync(id)).Where(item => item.Discount > 0);
+			var enumerable = (await carReservationRepository.GetReservationAsync(id));
+			return enumerable.Where(item => item.Discount > 0 && string.IsNullOrEmpty(item.OwnerEmail)).Select(s => new CarReservation
+			{
+				CostForRange = s.CostForRange,
+				Discount = s.Discount,
+				DateCreated = s.DateCreated,
+				From = s.From,
+				Id = s.Id,
+				Owner = null,
+				OwnerEmail = s.OwnerEmail,
+				Rating = s.Rating,
+				ReservedCar = null,
+				ReservedCarId = s.ReservedCarId,
+				To = s.To
+			});
+		}
+
+		// Put api/<CarReservationController>
+		[HttpPut]
+		public async Task<object> UpdateReservationAsync([FromBody] CarReservation reservation)
+		{
+			await carReservationRepository.UpdateReservationAsync(reservation);
+			return Ok();
 		}
 	}
 }

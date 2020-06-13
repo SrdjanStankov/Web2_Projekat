@@ -26,4 +26,8 @@ export class CarReservationService {
     return this.http.get<CarReservation[]>(this.carReservationControllerUri + "QuickReservation/" + rentACarAgencyId).toPromise();
   }
 
+  updateReservationWithUser(ticket: CarReservation) {
+    return this.http.put<CarReservation>(this.carReservationControllerUri, ticket).toPromise();
+  }
+
 }

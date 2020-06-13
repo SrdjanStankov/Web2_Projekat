@@ -11,5 +11,7 @@ namespace Core.Interfaces.Repositories
         Task<IEnumerable<CarReservation>> GetReservationsAsync(string userEmail);
 
         Task<bool> AddCarReservationAsync(CarReservation reservation);
+		
+		Task UpdateReservationAsync(CarReservation reservation);
 	}
 }

@@ -27,6 +27,11 @@ namespace Persistance.Repositories
 			var car = await context.Car.FirstOrDefaultAsync(item => item.Id == reservation.ReservedCarId);
 			var user = await context.User.FirstOrDefaultAsync(item => item.Email == reservation.OwnerEmail);
 			car.IsReserved = true;
+			if (reservation.Discount > 0)
+			{
+				var costPerDay = (reservation.To - reservation.From).Value.TotalDays * car.CostPerDay;
+				reservation.CostForRange = costPerDay - (costPerDay * (reservation.Discount / 100));
+			}
 			reservation.ReservedCar = car;
 			reservation.Owner = user;
 			await context.CarReservations.AddAsync(reservation);
@@ -42,6 +47,12 @@ namespace Persistance.Repositories
 		public async Task<IEnumerable<CarReservation>> GetReservationsAsync(string userEmail)
 		{
 			return await context.CarReservations.Where(item => item.OwnerEmail == userEmail).ToListAsync();
+		}
+
+		public async Task UpdateReservationAsync(CarReservation reservation)
+		{
+			var res = context.CarReservations.Update(reservation);
+			await context.SaveChangesAsync();
 		}
 	}
 }
