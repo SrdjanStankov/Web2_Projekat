@@ -110,6 +110,7 @@ export class RentACarProfileEditComponent implements OnInit {
         this.formGroupEditCar.get("costPerDay").value,
       );
       car.id = id;
+      car.rentACarId = parseInt(this.agencyId.toString());
       this.carService.updateCar(car).then(() => {
         this.refreshAgency();
       }, err => {
@@ -137,6 +138,7 @@ export class RentACarProfileEditComponent implements OnInit {
         this.formGroup.get("buildDate").value,
         this.formGroup.get("costPerDay").value,
       );
+      car.rentACarId = parseInt(this.agencyId.toString());
       this.carService.addCar(car).then(result => {
         this.rentACarService.addCarToAgency(result.id, parseInt(this.agencyId.toString())).then(() => {
           this.refreshAgency();

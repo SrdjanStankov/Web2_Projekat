@@ -39,7 +39,7 @@ namespace Persistance.Repositories
 
         public async Task<Car> GetAsync(long id)
         {
-            return await context.FindAsync<Car>(id);
+            return await context.Car.AsNoTracking().FirstOrDefaultAsync(item => item.Id == id);
         }
 
         public async Task<double> GetAverageRatingAsync(long id)
@@ -55,7 +55,7 @@ namespace Persistance.Repositories
 
         public async Task UpdateAsync(Car car)
         {
-            context.Update(car);
+            context.Car.Update(car);
             await context.SaveChangesAsync();
         }
     }
