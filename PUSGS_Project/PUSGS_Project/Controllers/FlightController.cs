@@ -3,6 +3,7 @@ using Core.Interfaces.Services;
 using Core.ViewModels.Aviation;
 using Core.ViewModels.Aviation.Requests;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,18 +84,35 @@ namespace PUSGS_Project.Controllers
         }
 
         [HttpPost("ticket")]
-        public Task<long> MakeReservation([FromBody]FlightTicketModel model)
+        public async Task<long> MakeReservation([FromBody]FlightTicketModel model)
         {
-            // TODO: Send confirmation mail that reservation has been made
-            return _flightService.MakeReservationAsync(model);
+            var ticketId = await _flightService.MakeReservationAsync(model);
+
+            if (!string.IsNullOrWhiteSpace(model.TicketOwnerEmail) && _settings.SendEmailNotifications)
+            {
+                model.Id = ticketId;
+                await SendTicketSuccessNotificationAsync(model.TicketOwnerEmail, model);
+            }
+            return ticketId;
+        }
+
+        private Task SendTicketSuccessNotificationAsync(string email, FlightTicketModel ticket)
+        {
+            string body = $"<p>For: {email}</p>"
+                + $"<p>flightId: {ticket.FlightId}, ticketId: {ticket.Id}, Discount: {ticket.Discount}%</p>";
+            return _emailService.SendMailAsync(email, "Reservation success", body);
         }
 
         [HttpPost("ticket-invitation")]
         public async Task InviteFriends([FromBody]InviteFriendsRequestModel request)
         {
             var friendTickets = await _flightService.MakeFriendReservations(request.FlightTickets);
-            var tasks = friendTickets.Select(SendInvitationAsync).ToArray();
-            await Task.WhenAll(tasks).ConfigureAwait(false);
+
+            if (_settings.SendEmailNotifications)
+            {
+                var tasks = friendTickets.Select(SendInvitationAsync).ToArray();
+                await Task.WhenAll(tasks).ConfigureAwait(false);
+            }
         }
 
         private Task SendInvitationAsync(FlightTicket ticket)

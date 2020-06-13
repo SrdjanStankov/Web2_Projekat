@@ -10,5 +10,7 @@
         public bool RedirectEmailToCredentialUsername { get; set; } = true;
         public string SmtpClientHost { get; set; }
         public int SmtpClientPort { get; set; }
+
+        public bool SendEmailNotifications { get; set; } = true;
     }
 }

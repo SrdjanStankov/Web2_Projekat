@@ -9,23 +9,26 @@ namespace Core.Entities
     public class Flight
     {
         public long Id { get; set; }
-
         public long AviationCompanyId { get; set; }
         public AviationCompany AviationCompany { get; set; }
         public DateTime? DepartureTime { get; set; }
         public DateTime? ArrivalTime { get; set; }
-        public double TravelLength { get; set; }
-        public double TicketPrice { get; set; }
-        public int NumberOfChangeovers { get; set; }
-
         public Location From { get; set; }
         public Location To { get; set; }
-
+        public int MaxSeatsPerRow { get; set; } = 4;
+        public int NumberOfChangeovers { get; set; }
+        public double TicketPrice { get; set; }
+        public double TravelLength { get; set; }
         public ICollection<FlightTicket> Tickets { get; set; }
         public ICollection<FlightSeat> Seats { get; set; }
         public ICollection<Rating> Ratings { get; set; }
 
-        public int MaxSeatsPerRow { get; set; } = 4;
+        public Flight()
+        {
+            Tickets = new HashSet<FlightTicket>();
+            Seats = new HashSet<FlightSeat>();
+            Ratings = new HashSet<Rating>();
+        }
 
         public bool CanCancelReservation()
         {
@@ -44,11 +47,26 @@ namespace Core.Entities
             return Tickets.Where(t => t.Rating > 0).Select(t => t.Rating).DefaultIfEmpty().Average();
         }
 
-        public Flight()
+        /// <summary>
+        /// Calculates total price based on discount (%)
+        /// </summary>
+        /// <param name="discount">Value in range [0,100]</param>
+        /// <returns>Total price</returns>
+        public double GetTotalPrice(double discount)
         {
-            Tickets = new HashSet<FlightTicket>();
-            Seats = new HashSet<FlightSeat>();
-            Ratings = new HashSet<Rating>();
+            discount = Clip(discount, min: 0, max: 100);
+            discount /= 100;
+
+            return TicketPrice * discount;
+        }
+
+        private static double Clip(double value, double min, double max)
+        {
+            if (value > max)
+            {
+                return max;
+            }
+            return value < min ? min : value;
         }
     }
 }

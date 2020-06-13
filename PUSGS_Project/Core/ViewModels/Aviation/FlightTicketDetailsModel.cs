@@ -22,6 +22,8 @@ namespace Core.ViewModels.Aviation
         public bool CanCancel { get; set; }
         public bool CanRate { get; set; }
 
+        public double TotalPrice { get; set; }
+
         public FlightTicketDetailsModel(FlightTicket ticket)
         {
             Id = ticket.Id;
@@ -34,6 +36,7 @@ namespace Core.ViewModels.Aviation
             Rating = ticket.Rating;
             CanCancel = ticket.Flight.CanCancelReservation();
             CanRate = ticket.Flight.CanRate();
+            TotalPrice = ticket.Flight.GetTotalPrice(ticket.Discount);
         }
     }
 }

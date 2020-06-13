@@ -22,5 +22,10 @@ namespace Core.Entities
         public bool Accepted { get; set; }
 
         public double Rating { get; set; }
+
+        public double? GetTotalPrice()
+        {
+            return Flight?.GetTotalPrice(Discount);
+        }
     }
 }
