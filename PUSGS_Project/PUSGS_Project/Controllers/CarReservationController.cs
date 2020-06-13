@@ -62,31 +62,51 @@ namespace PUSGS_Project.Controllers
 		// GET api/<CarReservationController>/QuickReservation/id
 		[HttpGet]
 		[Route("QuickReservation/{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 		public async Task<object> GetQuickReservationAsync(long id)
 		{
-			var enumerable = (await carReservationRepository.GetReservationAsync(id));
-			return enumerable.Where(item => item.Discount > 0 && string.IsNullOrEmpty(item.OwnerEmail)).Select(s => new CarReservation
+			var user = await GetLoginUserAsync();
+
+			if (user is User)
 			{
-				CostForRange = s.CostForRange,
-				Discount = s.Discount,
-				DateCreated = s.DateCreated,
-				From = s.From,
-				Id = s.Id,
-				Owner = null,
-				OwnerEmail = s.OwnerEmail,
-				Rating = s.Rating,
-				ReservedCar = null,
-				ReservedCarId = s.ReservedCarId,
-				To = s.To
-			});
+				var enumerable = (await carReservationRepository.GetReservationAsync(id));
+				return enumerable.Where(item => item.Discount > 0 && string.IsNullOrEmpty(item.OwnerEmail)).Select(s => new CarReservation
+				{
+					CostForRange = s.CostForRange,
+					Discount = s.Discount,
+					DateCreated = s.DateCreated,
+					From = s.From,
+					Id = s.Id,
+					Owner = null,
+					OwnerEmail = s.OwnerEmail,
+					Rating = s.Rating,
+					ReservedCar = null,
+					ReservedCarId = s.ReservedCarId,
+					To = s.To
+				}); 
+			}
+			else
+			{
+				return Forbid();
+			}
 		}
 
 		// Put api/<CarReservationController>
 		[HttpPut]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 		public async Task<object> UpdateReservationAsync([FromBody] CarReservation reservation)
 		{
-			await carReservationRepository.UpdateReservationAsync(reservation);
-			return Ok();
+			var user = await GetLoginUserAsync();
+
+			if (user is User)
+			{
+				await carReservationRepository.UpdateReservationAsync(reservation);
+				return Ok();
+			}
+			else
+			{
+				return Forbid();
+			}
 		}
 	}
 }
