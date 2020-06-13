@@ -50,6 +50,7 @@ namespace PUSGS_Project
             services.AddScoped<ICarReservationRepository, CarReservationRepository>();
             services.AddScoped<IRatingRepository, RatingRepository>();
 
+            services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IAviationService, AviationService>();
             services.AddScoped<IFlightService, FlightService>();
 

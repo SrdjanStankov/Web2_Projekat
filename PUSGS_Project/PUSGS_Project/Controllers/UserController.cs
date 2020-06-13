@@ -31,12 +31,18 @@ namespace PUSGS_Project.Controllers
         private readonly IUserRepository repository;
         private readonly ApplicationSettings settings;
         private readonly IFlightService _flightService;
+        private readonly IEmailService _mailService;
 
-        public UserController(IUserRepository userRepository, IOptions<ApplicationSettings> appSettings, IFlightService flightService) : base(userRepository)
+        public UserController(
+            IUserRepository userRepository,
+            IOptions<ApplicationSettings> appSettings,
+            IFlightService flightService,
+            IEmailService emailService) : base(userRepository)
         {
             repository = userRepository;
             settings = appSettings.Value;
             _flightService = flightService;
+            _mailService = emailService;
         }
 
         // GET: api/User
@@ -269,23 +275,11 @@ namespace PUSGS_Project.Controllers
             return (true, googleApiTokenInfo);
         }
 
-        private async Task SendConfirmationEmailAsync(string email)
+        private Task SendConfirmationEmailAsync(string email)
         {
-            var client = new SmtpClient("smtp.gmail.com", 25);
-            client.EnableSsl = true;
-            client.Credentials = new NetworkCredential(@"srki.miki@gmail.com", "twshdabuaclmjkfw");
-            using (var message = new MailMessage())
-            {
-                message.To.Add("srki.miki@gmail.com");
-                //message.To.Add(email);
-                message.From = new MailAddress(@"noreply@gmail.com");
-                message.Subject = "Email verification";
-                message.Body = $"<a href=\"http://localhost:4200/ConfirmEmail/{email}\">Confirm Email</a>";
-                message.IsBodyHtml = true;
-                message.Priority = MailPriority.High;
-
-                await client.SendMailAsync(message);
-            }
+            const string subject = "Email verification";
+            string body = $"<a href=\"http://localhost:4200/ConfirmEmail/{email}\">Confirm Email</a>";
+            return _mailService.SendMailAsync(email, subject, body);
         }
 
         private static User MapUser(User model, bool requireEmailVerification = true)
