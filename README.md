@@ -32,7 +32,7 @@ Due to possible security difficulties of sending email to gmail from `localhost`
 
 For this reason we have added properties which you can modify in `PUSGS_Project/appsettings.json` as explained below.
 
-```json
+```js
 "ApplicationSettings": {
   /* used for jwt authorization */
   "JWT_Secret": "...", 
