@@ -18,7 +18,7 @@ namespace Core.Interfaces.Services
 
         Task<long> MakeReservationAsync(FlightTicketModel model);
 
-        Task MakeFriendReservations(IEnumerable<FlightTicketModel> models);
+        Task<List<FlightTicket>> MakeFriendReservations(IEnumerable<FlightTicketModel> models);
 
         Task<List<FlightTicketDetailsModel>> GetFlightTicketHistoryForUserAsync(string userEmail);
 
@@ -31,6 +31,7 @@ namespace Core.Interfaces.Services
         Task MakeQuickReservationAsync(QuickReservationRequestModel model);
 
         Task CancelQuickReservationAsync(long ticketId);
+
         Task RateAsync(RateFlightRequestModel model);
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Core.Entities;
 using Core.Interfaces.Services;
 using Microsoft.Extensions.Options;
+using System;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
@@ -18,7 +20,7 @@ namespace Core.Services
 
         public async Task SendMailAsync(string to, string subject, string body, string from = "noreply@gmail.com")
         {
-            var client = new SmtpClient("smtp.gmail.com", 25)
+            var client = new SmtpClient(_settings.SmtpClientHost, _settings.SmtpClientPort)
             {
                 EnableSsl = true,
                 Credentials = new NetworkCredential(_settings.NetworkCredentialUsername, _settings.NetworkCredentialPassword)
@@ -40,7 +42,14 @@ namespace Core.Services
                 message.IsBodyHtml = true;
                 message.Priority = MailPriority.High;
 
-                await client.SendMailAsync(message).ConfigureAwait(false);
+                try
+                {
+                    await client.SendMailAsync(message);
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError(ex.Message);
+                }
             }
         }
     }

@@ -18,15 +18,15 @@ export function passwordMatchValidator(passwordControll: FormGroup) {
 })
 export class RegisterComponent implements OnInit {
   registerGroup = new FormGroup({
-    email: new FormControl(null, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]),
+    email: new FormControl('mika@gmail.com', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]),
     passwordGroup: new FormGroup({
-      password: new FormControl(null, [Validators.required, Validators.minLength(3)]),
-      passwordRepeated: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+      password: new FormControl('123', [Validators.required, Validators.minLength(3)]),
+      passwordRepeated: new FormControl('123', [Validators.required, Validators.minLength(3)]),
     }, { validators: passwordMatchValidator }),
-    name: new FormControl(null, Validators.required),
-    lastName: new FormControl(null, Validators.required),
-    city: new FormControl(null, Validators.required),
-    phone: new FormControl(null, Validators.required),
+    name: new FormControl('mika', Validators.required),
+    lastName: new FormControl('mikic', Validators.required),
+    city: new FormControl('mikaland', Validators.required),
+    phone: new FormControl('mikaphone', Validators.required),
   });
 
   invalidUser: boolean;

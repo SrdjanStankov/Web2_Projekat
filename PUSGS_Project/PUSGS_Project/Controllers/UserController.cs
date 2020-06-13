@@ -277,8 +277,9 @@ namespace PUSGS_Project.Controllers
 
         private Task SendConfirmationEmailAsync(string email)
         {
+            var clientUrl = settings.Client_URL;
             const string subject = "Email verification";
-            string body = $"<a href=\"http://localhost:4200/ConfirmEmail/{email}\">Confirm Email</a>";
+            string body = $"<p>For: {email}</p><a href=\"{clientUrl}/ConfirmEmail/{email}\">Confirm Email</a>";
             return _mailService.SendMailAsync(email, subject, body);
         }
 

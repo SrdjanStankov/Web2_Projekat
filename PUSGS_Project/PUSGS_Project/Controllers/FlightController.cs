@@ -3,7 +3,9 @@ using Core.Interfaces.Services;
 using Core.ViewModels.Aviation;
 using Core.ViewModels.Aviation.Requests;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PUSGS_Project.Controllers
@@ -13,10 +15,14 @@ namespace PUSGS_Project.Controllers
     public class FlightController : ControllerBase
     {
         private readonly IFlightService _flightService;
+        private readonly IEmailService _emailService;
+        private readonly ApplicationSettings _settings;
 
-        public FlightController(IFlightService flightService)
+        public FlightController(IFlightService flightService, IEmailService emailService, IOptions<ApplicationSettings> options)
         {
             _flightService = flightService;
+            _emailService = emailService;
+            _settings = options.Value;
         }
 
         #region flight
@@ -84,10 +90,19 @@ namespace PUSGS_Project.Controllers
         }
 
         [HttpPost("ticket-invitation")]
-        public Task InviteFriends([FromBody]InviteFriendsRequestModel request)
+        public async Task InviteFriends([FromBody]InviteFriendsRequestModel request)
         {
-            // TODO: Send email invitation to each friend
-            return _flightService.MakeFriendReservations(request.FlightTickets);
+            var friendTickets = await _flightService.MakeFriendReservations(request.FlightTickets);
+            var tasks = friendTickets.Select(SendInvitationAsync).ToArray();
+            await Task.WhenAll(tasks).ConfigureAwait(false);
+        }
+
+        private Task SendInvitationAsync(FlightTicket ticket)
+        {
+            var email = ticket.TicketOwnerEmail;
+            string href = $"{_settings.Client_URL}/flight-ticket/{ticket.Id}/accept";
+            string body = $"<p>For: {email}</p><a href=\"{href}\">Accept invitation</a>";
+            return _emailService.SendMailAsync(email, "Flight Ticket Invitation request", body);
         }
 
         [HttpPost("quick-reservation")]

@@ -38,6 +38,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { QuickTicketReservationComponent } from './quick-ticket-reservation/quick-ticket-reservation.component';
 import { AddQuickTicketComponent } from './add-quick-ticket/add-quick-ticket.component';
 import { AviationCompaniesComponent } from './aviation-companies/aviation-companies.component';
+import { AcceptInvitationComponent } from './accept-invitation/accept-invitation.component';
 
 let config = new AuthServiceConfig([
   {
@@ -79,6 +80,7 @@ export function provideConfig() {
     QuickTicketReservationComponent,
     AddQuickTicketComponent,
     AviationCompaniesComponent,
+    AcceptInvitationComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -103,6 +105,7 @@ export function provideConfig() {
       { path: "flights", component: FlightsComponent, canActivate: [AuthGuard] },
       { path: "flight/:id", component: FlightDetailsComponent },
       { path: "flight/:id/reservation", component: FlightReservationFormComponent, canActivate: [AuthGuard] },
+      { path: "flight-ticket/:id/accept", component: AcceptInvitationComponent },
       { path: "ConfirmEmail/:email", component: MailConfirmationComponent },
       { path: "services", component: RegisterServicesComponent, canActivate: [AuthGuard] },
     ]),
