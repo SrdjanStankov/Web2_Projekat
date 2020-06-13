@@ -13,6 +13,8 @@ export class Car {
   costPerDay: number;
   averageRating: number;
   costForRange: number;
+  rentACarId: number;
+
 
   constructor(name: string, passengerNumber: number, type: string, brand: string, model:string, buildDate: number, costPerDay: number) {
     this.name = name;
