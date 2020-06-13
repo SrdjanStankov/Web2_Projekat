@@ -1,0 +1,71 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Aviation Admin Form</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form [formGroup]="adminGroup" (ngSubmit)="onSubmit()">
+  <div class="modal-body">
+    <div class="form-group">
+
+      <label for="name">Name</label>
+      <div class="input-group">
+        <input [class.is-invalid]="adminGroup.get('name').invalid && adminGroup.get('name').touched" type="text" autocomplete="on" id="name" class="form-control" placeholder="name" name="name" formControlName="name" />
+      </div>
+      <div *ngIf="(adminGroup.get('name').invalid && adminGroup.get('name').touched) || adminGroup.get('name').dirty">
+        <small *ngIf="adminGroup.get('name').errors?.required" class="text-danger">Name is required</small>
+      </div>
+      <br />
+
+      <label for="lastName">Last Name</label>
+      <div class="input-group">
+        <input [class.is-invalid]="adminGroup.get('lastName').invalid && adminGroup.get('lastName').touched" type="text" autocomplete="on" id="lastName" class="form-control" placeholder="Last Name" name="lastName" formControlName="lastName" />
+      </div>
+      <div *ngIf="(adminGroup.get('lastName').invalid && adminGroup.get('lastName').touched) || adminGroup.get('lastName').dirty">
+        <small *ngIf="adminGroup.get('lastName').errors?.required" class="text-danger">Last Name is required</small>
+      </div>
+      <br />
+
+      <label for="city">City</label>
+      <div class="input-group">
+        <input [class.is-invalid]="adminGroup.get('city').invalid && adminGroup.get('city').touched" type="text" autocomplete="on" id="city" class="form-control" placeholder="city" name="city" formControlName="city" />
+      </div>
+      <div *ngIf="(adminGroup.get('city').invalid && adminGroup.get('city').touched) || adminGroup.get('city').dirty">
+        <small *ngIf="adminGroup.get('city').errors?.required" class="text-danger">City is required</small>
+      </div>
+      <br />
+
+      <label for="phone">Phone</label>
+      <div class="input-group">
+        <input [class.is-invalid]="adminGroup.get('phone').invalid && adminGroup.get('phone').touched" type="text" autocomplete="on" id="phone" class="form-control" placeholder="phone" name="phone" formControlName="phone" />
+      </div>
+      <div *ngIf="(adminGroup.get('phone').invalid && adminGroup.get('phone').touched) || adminGroup.get('phone').dirty">
+        <small *ngIf="adminGroup.get('phone').errors?.required" class="text-danger">Phone is required</small>
+      </div>
+      <br />
+
+      <label for="email">Email</label>
+      <div class="input-group">
+        <input [class.is-invalid]="adminGroup.get('email').invalid && adminGroup.get('email').touched" type="email" autocomplete="on" id="email" class="form-control" placeholder="example@mail.com" name="email" formControlName="email" />
+      </div>
+      <div *ngIf="(adminGroup.get('email').invalid && adminGroup.get('email').touched) || adminGroup.get('email').dirty">
+        <small *ngIf="adminGroup.get('email').errors?.required" class="text-danger">Email is required</small>
+        <small *ngIf="adminGroup.get('email').errors?.pattern" class="text-danger">Please provide a valid email address</small>
+      </div>
+      <br />
+
+      <label for="password">Password</label>
+      <div class="input-group">
+        <input [class.is-invalid]="adminGroup.get('password').invalid && adminGroup.get('password').touched" type="password" autocomplete="on" id="password" class="form-control" name="password" formControlName="password">
+      </div>
+      <div *ngIf="(adminGroup.get('password').invalid && adminGroup.get('password').touched) || adminGroup.get('password').dirty">
+        <small *ngIf="adminGroup.get('password').errors?.required" class="text-danger">Password is required</small>
+        <small *ngIf="adminGroup.get('password').errors?.minlength" class="text-danger">Password must be minimum 3 characters long</small>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <small *ngIf="reason != ''" class="text-danger">{{ reason }}</small>
+    <button type="submit" [disabled]="!adminGroup.valid" class="btn btn-outline-dark">Add</button>
+  </div>
+</form>

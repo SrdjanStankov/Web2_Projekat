@@ -40,6 +40,7 @@ import { AddQuickTicketComponent } from './add-quick-ticket/add-quick-ticket.com
 import { QuickCarReservationComponent } from './quick-car-reservation/quick-car-reservation.component';
 import { AviationCompaniesComponent } from './aviation-companies/aviation-companies.component';
 import { AcceptInvitationComponent } from './accept-invitation/accept-invitation.component';
+import { AddAviationAdministratorComponent } from './add-aviation-administrator/add-aviation-administrator.component';
 
 let config = new AuthServiceConfig([
   {
@@ -82,6 +83,7 @@ export function provideConfig() {
     AddQuickTicketComponent,
     AviationCompaniesComponent,
     AcceptInvitationComponent,
+    AddAviationAdministratorComponent,
     QuickCarReservationComponent,
   ],
   imports: [

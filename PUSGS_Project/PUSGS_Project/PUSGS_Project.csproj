@@ -42,6 +42,7 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\constants\storage.ts" />
     <None Remove="ClientApp\src\app\constants\user-types.ts" />
+    <None Remove="ClientApp\src\app\entities\AviationAdmin.ts" />
     <None Remove="ClientApp\src\app\entities\flight-seat.ts" />
     <None Remove="ClientApp\src\app\entities\rating.ts" />
     <None Remove="ClientApp\src\app\entities\RentACarAdmin.ts" />
@@ -60,6 +61,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\constants\user-types.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\constants\storage.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\entities\AviationAdmin.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\entities\flight-seat.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\entities\rating.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\entities\RentACarAdmin.ts" />

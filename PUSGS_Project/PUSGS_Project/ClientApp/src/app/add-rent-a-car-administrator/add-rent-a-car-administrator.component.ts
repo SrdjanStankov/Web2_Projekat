@@ -10,14 +10,13 @@ import { RentACarAdmin } from '../entities/RentACarAdmin';
   styleUrls: ['./add-rent-a-car-administrator.component.css']
 })
 export class AddRentACarAdministratorComponent implements OnInit {
-
   rentACarAdminGroup = new FormGroup({
-    name: new FormControl(null, Validators.required),
-    lastName: new FormControl(null, Validators.required),
-    city: new FormControl(null, Validators.required),
-    phone: new FormControl(null, Validators.required),
-    email: new FormControl(null, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]),
-    password: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+    name: new FormControl('Dio', Validators.required),
+    lastName: new FormControl('Brando', Validators.required),
+    city: new FormControl('JOJO', Validators.required),
+    phone: new FormControl('WRYYYYYY', Validators.required),
+    email: new FormControl('dio@gmail.com', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]),
+    password: new FormControl('123', [Validators.required, Validators.minLength(3)]),
   });
 
   reason: string;
@@ -28,7 +27,6 @@ export class AddRentACarAdministratorComponent implements OnInit {
   }
 
   onSubmit() {
-
     var a = this.rentACarAdminGroup.valid;
 
     let rentacaradmin = new RentACarAdmin();
@@ -44,5 +42,4 @@ export class AddRentACarAdministratorComponent implements OnInit {
       this.reason = err.error.message;
     });
   }
-
 }
