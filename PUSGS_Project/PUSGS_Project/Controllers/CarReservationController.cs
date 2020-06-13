@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -56,6 +57,14 @@ namespace PUSGS_Project.Controllers
 			{
 				return Forbid();
 			}
+		}
+
+		// GET api/<CarReservationController>/QuickReservation/id
+		[HttpGet]
+		[Route("QuickReservation/{id}")]
+		public async Task<object> GetQuickReservationAsync(long id)
+		{
+			return (await carReservationRepository.GetReservationAsync(id)).Where(item => item.Discount > 0);
 		}
 	}
 }

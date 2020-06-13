@@ -59,6 +59,7 @@
     <div class="col-md">
       <button *ngIf="backend.getLogedInUserType() == 'RentACarAdmin'" class="btn btn-warning" (click)="edit(rentACar.id)">Edit</button>
       <button *ngIf="backend.getLogedInUserType() == 'SystemAdmin'" class="btn btn-danger" (click)="remove(rentACar.id)">Remove</button>
+      <button *ngIf="backend.isLogedIn()" class="btn btn-outline-primary" (click)="quickReservation()">Quick reservation</button>
     </div>
   </div>
 </div>

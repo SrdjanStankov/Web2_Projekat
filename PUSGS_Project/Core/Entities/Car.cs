@@ -15,6 +15,9 @@ namespace Core.Entities
 		public bool IsReserved { get; set; }
         public ICollection<Rating> Ratings { get; set; }
 
+		public long RentACarId { get; set; }
+		public RentACar RentACar { get; set; }
+
 		public Car()
         {
             Ratings = new HashSet<Rating>();

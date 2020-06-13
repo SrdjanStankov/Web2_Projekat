@@ -34,14 +34,9 @@ namespace Persistance.Repositories
 			return true;
 		}
 
-		public Task DeleteAsync(long id)
+		public async Task<IEnumerable<CarReservation>> GetReservationAsync(long rentACarAgencyId)
 		{
-			throw new NotImplementedException();
-		}
-
-		public Task<CarReservation> GetReservationAsync(long id)
-		{
-			throw new NotImplementedException();
+			return await context.CarReservations.Include(r => r.Owner).Include(r => r.ReservedCar).ThenInclude(c => c.RentACar).Where(r => r.ReservedCar.RentACarId == rentACarAgencyId).ToListAsync();
 		}
 
 		public async Task<IEnumerable<CarReservation>> GetReservationsAsync(string userEmail)
