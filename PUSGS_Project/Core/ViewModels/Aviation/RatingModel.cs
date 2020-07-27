@@ -19,7 +19,7 @@ namespace Core.ViewModels.Aviation
 
             Id = rating.Id;
             Value = rating.Value;
-            RatingGiverId = rating.RatingGiver?.Email;
+            RatingGiverId = rating.RatingGiverEmail;
         }
     }
 }

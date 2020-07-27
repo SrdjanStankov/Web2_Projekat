@@ -16,7 +16,7 @@ namespace Core.Entities
 		public Car ReservedCar { get; set; }
 
 		public string OwnerEmail { get; set; }
-		public User Owner { get; set; }
+		//public User Owner { get; set; }
 
 	}
 }

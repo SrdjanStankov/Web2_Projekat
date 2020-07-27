@@ -3,6 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Persistance;
+using Persistance.Avio;
+using Persistance.RentACar;
+using Persistance.User;
 using System;
 
 namespace PUSGS_Project
@@ -17,8 +20,12 @@ namespace PUSGS_Project
             {
                 try
                 {
-                    var concreteContext = scope.ServiceProvider.GetService<ApplicationDbContext>();
-                    ApplicationDbInitializer.Initialize(concreteContext);
+                    var concreteUserContext = scope.ServiceProvider.GetService<UserDbContext>();
+                    UserDbInitializer.Initialize(concreteUserContext);
+                    var concreteAvioContext = scope.ServiceProvider.GetService<AvioDbContext>();
+                    AvioDbInitializer.Initialize(concreteAvioContext);
+                    var concreteRentACarContext = scope.ServiceProvider.GetService<RentACarDbContext>();
+                    RentACarDbInitializer.Initialize(concreteRentACarContext);
                 }
                 catch (Exception ex)
                 {

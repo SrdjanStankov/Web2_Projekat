@@ -7,7 +7,7 @@ using Persistance;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Core.Interfaces.Repositories;
-using Persistance.Repositories;
+//using Persistance.Repositories;
 using Core.Entities;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -16,6 +16,12 @@ using System;
 using Microsoft.AspNetCore.Identity;
 using Core.Interfaces.Services;
 using Core.Services;
+using Persistance.Avio;
+using Persistance.RentACar;
+using Persistance.User;
+using Persistance.RentACar.Repositories;
+using Persistance.User.Repositories;
+using Persistance.Avio.Repositories;
 
 namespace PUSGS_Project
 {
@@ -32,9 +38,10 @@ namespace PUSGS_Project
         public void ConfigureServices(IServiceCollection services)
         {
             // Add DbContext using SQL Server Provider
-            string connectionString = this.Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<ApplicationDbContext>(optionsAction: (options) =>
-          options.UseSqlServer(connectionString, b => b.MigrationsAssembly("Persistance")));
+            //string connectionString = this.Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<UserDbContext>(optionsAction: (options) => options.UseSqlServer(Configuration.GetConnectionString("DefaultUserConnection"), b => b.MigrationsAssembly("Persistance.User")));
+            services.AddDbContext<AvioDbContext>(optionsAction: (options) => options.UseSqlServer(Configuration.GetConnectionString("DefaultAvioConnection"), b => b.MigrationsAssembly("Persistance.Avio")));
+            services.AddDbContext<RentACarDbContext>(optionsAction: (options) => options.UseSqlServer(Configuration.GetConnectionString("DefaultRentACarConnection"), b => b.MigrationsAssembly("Persistance.RentACar")));
 
             // TODO: Add services here
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));

@@ -7,7 +7,7 @@ namespace Core.Entities
         public long Id { get; set; }
 
         public string TicketOwnerEmail { get; set; }
-        public User TicketOwner { get; set; }
+        //public User TicketOwner { get; set; }
 
         public long FlightId { get; set; }
         public Flight Flight { get; set; }

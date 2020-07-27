@@ -23,12 +23,12 @@ namespace Core.Entities
         [NotMapped]
         public ICollection<User> Friends { get; set; }
 
-        public ICollection<FlightTicket> Tickets { get; set; }
+        //public ICollection<FlightTicket> Tickets { get; set; }
 
         public User()
         {
             Friends = new HashSet<User>();
-            Tickets = new HashSet<FlightTicket>();
+            //Tickets = new HashSet<FlightTicket>();
         }
     }
 }

@@ -77,7 +77,6 @@ namespace PUSGS_Project.Controllers
 					DateCreated = s.DateCreated,
 					From = s.From,
 					Id = s.Id,
-					Owner = null,
 					OwnerEmail = s.OwnerEmail,
 					Rating = s.Rating,
 					ReservedCar = null,

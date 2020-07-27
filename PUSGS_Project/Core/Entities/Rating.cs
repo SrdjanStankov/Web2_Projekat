@@ -4,10 +4,10 @@
     {
         public long Id { get; set; }
         public double Value { get; set; }
-        public User RatingGiver { get; set; }
-		public Car Car { get; set; }
-		public Flight Flight { get; set; }
-		public RentACar RentACar { get; set; }
-		public AviationCompany AviationCompany { get; set; }
+        public string RatingGiverEmail { get; set; }
+		public long? CarId { get; set; }
+		public long? FlightId { get; set; }
+		public long? RentACarId { get; set; }
+		public long? AviationCompanyId { get; set; }
 	}
 }
