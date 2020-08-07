@@ -14,7 +14,7 @@ export class BackendService {
   http: HttpClient;
   userControllerUri: string;
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private router: Router) {
+  constructor(http: HttpClient, @Inject('BASE_USER_URL') baseUrl: string, private router: Router) {
     this.http = http;
     this.userControllerUri = baseUrl + 'api/user/';
   }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Core.Entities;
+using Core.Interfaces.Repositories;
 using Core.Interfaces.Services;
 using Core.ViewModels.Aviation;
 using Core.ViewModels.Aviation.Requests;
@@ -17,13 +18,13 @@ namespace PUSGS_Project.Api.Aviations.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FlightController : ControllerBase
+    public class FlightController : ApiController
     {
         private readonly IFlightService _flightService;
         private readonly IEmailService _emailService;
         private readonly ApplicationSettings _settings;
 
-        public FlightController(IFlightService flightService, IEmailService emailService, IOptions<ApplicationSettings> options)
+        public FlightController(IFlightService flightService, IEmailService emailService, IOptions<ApplicationSettings> options, IUserRepository userRepository): base(userRepository)
         {
             _flightService = flightService;
             _emailService = emailService;
@@ -72,6 +73,21 @@ namespace PUSGS_Project.Api.Aviations.Controllers
         public Task Put(long id, [FromBody] UpdateFlightRequestModel model)
         {
             return _flightService.UpdateAsync(id, model);
+        }
+
+        [HttpGet]
+        [Route("{id}/flight-history")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<object> GetFlightTicketHistory(string id)
+        {
+            var currUser = await GetLoginUserAsync();
+            if (currUser.Email != id)
+            {
+                return Forbid();
+            }
+
+            var ticketHistory = await _flightService.GetFlightTicketHistoryForUserAsync(id);
+            return Ok(ticketHistory);
         }
 
         #endregion flight

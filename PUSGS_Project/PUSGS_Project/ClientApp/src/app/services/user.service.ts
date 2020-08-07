@@ -11,7 +11,7 @@ export class UserService {
   http: HttpClient;
   userControllerUri: string;
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+  constructor(http: HttpClient, @Inject('BASE_USER_URL') baseUrl: string) {
     this.http = http;
     this.userControllerUri = baseUrl + 'api/user/';
   }
@@ -41,7 +41,7 @@ export class UserService {
     return this.http.put(this.userControllerUri + user.email, user).toPromise();
   }
   getFlightHistory(userId: string): Promise<FlightTicketDetails[]> {
-    return this.http.get<FlightTicketDetails[]>(this.userControllerUri + userId + "/flight-history").toPromise();
+    return this.http.get<FlightTicketDetails[]>("api/flight/" + userId + "/flight-history").toPromise();
   }
   changePassword(userId: string, newPassword: string) {
     return this.http.post(this.userControllerUri + `${userId}/change-password`, { newPassword }).toPromise();

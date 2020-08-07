@@ -42,7 +42,6 @@ namespace PUSGS_Project.Api.Users
             services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddScoped<IEmailService, EmailService>();
-            services.AddScoped<IFlightService, FlightService>();
 
             services.AddCors();
 

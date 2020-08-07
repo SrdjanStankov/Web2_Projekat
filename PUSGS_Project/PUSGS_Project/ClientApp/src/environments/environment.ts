@@ -4,7 +4,10 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: "https://localhost:5001/",
+  //apiBaseUrl: "https://localhost:5001/",
+  apiBaseUserUrl: "https://localhost:5001/",
+  apiBaseAvioUrl: "https://localhost:5005/",
+  apiBaseRentACarUrl: "https://localhost:5003/",
   startedByDotNet: false,
 };
 

@@ -28,18 +28,15 @@ namespace PUSGS_Project.Api.Users.Controllers
     {
         private readonly IUserRepository repository;
         private readonly ApplicationSettings settings;
-        private readonly IFlightService _flightService;
         private readonly IEmailService _mailService;
 
         public UserController(
             IUserRepository userRepository,
             IOptions<ApplicationSettings> appSettings,
-            IFlightService flightService,
             IEmailService emailService) : base(userRepository)
         {
             repository = userRepository;
             settings = appSettings.Value;
-            _flightService = flightService;
             _mailService = emailService;
         }
 
@@ -94,20 +91,20 @@ namespace PUSGS_Project.Api.Users.Controllers
             return Ok();
         }
 
-        [HttpGet]
-        [Route("{id}/flight-history")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<object> GetFlightTicketHistory(string id)
-        {
-            var currUser = await GetLoginUserAsync();
-            if (currUser.Email != id)
-            {
-                return Forbid();
-            }
+        //[HttpGet]
+        //[Route("{id}/flight-history")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //public async Task<object> GetFlightTicketHistory(string id)
+        //{
+        //    var currUser = await GetLoginUserAsync();
+        //    if (currUser.Email != id)
+        //    {
+        //        return Forbid();
+        //    }
 
-            var ticketHistory = await _flightService.GetFlightTicketHistoryForUserAsync(id);
-            return Ok(ticketHistory);
-        }
+        //    var ticketHistory = await _flightService.GetFlightTicketHistoryForUserAsync(id);
+        //    return Ok(ticketHistory);
+        //}
 
         [HttpPost("{id}/change-password")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
