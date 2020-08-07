@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PUSGS_Project", "PUSGS_Project\PUSGS_Project.csproj", "{0653E50B-B828-46BA-8AFD-526B17C0219B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{B867E64A-7BCF-4FEE-BC44-6771AF9C4692}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistance.RentACar", "Persistance.RentACar\Persistance.RentACar.csproj", "{B00D22D3-016B-4C43-940A-4ABA9BBF9070}"
@@ -13,11 +11,400 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistance.Avio", "Persist
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistance.User", "Persistance.User\Persistance.User.csproj", "{A51A5D68-B7D8-48DF-AE69-06959541F82F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PUSGS_Project.Api.Users", "PUSGS_Project.Api.Users\PUSGS_Project.Api.Users.csproj", "{D99CCA36-5CED-4BD7-9410-50ABEB42C6D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PUSGS_Project.Api.Users", "PUSGS_Project.Api.Users\PUSGS_Project.Api.Users.csproj", "{D99CCA36-5CED-4BD7-9410-50ABEB42C6D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PUSGS_Project.Api.Aviations", "PUSGS_Project.Api.Aviations\PUSGS_Project.Api.Aviations.csproj", "{A613E172-F3C3-47A0-A9C9-FBEAB5BFC9E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PUSGS_Project.Api.Aviations", "PUSGS_Project.Api.Aviations\PUSGS_Project.Api.Aviations.csproj", "{A613E172-F3C3-47A0-A9C9-FBEAB5BFC9E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PUSGS_Project.Api.RentACars", "PUSGS_Project.Api.RentACars\PUSGS_Project.Api.RentACars.csproj", "{7AC29E8A-6792-494B-BC24-7921A3BD40FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PUSGS_Project.Api.RentACars", "PUSGS_Project.Api.RentACars\PUSGS_Project.Api.RentACars.csproj", "{7AC29E8A-6792-494B-BC24-7921A3BD40FA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{192CF5FF-7783-4D60-8A0D-27004F49CA68}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\index.html = ClientApp\src\index.html
+		ClientApp\src\karma.conf.js = ClientApp\src\karma.conf.js
+		ClientApp\src\main.ts = ClientApp\src\main.ts
+		ClientApp\src\polyfills.ts = ClientApp\src\polyfills.ts
+		ClientApp\src\styles.css = ClientApp\src\styles.css
+		ClientApp\src\test.ts = ClientApp\src\test.ts
+		ClientApp\src\tsconfig.app.json = ClientApp\src\tsconfig.app.json
+		ClientApp\src\tsconfig.server.json = ClientApp\src\tsconfig.server.json
+		ClientApp\src\tsconfig.spec.json = ClientApp\src\tsconfig.spec.json
+		ClientApp\src\tslint.json = ClientApp\src\tslint.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{929EBEA0-9E10-436C-8456-3D8637216232}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\app.component.html = ClientApp\src\app\app.component.html
+		ClientApp\src\app\app.component.ts = ClientApp\src\app\app.component.ts
+		ClientApp\src\app\app.module.ts = ClientApp\src\app\app.module.ts
+		ClientApp\src\app\app.server.module.ts = ClientApp\src\app\app.server.module.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "accept-invitation", "accept-invitation", "{7DA42985-3D47-40FF-A2EF-6AD1601D55A7}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\accept-invitation\accept-invitation.component.css = ClientApp\src\app\accept-invitation\accept-invitation.component.css
+		ClientApp\src\app\accept-invitation\accept-invitation.component.html = ClientApp\src\app\accept-invitation\accept-invitation.component.html
+		ClientApp\src\app\accept-invitation\accept-invitation.component.spec.ts = ClientApp\src\app\accept-invitation\accept-invitation.component.spec.ts
+		ClientApp\src\app\accept-invitation\accept-invitation.component.ts = ClientApp\src\app\accept-invitation\accept-invitation.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "add-aviation-administrator", "add-aviation-administrator", "{6BC1C9B1-DF5C-487B-89F2-EE0ED54C3F7E}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\add-aviation-administrator\add-aviation-administrator.component.css = ClientApp\src\app\add-aviation-administrator\add-aviation-administrator.component.css
+		ClientApp\src\app\add-aviation-administrator\add-aviation-administrator.component.html = ClientApp\src\app\add-aviation-administrator\add-aviation-administrator.component.html
+		ClientApp\src\app\add-aviation-administrator\add-aviation-administrator.component.spec.ts = ClientApp\src\app\add-aviation-administrator\add-aviation-administrator.component.spec.ts
+		ClientApp\src\app\add-aviation-administrator\add-aviation-administrator.component.ts = ClientApp\src\app\add-aviation-administrator\add-aviation-administrator.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "add-aviation-company", "add-aviation-company", "{3AB86D42-1B4E-46EB-BE4F-DF55FB2B4B43}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\add-aviation-company\add-aviation-company.component.css = ClientApp\src\app\add-aviation-company\add-aviation-company.component.css
+		ClientApp\src\app\add-aviation-company\add-aviation-company.component.html = ClientApp\src\app\add-aviation-company\add-aviation-company.component.html
+		ClientApp\src\app\add-aviation-company\add-aviation-company.component.spec.ts = ClientApp\src\app\add-aviation-company\add-aviation-company.component.spec.ts
+		ClientApp\src\app\add-aviation-company\add-aviation-company.component.ts = ClientApp\src\app\add-aviation-company\add-aviation-company.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "add-flight-form", "add-flight-form", "{2A2D42B7-8EAC-46AC-B2DC-5FDA5A05B288}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\add-flight-form\add-flight-form.component.css = ClientApp\src\app\add-flight-form\add-flight-form.component.css
+		ClientApp\src\app\add-flight-form\add-flight-form.component.html = ClientApp\src\app\add-flight-form\add-flight-form.component.html
+		ClientApp\src\app\add-flight-form\add-flight-form.component.spec.ts = ClientApp\src\app\add-flight-form\add-flight-form.component.spec.ts
+		ClientApp\src\app\add-flight-form\add-flight-form.component.ts = ClientApp\src\app\add-flight-form\add-flight-form.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "add-quick-ticket", "add-quick-ticket", "{9C1108B0-0C41-4634-B51E-CB031CA55C8F}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\add-quick-ticket\add-quick-ticket.component.css = ClientApp\src\app\add-quick-ticket\add-quick-ticket.component.css
+		ClientApp\src\app\add-quick-ticket\add-quick-ticket.component.html = ClientApp\src\app\add-quick-ticket\add-quick-ticket.component.html
+		ClientApp\src\app\add-quick-ticket\add-quick-ticket.component.spec.ts = ClientApp\src\app\add-quick-ticket\add-quick-ticket.component.spec.ts
+		ClientApp\src\app\add-quick-ticket\add-quick-ticket.component.ts = ClientApp\src\app\add-quick-ticket\add-quick-ticket.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "add-rent-a-car-administrator", "add-rent-a-car-administrator", "{1D9B8A97-D034-4DEF-9046-DF094934CEFF}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\add-rent-a-car-administrator\add-rent-a-car-administrator.component.css = ClientApp\src\app\add-rent-a-car-administrator\add-rent-a-car-administrator.component.css
+		ClientApp\src\app\add-rent-a-car-administrator\add-rent-a-car-administrator.component.html = ClientApp\src\app\add-rent-a-car-administrator\add-rent-a-car-administrator.component.html
+		ClientApp\src\app\add-rent-a-car-administrator\add-rent-a-car-administrator.component.spec.ts = ClientApp\src\app\add-rent-a-car-administrator\add-rent-a-car-administrator.component.spec.ts
+		ClientApp\src\app\add-rent-a-car-administrator\add-rent-a-car-administrator.component.ts = ClientApp\src\app\add-rent-a-car-administrator\add-rent-a-car-administrator.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "add-rent-a-car-company", "add-rent-a-car-company", "{3B4F9A9C-707A-4F25-B0EE-B32CEFD668B8}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\add-rent-a-car-company\add-rent-a-car-company.component.css = ClientApp\src\app\add-rent-a-car-company\add-rent-a-car-company.component.css
+		ClientApp\src\app\add-rent-a-car-company\add-rent-a-car-company.component.html = ClientApp\src\app\add-rent-a-car-company\add-rent-a-car-company.component.html
+		ClientApp\src\app\add-rent-a-car-company\add-rent-a-car-company.component.spec.ts = ClientApp\src\app\add-rent-a-car-company\add-rent-a-car-company.component.spec.ts
+		ClientApp\src\app\add-rent-a-car-company\add-rent-a-car-company.component.ts = ClientApp\src\app\add-rent-a-car-company\add-rent-a-car-company.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "auth", "auth", "{AFC91C57-38CB-4F1E-A30B-F18AB49AB5ED}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\auth\auth.guard.spec.ts = ClientApp\src\app\auth\auth.guard.spec.ts
+		ClientApp\src\app\auth\auth.guard.ts = ClientApp\src\app\auth\auth.guard.ts
+		ClientApp\src\app\auth\auth.interceptor.spec.ts = ClientApp\src\app\auth\auth.interceptor.spec.ts
+		ClientApp\src\app\auth\auth.interceptor.ts = ClientApp\src\app\auth\auth.interceptor.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "aviation-companies", "aviation-companies", "{F641886D-66EE-4AF4-B595-4819B9F6335B}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\aviation-companies\aviation-companies.component.css = ClientApp\src\app\aviation-companies\aviation-companies.component.css
+		ClientApp\src\app\aviation-companies\aviation-companies.component.html = ClientApp\src\app\aviation-companies\aviation-companies.component.html
+		ClientApp\src\app\aviation-companies\aviation-companies.component.spec.ts = ClientApp\src\app\aviation-companies\aviation-companies.component.spec.ts
+		ClientApp\src\app\aviation-companies\aviation-companies.component.ts = ClientApp\src\app\aviation-companies\aviation-companies.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "aviation-profile", "aviation-profile", "{670FE8DB-F021-4DBE-B667-A40CFC07A77D}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\aviation-profile\aviation-profile.component.css = ClientApp\src\app\aviation-profile\aviation-profile.component.css
+		ClientApp\src\app\aviation-profile\aviation-profile.component.html = ClientApp\src\app\aviation-profile\aviation-profile.component.html
+		ClientApp\src\app\aviation-profile\aviation-profile.component.spec.ts = ClientApp\src\app\aviation-profile\aviation-profile.component.spec.ts
+		ClientApp\src\app\aviation-profile\aviation-profile.component.ts = ClientApp\src\app\aviation-profile\aviation-profile.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "car-reservation", "car-reservation", "{D737979E-64FE-4548-ABE4-0E54C0BDE770}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\car-reservation\car-reservation.component.css = ClientApp\src\app\car-reservation\car-reservation.component.css
+		ClientApp\src\app\car-reservation\car-reservation.component.html = ClientApp\src\app\car-reservation\car-reservation.component.html
+		ClientApp\src\app\car-reservation\car-reservation.component.spec.ts = ClientApp\src\app\car-reservation\car-reservation.component.spec.ts
+		ClientApp\src\app\car-reservation\car-reservation.component.ts = ClientApp\src\app\car-reservation\car-reservation.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "change-password", "change-password", "{3734AB6A-2522-44C9-89C1-07E6978EC150}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\change-password\change-password.component.css = ClientApp\src\app\change-password\change-password.component.css
+		ClientApp\src\app\change-password\change-password.component.html = ClientApp\src\app\change-password\change-password.component.html
+		ClientApp\src\app\change-password\change-password.component.spec.ts = ClientApp\src\app\change-password\change-password.component.spec.ts
+		ClientApp\src\app\change-password\change-password.component.ts = ClientApp\src\app\change-password\change-password.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "constants", "constants", "{7F731B83-40E4-4554-8AA6-FBCFBD127D83}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\constants\storage.js = ClientApp\src\app\constants\storage.js
+		ClientApp\src\app\constants\storage.js.map = ClientApp\src\app\constants\storage.js.map
+		ClientApp\src\app\constants\storage.ts = ClientApp\src\app\constants\storage.ts
+		ClientApp\src\app\constants\user-types.js = ClientApp\src\app\constants\user-types.js
+		ClientApp\src\app\constants\user-types.js.map = ClientApp\src\app\constants\user-types.js.map
+		ClientApp\src\app\constants\user-types.ts = ClientApp\src\app\constants\user-types.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "counter", "counter", "{4D4E110D-3D55-48CD-B8CC-87B0AAD8C773}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\counter\counter.component.html = ClientApp\src\app\counter\counter.component.html
+		ClientApp\src\app\counter\counter.component.spec.ts = ClientApp\src\app\counter\counter.component.spec.ts
+		ClientApp\src\app\counter\counter.component.ts = ClientApp\src\app\counter\counter.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "entities", "entities", "{3B4A0BC0-95DB-4EBA-8BAA-70AD80BB669C}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\entities\aviation-company.js = ClientApp\src\app\entities\aviation-company.js
+		ClientApp\src\app\entities\aviation-company.js.map = ClientApp\src\app\entities\aviation-company.js.map
+		ClientApp\src\app\entities\aviation-company.spec.ts = ClientApp\src\app\entities\aviation-company.spec.ts
+		ClientApp\src\app\entities\aviation-company.ts = ClientApp\src\app\entities\aviation-company.ts
+		ClientApp\src\app\entities\AviationAdmin.js = ClientApp\src\app\entities\AviationAdmin.js
+		ClientApp\src\app\entities\AviationAdmin.js.map = ClientApp\src\app\entities\AviationAdmin.js.map
+		ClientApp\src\app\entities\AviationAdmin.ts = ClientApp\src\app\entities\AviationAdmin.ts
+		ClientApp\src\app\entities\branch.spec.ts = ClientApp\src\app\entities\branch.spec.ts
+		ClientApp\src\app\entities\branch.ts = ClientApp\src\app\entities\branch.ts
+		ClientApp\src\app\entities\car-reservation.spec.ts = ClientApp\src\app\entities\car-reservation.spec.ts
+		ClientApp\src\app\entities\car-reservation.ts = ClientApp\src\app\entities\car-reservation.ts
+		ClientApp\src\app\entities\car.spec.ts = ClientApp\src\app\entities\car.spec.ts
+		ClientApp\src\app\entities\car.ts = ClientApp\src\app\entities\car.ts
+		ClientApp\src\app\entities\flight-seat.js = ClientApp\src\app\entities\flight-seat.js
+		ClientApp\src\app\entities\flight-seat.js.map = ClientApp\src\app\entities\flight-seat.js.map
+		ClientApp\src\app\entities\flight-seat.ts = ClientApp\src\app\entities\flight-seat.ts
+		ClientApp\src\app\entities\flight-ticket.js = ClientApp\src\app\entities\flight-ticket.js
+		ClientApp\src\app\entities\flight-ticket.js.map = ClientApp\src\app\entities\flight-ticket.js.map
+		ClientApp\src\app\entities\flight-ticket.spec.ts = ClientApp\src\app\entities\flight-ticket.spec.ts
+		ClientApp\src\app\entities\flight-ticket.ts = ClientApp\src\app\entities\flight-ticket.ts
+		ClientApp\src\app\entities\flight.js = ClientApp\src\app\entities\flight.js
+		ClientApp\src\app\entities\flight.js.map = ClientApp\src\app\entities\flight.js.map
+		ClientApp\src\app\entities\flight.spec.ts = ClientApp\src\app\entities\flight.spec.ts
+		ClientApp\src\app\entities\flight.ts = ClientApp\src\app\entities\flight.ts
+		ClientApp\src\app\entities\location.js = ClientApp\src\app\entities\location.js
+		ClientApp\src\app\entities\location.js.map = ClientApp\src\app\entities\location.js.map
+		ClientApp\src\app\entities\location.spec.ts = ClientApp\src\app\entities\location.spec.ts
+		ClientApp\src\app\entities\location.ts = ClientApp\src\app\entities\location.ts
+		ClientApp\src\app\entities\rating.js = ClientApp\src\app\entities\rating.js
+		ClientApp\src\app\entities\rating.js.map = ClientApp\src\app\entities\rating.js.map
+		ClientApp\src\app\entities\rating.ts = ClientApp\src\app\entities\rating.ts
+		ClientApp\src\app\entities\rent-a-car.spec.ts = ClientApp\src\app\entities\rent-a-car.spec.ts
+		ClientApp\src\app\entities\rent-a-car.ts = ClientApp\src\app\entities\rent-a-car.ts
+		ClientApp\src\app\entities\RentACarAdmin.js = ClientApp\src\app\entities\RentACarAdmin.js
+		ClientApp\src\app\entities\RentACarAdmin.js.map = ClientApp\src\app\entities\RentACarAdmin.js.map
+		ClientApp\src\app\entities\RentACarAdmin.ts = ClientApp\src\app\entities\RentACarAdmin.ts
+		ClientApp\src\app\entities\user.js = ClientApp\src\app\entities\user.js
+		ClientApp\src\app\entities\user.js.map = ClientApp\src\app\entities\user.js.map
+		ClientApp\src\app\entities\user.spec.ts = ClientApp\src\app\entities\user.spec.ts
+		ClientApp\src\app\entities\user.ts = ClientApp\src\app\entities\user.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "requests", "requests", "{3AB1DF07-F8B6-4DB1-8A72-E52B0A4BBCC1}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\entities\requests\add-flight-request.js = ClientApp\src\app\entities\requests\add-flight-request.js
+		ClientApp\src\app\entities\requests\add-flight-request.js.map = ClientApp\src\app\entities\requests\add-flight-request.js.map
+		ClientApp\src\app\entities\requests\add-flight-request.ts = ClientApp\src\app\entities\requests\add-flight-request.ts
+		ClientApp\src\app\entities\requests\add-or-update-aviation-company-request.js = ClientApp\src\app\entities\requests\add-or-update-aviation-company-request.js
+		ClientApp\src\app\entities\requests\add-or-update-aviation-company-request.js.map = ClientApp\src\app\entities\requests\add-or-update-aviation-company-request.js.map
+		ClientApp\src\app\entities\requests\add-or-update-aviation-company-request.ts = ClientApp\src\app\entities\requests\add-or-update-aviation-company-request.ts
+		ClientApp\src\app\entities\requests\update-flight-request.js = ClientApp\src\app\entities\requests\update-flight-request.js
+		ClientApp\src\app\entities\requests\update-flight-request.js.map = ClientApp\src\app\entities\requests\update-flight-request.js.map
+		ClientApp\src\app\entities\requests\update-flight-request.ts = ClientApp\src\app\entities\requests\update-flight-request.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch-data", "fetch-data", "{F6EEAA40-3036-41D2-AD00-B707E314EBC0}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\fetch-data\fetch-data.component.html = ClientApp\src\app\fetch-data\fetch-data.component.html
+		ClientApp\src\app\fetch-data\fetch-data.component.ts = ClientApp\src\app\fetch-data\fetch-data.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "flight-details", "flight-details", "{4F252515-7F3A-4059-BBB2-BFBEB1CDF2D8}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\flight-details\flight-details.component.css = ClientApp\src\app\flight-details\flight-details.component.css
+		ClientApp\src\app\flight-details\flight-details.component.html = ClientApp\src\app\flight-details\flight-details.component.html
+		ClientApp\src\app\flight-details\flight-details.component.spec.ts = ClientApp\src\app\flight-details\flight-details.component.spec.ts
+		ClientApp\src\app\flight-details\flight-details.component.ts = ClientApp\src\app\flight-details\flight-details.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "flight-reservation-form", "flight-reservation-form", "{CADF8C53-05F0-4475-9341-86FCA1C456DD}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\flight-reservation-form\flight-reservation-form.component.css = ClientApp\src\app\flight-reservation-form\flight-reservation-form.component.css
+		ClientApp\src\app\flight-reservation-form\flight-reservation-form.component.html = ClientApp\src\app\flight-reservation-form\flight-reservation-form.component.html
+		ClientApp\src\app\flight-reservation-form\flight-reservation-form.component.spec.ts = ClientApp\src\app\flight-reservation-form\flight-reservation-form.component.spec.ts
+		ClientApp\src\app\flight-reservation-form\flight-reservation-form.component.ts = ClientApp\src\app\flight-reservation-form\flight-reservation-form.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "helpers", "helpers", "{B8A4824C-9732-4B44-8AE8-59F3D0014BF8}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\flight-reservation-form\helpers\flight-seat-reservation.js = ClientApp\src\app\flight-reservation-form\helpers\flight-seat-reservation.js
+		ClientApp\src\app\flight-reservation-form\helpers\flight-seat-reservation.js.map = ClientApp\src\app\flight-reservation-form\helpers\flight-seat-reservation.js.map
+		ClientApp\src\app\flight-reservation-form\helpers\flight-seat-reservation.ts = ClientApp\src\app\flight-reservation-form\helpers\flight-seat-reservation.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "flight-seat", "flight-seat", "{78FA9764-F0C5-4E01-B815-E1CBD786855F}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\flight-seat\flight-seat.component.css = ClientApp\src\app\flight-seat\flight-seat.component.css
+		ClientApp\src\app\flight-seat\flight-seat.component.html = ClientApp\src\app\flight-seat\flight-seat.component.html
+		ClientApp\src\app\flight-seat\flight-seat.component.spec.ts = ClientApp\src\app\flight-seat\flight-seat.component.spec.ts
+		ClientApp\src\app\flight-seat\flight-seat.component.ts = ClientApp\src\app\flight-seat\flight-seat.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "flight-seats", "flight-seats", "{595BBF9F-2C59-458B-9D64-346AB75ABA30}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\flight-seats\flight-seats.component.css = ClientApp\src\app\flight-seats\flight-seats.component.css
+		ClientApp\src\app\flight-seats\flight-seats.component.html = ClientApp\src\app\flight-seats\flight-seats.component.html
+		ClientApp\src\app\flight-seats\flight-seats.component.spec.ts = ClientApp\src\app\flight-seats\flight-seats.component.spec.ts
+		ClientApp\src\app\flight-seats\flight-seats.component.ts = ClientApp\src\app\flight-seats\flight-seats.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "flights", "flights", "{E7431F44-F5FF-423F-ACEA-515C23FECD71}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\flights\flights.component.css = ClientApp\src\app\flights\flights.component.css
+		ClientApp\src\app\flights\flights.component.html = ClientApp\src\app\flights\flights.component.html
+		ClientApp\src\app\flights\flights.component.spec.ts = ClientApp\src\app\flights\flights.component.spec.ts
+		ClientApp\src\app\flights\flights.component.ts = ClientApp\src\app\flights\flights.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "friends", "friends", "{C7EA0790-9CA6-4389-A9CC-11A89BD044B9}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\friends\friends.component.css = ClientApp\src\app\friends\friends.component.css
+		ClientApp\src\app\friends\friends.component.html = ClientApp\src\app\friends\friends.component.html
+		ClientApp\src\app\friends\friends.component.spec.ts = ClientApp\src\app\friends\friends.component.spec.ts
+		ClientApp\src\app\friends\friends.component.ts = ClientApp\src\app\friends\friends.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "home", "home", "{07E5AC25-AD0D-4172-9D37-13958C1D9F5D}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\home\home.component.html = ClientApp\src\app\home\home.component.html
+		ClientApp\src\app\home\home.component.ts = ClientApp\src\app\home\home.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "login", "login", "{58787446-A457-469C-B7D1-1F7EEF83902D}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\login\login.component.css = ClientApp\src\app\login\login.component.css
+		ClientApp\src\app\login\login.component.html = ClientApp\src\app\login\login.component.html
+		ClientApp\src\app\login\login.component.spec.ts = ClientApp\src\app\login\login.component.spec.ts
+		ClientApp\src\app\login\login.component.ts = ClientApp\src\app\login\login.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mail-confirmation", "mail-confirmation", "{7EB4B4F5-629D-4F09-A127-992121FBC7BC}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\mail-confirmation\mail-confirmation.component.css = ClientApp\src\app\mail-confirmation\mail-confirmation.component.css
+		ClientApp\src\app\mail-confirmation\mail-confirmation.component.html = ClientApp\src\app\mail-confirmation\mail-confirmation.component.html
+		ClientApp\src\app\mail-confirmation\mail-confirmation.component.spec.ts = ClientApp\src\app\mail-confirmation\mail-confirmation.component.spec.ts
+		ClientApp\src\app\mail-confirmation\mail-confirmation.component.ts = ClientApp\src\app\mail-confirmation\mail-confirmation.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nav-menu", "nav-menu", "{77467059-88DB-4CFE-B11C-8CF314CB2D1B}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\nav-menu\nav-menu.component.css = ClientApp\src\app\nav-menu\nav-menu.component.css
+		ClientApp\src\app\nav-menu\nav-menu.component.html = ClientApp\src\app\nav-menu\nav-menu.component.html
+		ClientApp\src\app\nav-menu\nav-menu.component.ts = ClientApp\src\app\nav-menu\nav-menu.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "profile", "profile", "{9520C0FB-05DB-401E-A96A-49AB094C88A5}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\profile\profile.component.css = ClientApp\src\app\profile\profile.component.css
+		ClientApp\src\app\profile\profile.component.html = ClientApp\src\app\profile\profile.component.html
+		ClientApp\src\app\profile\profile.component.spec.ts = ClientApp\src\app\profile\profile.component.spec.ts
+		ClientApp\src\app\profile\profile.component.ts = ClientApp\src\app\profile\profile.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "quick-car-reservation", "quick-car-reservation", "{DFEA045D-0C3F-43CD-B6C4-8AAD7FAB5A79}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\quick-car-reservation\quick-car-reservation.component.css = ClientApp\src\app\quick-car-reservation\quick-car-reservation.component.css
+		ClientApp\src\app\quick-car-reservation\quick-car-reservation.component.html = ClientApp\src\app\quick-car-reservation\quick-car-reservation.component.html
+		ClientApp\src\app\quick-car-reservation\quick-car-reservation.component.spec.ts = ClientApp\src\app\quick-car-reservation\quick-car-reservation.component.spec.ts
+		ClientApp\src\app\quick-car-reservation\quick-car-reservation.component.ts = ClientApp\src\app\quick-car-reservation\quick-car-reservation.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "quick-ticket-reservation", "quick-ticket-reservation", "{A027E3CB-F475-41F3-AC23-AD3304B7E207}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\quick-ticket-reservation\quick-ticket-reservation.component.css = ClientApp\src\app\quick-ticket-reservation\quick-ticket-reservation.component.css
+		ClientApp\src\app\quick-ticket-reservation\quick-ticket-reservation.component.html = ClientApp\src\app\quick-ticket-reservation\quick-ticket-reservation.component.html
+		ClientApp\src\app\quick-ticket-reservation\quick-ticket-reservation.component.spec.ts = ClientApp\src\app\quick-ticket-reservation\quick-ticket-reservation.component.spec.ts
+		ClientApp\src\app\quick-ticket-reservation\quick-ticket-reservation.component.ts = ClientApp\src\app\quick-ticket-reservation\quick-ticket-reservation.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "register", "register", "{8CBAEDDF-99D6-41F8-BBB2-B3B126039EE8}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\register\register.component.css = ClientApp\src\app\register\register.component.css
+		ClientApp\src\app\register\register.component.html = ClientApp\src\app\register\register.component.html
+		ClientApp\src\app\register\register.component.spec.ts = ClientApp\src\app\register\register.component.spec.ts
+		ClientApp\src\app\register\register.component.ts = ClientApp\src\app\register\register.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "register-services", "register-services", "{CE1DB5B3-23CC-4B3C-B855-5DE0B9498043}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\register-services\register-services.component.css = ClientApp\src\app\register-services\register-services.component.css
+		ClientApp\src\app\register-services\register-services.component.html = ClientApp\src\app\register-services\register-services.component.html
+		ClientApp\src\app\register-services\register-services.component.spec.ts = ClientApp\src\app\register-services\register-services.component.spec.ts
+		ClientApp\src\app\register-services\register-services.component.ts = ClientApp\src\app\register-services\register-services.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "rent-a-car-profile", "rent-a-car-profile", "{74F7962B-7C3F-4D5C-96AA-6370CD4E2F1E}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\rent-a-car-profile\rent-a-car-profile.component.css = ClientApp\src\app\rent-a-car-profile\rent-a-car-profile.component.css
+		ClientApp\src\app\rent-a-car-profile\rent-a-car-profile.component.html = ClientApp\src\app\rent-a-car-profile\rent-a-car-profile.component.html
+		ClientApp\src\app\rent-a-car-profile\rent-a-car-profile.component.spec.ts = ClientApp\src\app\rent-a-car-profile\rent-a-car-profile.component.spec.ts
+		ClientApp\src\app\rent-a-car-profile\rent-a-car-profile.component.ts = ClientApp\src\app\rent-a-car-profile\rent-a-car-profile.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "rent-a-car-profile-edit", "rent-a-car-profile-edit", "{ED993902-B71C-46ED-9FB5-404CB4D8F413}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\rent-a-car-profile-edit\rent-a-car-profile-edit.component.css = ClientApp\src\app\rent-a-car-profile-edit\rent-a-car-profile-edit.component.css
+		ClientApp\src\app\rent-a-car-profile-edit\rent-a-car-profile-edit.component.html = ClientApp\src\app\rent-a-car-profile-edit\rent-a-car-profile-edit.component.html
+		ClientApp\src\app\rent-a-car-profile-edit\rent-a-car-profile-edit.component.spec.ts = ClientApp\src\app\rent-a-car-profile-edit\rent-a-car-profile-edit.component.spec.ts
+		ClientApp\src\app\rent-a-car-profile-edit\rent-a-car-profile-edit.component.ts = ClientApp\src\app\rent-a-car-profile-edit\rent-a-car-profile-edit.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{81C44A10-57C2-4D12-94C1-CF58D1A3129E}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\services\aviation.service.spec.ts = ClientApp\src\app\services\aviation.service.spec.ts
+		ClientApp\src\app\services\aviation.service.ts = ClientApp\src\app\services\aviation.service.ts
+		ClientApp\src\app\services\backend.service.spec.ts = ClientApp\src\app\services\backend.service.spec.ts
+		ClientApp\src\app\services\backend.service.ts = ClientApp\src\app\services\backend.service.ts
+		ClientApp\src\app\services\branch.service.spec.ts = ClientApp\src\app\services\branch.service.spec.ts
+		ClientApp\src\app\services\branch.service.ts = ClientApp\src\app\services\branch.service.ts
+		ClientApp\src\app\services\car-reservation.service.spec.ts = ClientApp\src\app\services\car-reservation.service.spec.ts
+		ClientApp\src\app\services\car-reservation.service.ts = ClientApp\src\app\services\car-reservation.service.ts
+		ClientApp\src\app\services\car.service.spec.ts = ClientApp\src\app\services\car.service.spec.ts
+		ClientApp\src\app\services\car.service.ts = ClientApp\src\app\services\car.service.ts
+		ClientApp\src\app\services\flight.service.spec.ts = ClientApp\src\app\services\flight.service.spec.ts
+		ClientApp\src\app\services\flight.service.ts = ClientApp\src\app\services\flight.service.ts
+		ClientApp\src\app\services\rating.service.spec.ts = ClientApp\src\app\services\rating.service.spec.ts
+		ClientApp\src\app\services\rating.service.ts = ClientApp\src\app\services\rating.service.ts
+		ClientApp\src\app\services\rent-a-car.service.spec.ts = ClientApp\src\app\services\rent-a-car.service.spec.ts
+		ClientApp\src\app\services\rent-a-car.service.ts = ClientApp\src\app\services\rent-a-car.service.ts
+		ClientApp\src\app\services\user.service.spec.ts = ClientApp\src\app\services\user.service.spec.ts
+		ClientApp\src\app\services\user.service.ts = ClientApp\src\app\services\user.service.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ticket-history", "ticket-history", "{0C511555-7A3F-47C1-B5A0-429B1A60A46E}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\ticket-history\ticket-history.component.css = ClientApp\src\app\ticket-history\ticket-history.component.css
+		ClientApp\src\app\ticket-history\ticket-history.component.html = ClientApp\src\app\ticket-history\ticket-history.component.html
+		ClientApp\src\app\ticket-history\ticket-history.component.spec.ts = ClientApp\src\app\ticket-history\ticket-history.component.spec.ts
+		ClientApp\src\app\ticket-history\ticket-history.component.ts = ClientApp\src\app\ticket-history\ticket-history.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "util", "util", "{E95B8D00-6145-4688-A246-DB7B45BF6747}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\app\util\storage.js = ClientApp\src\app\util\storage.js
+		ClientApp\src\app\util\storage.js.map = ClientApp\src\app\util\storage.js.map
+		ClientApp\src\app\util\storage.ts = ClientApp\src\app\util\storage.ts
+		ClientApp\src\app\util\time.js = ClientApp\src\app\util\time.js
+		ClientApp\src\app\util\time.js.map = ClientApp\src\app\util\time.js.map
+		ClientApp\src\app\util\time.ts = ClientApp\src\app\util\time.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{5F13E480-DE32-4C03-BDAF-77C3E46678BD}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\assets\.gitkeep = ClientApp\src\assets\.gitkeep
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "environments", "environments", "{B7C15903-4DAF-4752-A329-074F4449962E}"
+	ProjectSection(SolutionItems) = preProject
+		ClientApp\src\environments\environment.prod.ts = ClientApp\src\environments\environment.prod.ts
+		ClientApp\src\environments\environment.ts = ClientApp\src\environments\environment.ts
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +412,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0653E50B-B828-46BA-8AFD-526B17C0219B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0653E50B-B828-46BA-8AFD-526B17C0219B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0653E50B-B828-46BA-8AFD-526B17C0219B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0653E50B-B828-46BA-8AFD-526B17C0219B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B867E64A-7BCF-4FEE-BC44-6771AF9C4692}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B867E64A-7BCF-4FEE-BC44-6771AF9C4692}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B867E64A-7BCF-4FEE-BC44-6771AF9C4692}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -60,6 +443,49 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{929EBEA0-9E10-436C-8456-3D8637216232} = {192CF5FF-7783-4D60-8A0D-27004F49CA68}
+		{7DA42985-3D47-40FF-A2EF-6AD1601D55A7} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{6BC1C9B1-DF5C-487B-89F2-EE0ED54C3F7E} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{3AB86D42-1B4E-46EB-BE4F-DF55FB2B4B43} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{2A2D42B7-8EAC-46AC-B2DC-5FDA5A05B288} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{9C1108B0-0C41-4634-B51E-CB031CA55C8F} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{1D9B8A97-D034-4DEF-9046-DF094934CEFF} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{3B4F9A9C-707A-4F25-B0EE-B32CEFD668B8} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{AFC91C57-38CB-4F1E-A30B-F18AB49AB5ED} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{F641886D-66EE-4AF4-B595-4819B9F6335B} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{670FE8DB-F021-4DBE-B667-A40CFC07A77D} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{D737979E-64FE-4548-ABE4-0E54C0BDE770} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{3734AB6A-2522-44C9-89C1-07E6978EC150} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{7F731B83-40E4-4554-8AA6-FBCFBD127D83} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{4D4E110D-3D55-48CD-B8CC-87B0AAD8C773} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{3B4A0BC0-95DB-4EBA-8BAA-70AD80BB669C} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{3AB1DF07-F8B6-4DB1-8A72-E52B0A4BBCC1} = {3B4A0BC0-95DB-4EBA-8BAA-70AD80BB669C}
+		{F6EEAA40-3036-41D2-AD00-B707E314EBC0} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{4F252515-7F3A-4059-BBB2-BFBEB1CDF2D8} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{CADF8C53-05F0-4475-9341-86FCA1C456DD} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{B8A4824C-9732-4B44-8AE8-59F3D0014BF8} = {CADF8C53-05F0-4475-9341-86FCA1C456DD}
+		{78FA9764-F0C5-4E01-B815-E1CBD786855F} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{595BBF9F-2C59-458B-9D64-346AB75ABA30} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{E7431F44-F5FF-423F-ACEA-515C23FECD71} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{C7EA0790-9CA6-4389-A9CC-11A89BD044B9} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{07E5AC25-AD0D-4172-9D37-13958C1D9F5D} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{58787446-A457-469C-B7D1-1F7EEF83902D} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{7EB4B4F5-629D-4F09-A127-992121FBC7BC} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{77467059-88DB-4CFE-B11C-8CF314CB2D1B} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{9520C0FB-05DB-401E-A96A-49AB094C88A5} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{DFEA045D-0C3F-43CD-B6C4-8AAD7FAB5A79} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{A027E3CB-F475-41F3-AC23-AD3304B7E207} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{8CBAEDDF-99D6-41F8-BBB2-B3B126039EE8} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{CE1DB5B3-23CC-4B3C-B855-5DE0B9498043} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{74F7962B-7C3F-4D5C-96AA-6370CD4E2F1E} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{ED993902-B71C-46ED-9FB5-404CB4D8F413} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{81C44A10-57C2-4D12-94C1-CF58D1A3129E} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{0C511555-7A3F-47C1-B5A0-429B1A60A46E} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{E95B8D00-6145-4688-A246-DB7B45BF6747} = {929EBEA0-9E10-436C-8456-3D8637216232}
+		{5F13E480-DE32-4C03-BDAF-77C3E46678BD} = {192CF5FF-7783-4D60-8A0D-27004F49CA68}
+		{B7C15903-4DAF-4752-A329-074F4449962E} = {192CF5FF-7783-4D60-8A0D-27004F49CA68}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {84A4F09E-F345-4C2F-A0B8-E43494305FB0}
