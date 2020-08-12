@@ -9,7 +9,7 @@ export class CarService {
   http: HttpClient;
   carControllerUri: string;
 
-  constructor(http: HttpClient, @Inject("BASE_RENTACAR_URL") baseUrl: string) {
+  constructor(http: HttpClient, @Inject("BASE_URL") baseUrl: string) {
     this.http = http;
     this.carControllerUri = baseUrl + "api/car/";
   }

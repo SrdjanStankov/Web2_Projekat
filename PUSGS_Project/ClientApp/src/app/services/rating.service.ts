@@ -9,7 +9,7 @@ export class RatingService {
   http: HttpClient;
   ratingControllerUri: string;
 
-  constructor(http: HttpClient, @Inject('BASE_RENTACAR_URL') baseUrl: string) {
+  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.http = http;
     this.ratingControllerUri = baseUrl + 'api/rating/';
   }

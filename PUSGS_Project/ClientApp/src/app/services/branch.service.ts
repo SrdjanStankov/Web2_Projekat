@@ -9,7 +9,7 @@ export class BranchService {
   http: HttpClient;
   branchControllerUri: string;
 
-  constructor(http: HttpClient, @Inject("BASE_RENTACAR_URL") baseUrl: string) {
+  constructor(http: HttpClient, @Inject("BASE_URL") baseUrl: string) {
     this.http = http;
     this.branchControllerUri = baseUrl + "api/branch/";
   }

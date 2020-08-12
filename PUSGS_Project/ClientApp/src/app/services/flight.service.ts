@@ -12,7 +12,7 @@ export class FlightService {
   http: HttpClient;
   flightControllerUri: string;
 
-  constructor(http: HttpClient, @Inject('BASE_AVIO_URL') baseUrl: string) {
+  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.http = http;
     this.flightControllerUri = baseUrl + 'api/flight/';
   }

@@ -11,7 +11,7 @@ export class AviationService {
   http: HttpClient;
   aviationControllerUri: string;
 
-  constructor(http: HttpClient, @Inject('BASE_AVIO_URL') baseUrl: string) {
+  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.http = http;
     this.aviationControllerUri = baseUrl + 'api/aviation/';
   }
