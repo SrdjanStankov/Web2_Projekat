@@ -2,7 +2,6 @@
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -41,11 +40,14 @@ namespace PUSGS_Project.ApiGateway.Controllers
                     return await getRequest.Content.ReadAsStringAsync();
                 case "DELETE":
                     var deleteRequest = await client.DeleteAsync(requestUri);
+                    if (deleteRequest.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        return Unauthorized();
+                    }
                     return await deleteRequest.Content.ReadAsStringAsync();
                 default:
                     return NotFound();
             }
-
         }
 
         [HttpPut]
@@ -62,9 +64,17 @@ namespace PUSGS_Project.ApiGateway.Controllers
             {
                 case "POST":
                     var postRequest = await client.PostAsync(requestUri, new StringContent(receivedObject.ToString(), Encoding.UTF8, Request.ContentType));
+                    if (postRequest.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        return Unauthorized();
+                    }
                     return await postRequest.Content.ReadAsStringAsync();
                 case "PUT":
                     var putRequest = await client.PutAsync(requestUri, new StringContent(receivedObject.ToString(), Encoding.UTF8, Request.ContentType));
+                    if (putRequest.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        return Unauthorized();
+                    }
                     return await putRequest.Content.ReadAsStringAsync();
                 default:
                     return NotFound();
