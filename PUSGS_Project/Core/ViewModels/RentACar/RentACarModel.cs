@@ -12,7 +12,7 @@ namespace Core.ViewModels.RentACar
         public string Address { get; set; }
         public string Description { get; set; }
         public ICollection<CarModel> Cars { get; set; }
-        public ICollection<Branch> Branches { get; set; }
+        public ICollection<BranchesModel> Branches { get; set; }
 
         public double AverageRating { get; set; }
 
@@ -23,7 +23,7 @@ namespace Core.ViewModels.RentACar
             Address = rentACar.Address;
             Description = rentACar.Description;
             Cars = new HashSet<CarModel>(rentACar.Cars.Select(item => new CarModel(item)));
-            Branches = new HashSet<Branch>(rentACar.Branches);
+            Branches = new HashSet<BranchesModel>(rentACar.Branches.Select(item => new BranchesModel(item)));
             AverageRating = rentACar.Cars.DefaultIfEmpty(new Car()).Average(item=> item.Ratings.DefaultIfEmpty(new Entities.Rating()).Average(rating=>rating.Value));
         }
     }

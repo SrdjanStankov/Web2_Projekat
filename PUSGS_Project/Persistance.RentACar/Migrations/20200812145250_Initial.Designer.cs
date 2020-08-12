@@ -10,8 +10,8 @@ using Persistance.RentACar;
 namespace Persistance.RentACar.Migrations
 {
     [DbContext(typeof(RentACarDbContext))]
-    [Migration("20200726224728_RatingNullFix")]
-    partial class RatingNullFix
+    [Migration("20200812145250_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,7 +34,7 @@ namespace Persistance.RentACar.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("RentACarId")
+                    b.Property<long>("RentACarId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -180,9 +180,11 @@ namespace Persistance.RentACar.Migrations
 
             modelBuilder.Entity("Core.Entities.Branch", b =>
                 {
-                    b.HasOne("Core.Entities.RentACar", null)
+                    b.HasOne("Core.Entities.RentACar", "RentACar")
                         .WithMany("Branches")
-                        .HasForeignKey("RentACarId");
+                        .HasForeignKey("RentACarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Core.Entities.Car", b =>

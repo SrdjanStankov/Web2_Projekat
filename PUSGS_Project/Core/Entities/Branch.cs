@@ -9,5 +9,8 @@ namespace Core.Entities
         public long Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
+
+        public RentACar RentACar { get; set; }
+        public long RentACarId { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistance.RentACar.Migrations
 {
-    public partial class Init : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,7 +30,7 @@ namespace Persistance.RentACar.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true),
-                    RentACarId = table.Column<long>(nullable: true)
+                    RentACarId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -40,7 +40,7 @@ namespace Persistance.RentACar.Migrations
                         column: x => x.RentACarId,
                         principalTable: "RentACars",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -105,7 +105,9 @@ namespace Persistance.RentACar.Migrations
                     Value = table.Column<double>(nullable: false),
                     RatingGiverEmail = table.Column<string>(nullable: true),
                     CarId = table.Column<long>(nullable: true),
-                    RentACarId = table.Column<long>(nullable: true)
+                    FlightId = table.Column<long>(nullable: true),
+                    RentACarId = table.Column<long>(nullable: true),
+                    AviationCompanyId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {

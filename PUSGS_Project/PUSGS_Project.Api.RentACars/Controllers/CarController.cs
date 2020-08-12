@@ -52,7 +52,7 @@ namespace PUSGS_Project.Api.RentACars.Controllers
                     carsModel.Add(new CarReservationDetailsModel(item)
                     {
                         AverageRating = await carRepository.GetAverageRatingAsync(item.Id),
-                        CostForRange = (model.ReturnDate - model.TakeDate).TotalDays * item.CostPerDay
+                        CostForRange = (model.ReturnDate - model.TakeDate).Value.TotalDays * item.CostPerDay
                     });
                 }
 

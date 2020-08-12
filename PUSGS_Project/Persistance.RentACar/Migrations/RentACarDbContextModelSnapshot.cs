@@ -32,7 +32,7 @@ namespace Persistance.RentACar.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("RentACarId")
+                    b.Property<long>("RentACarId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -178,9 +178,11 @@ namespace Persistance.RentACar.Migrations
 
             modelBuilder.Entity("Core.Entities.Branch", b =>
                 {
-                    b.HasOne("Core.Entities.RentACar", null)
+                    b.HasOne("Core.Entities.RentACar", "RentACar")
                         .WithMany("Branches")
-                        .HasForeignKey("RentACarId");
+                        .HasForeignKey("RentACarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Core.Entities.Car", b =>
