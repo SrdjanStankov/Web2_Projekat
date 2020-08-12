@@ -42,7 +42,7 @@ export class QuickCarReservationComponent implements OnInit {
       this.quickTickets = result;
     });
 
-    this.carService.getCars(this.rentACarAgencyId, null, null, null, null, null, "true").then(result => {
+    this.carService.getCars(this.rentACarAgencyId, '0', '', new Date().toDateString(), new Date().toDateString(), '0', "true").then(result => {
       this.cars = result;
     });
   }

@@ -23,7 +23,14 @@ export class CarService {
   }
 
   getCars(rentACarId: number, passengerNumber: string, type: string, returnDate: string, takeDate: string, maxCost: string, all: string = "false"): Promise<Car[]> {
-    let params = new HttpParams().set("passengerNumber", passengerNumber).set("type", type).set("returnDate", returnDate).set("takeDate", takeDate).set("maxCost", maxCost).set("all", all);
+    let params = new HttpParams();
+    params = params.set("passengerNumber", passengerNumber);
+    params = params.append("type", type);
+    params = params.append("returnDate", returnDate);
+    params = params.append("takeDate", takeDate);
+    params = params.append("maxCost", maxCost);
+    params = params.append("all", all);
+    console.log(params.toString());
     return this.http.get<Car[]>(this.carControllerUri + "RentACar/" + rentACarId, { params: params }).toPromise();
   }
 

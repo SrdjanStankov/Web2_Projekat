@@ -10,10 +10,12 @@ import { FlightTicketDetails } from '../entities/flight-ticket';
 export class UserService {
   http: HttpClient;
   userControllerUri: string;
+  flightControllerUri: string;
 
-  constructor(http: HttpClient, @Inject('BASE_USER_URL') baseUrl: string) {
+  constructor(http: HttpClient, @Inject('BASE_USER_URL') baseUrl: string, @Inject('BASE_AVIO_URL') baseAvioUrl: string) {
     this.http = http;
     this.userControllerUri = baseUrl + 'api/user/';
+    this.flightControllerUri = baseAvioUrl + 'api/flight/';
   }
   getAllUsers(): Promise<User[]> {
     return this.http.get<User[]>(this.userControllerUri).toPromise();
@@ -41,7 +43,7 @@ export class UserService {
     return this.http.put(this.userControllerUri + user.email, user).toPromise();
   }
   getFlightHistory(userId: string): Promise<FlightTicketDetails[]> {
-    return this.http.get<FlightTicketDetails[]>("api/flight/" + userId + "/flight-history").toPromise();
+    return this.http.get<FlightTicketDetails[]>(this.flightControllerUri + userId + "/flight-history").toPromise();
   }
   changePassword(userId: string, newPassword: string) {
     return this.http.post(this.userControllerUri + `${userId}/change-password`, { newPassword }).toPromise();

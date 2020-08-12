@@ -158,6 +158,7 @@ export class RentACarProfileEditComponent implements OnInit {
       const branch = new Branch();
       branch.name = this.formGroupAddBranch.get('name').value;
       branch.address = this.formGroupAddBranch.get('address').value;
+      branch.rentACarId = Number.parseInt(this.agencyId.toString());
       // branch service
       this.branchService.addBranch(branch).then(result => {
         this.rentACarService.addBranchToAgency(result.id, parseInt(this.agencyId.toString())).then(() => {
