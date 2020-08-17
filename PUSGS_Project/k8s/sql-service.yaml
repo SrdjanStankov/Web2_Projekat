@@ -1,0 +1,44 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: mssql-user-service
+spec:
+  selector:
+    app: mssql-user
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    # Port accessible inside cluster
+    port: 1433
+    # Port to forward to inside the pod
+    targetPort: 1433
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mssql-aviation-service
+spec:
+  selector:
+    app: mssql-aviation
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    # Port accessible inside cluster
+    port: 1434
+    # Port to forward to inside the pod
+    targetPort: 1433
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mssql-rentacar-service
+spec:
+  selector:
+    app: mssql-rentacar
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    # Port accessible inside cluster
+    port: 1435
+    # Port to forward to inside the pod
+    targetPort: 1433

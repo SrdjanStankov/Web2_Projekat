@@ -1,0 +1,163 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: api-users-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-users
+  template:
+    metadata:
+      labels:
+        app: api-users
+    spec:
+      containers:
+      - image: users-api:latest
+        imagePullPolicy: Never
+        name: api-users
+        env:
+        - name: Kestrel__Certificates__Default__Password 
+          value: "Pa55word"
+        - name: Kestrel__Certificates__Default__Path
+          value: "/https/aspnetapp.pfx"
+        - name: ASPNETCORE_URLS
+          value: "http://+:80;https://+:443"
+        - name: ConnectionStrings__DefaultUserConnection
+          value: "Server=mssql-user-service,1433;Initial Catalog=UsersDb;User ID=sa;Password=Pa5555word;"
+        - name: ApplicationSettings__JWT_Secret
+          value: "1234567890123456"
+        - name: ApplicationSettings__Client_URL
+          value: "http://localhost:4200"
+        - name: ApplicationSettings__RequireEmailVerification
+          value: "true"
+        - name: ApplicationSettings__NetworkCredentialUsername
+          value: "srki.miki@gmail.com"
+        - name: ApplicationSettings__NetworkCredentialPassword
+          value: "twshdabuaclmjkfw"
+        - name: ApplicationSettings__RedirectEmailToCredentialUsername
+          value: "true"
+        - name: ApplicationSettings__SmtpClientHost
+          value: "smtp.gmail.com"
+        - name: ApplicationSettings__SmtpClientPort
+          value: "25"
+        - name: ApplicationSettings__SendEmailNotifications
+          value: "true"
+        ports:
+          - containerPort: 80
+            containerPort: 443
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: api-aviations-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-aviations
+  template:
+    metadata:
+      labels:
+        app: api-aviations
+    spec:
+      containers:
+      - image: aviation-api:latest
+        imagePullPolicy: Never
+        name: api-aviations
+        env:
+        - name: Kestrel__Certificates__Default__Password 
+          value: "Pa55word"
+        - name: Kestrel__Certificates__Default__Path
+          value: "/https/aspnetapp.pfx"
+        - name: ASPNETCORE_URLS
+          value: "http://+:80;https://+:443"
+        - name: ConnectionStrings__DefaultUserConnection
+          value: "Server=mssql-user-service,1433;Initial Catalog=UsersDb;User ID=sa;Password=Pa5555word;"
+        - name: ConnectionStrings__DefaultAvioConnection
+          value: "Server=mssql-aviation-service,1434;Initial Catalog=AviationsDb;User ID=sa;Password=Pa5555word;"
+        - name: ApplicationSettings__JWT_Secret
+          value: "1234567890123456"
+        - name: ApplicationSettings__Client_URL
+          value: "http://localhost:4200"
+        - name: ApplicationSettings__RequireEmailVerification
+          value: "true"
+        - name: ApplicationSettings__NetworkCredentialUsername
+          value: "srki.miki@gmail.com"
+        - name: ApplicationSettings__NetworkCredentialPassword
+          value: "twshdabuaclmjkfw"
+        - name: ApplicationSettings__RedirectEmailToCredentialUsername
+          value: "true"
+        - name: ApplicationSettings__SmtpClientHost
+          value: "smtp.gmail.com"
+        - name: ApplicationSettings__SmtpClientPort
+          value: "25"
+        - name: ApplicationSettings__SendEmailNotifications
+          value: "true"
+        ports:
+          - containerPort: 80
+            containerPort: 443
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: api-rentacars-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-rentacars
+  template:
+    metadata:
+      labels:
+        app: api-rentacars
+    spec:
+      containers:
+      - image: rentacar-api:latest
+        imagePullPolicy: Never
+        name: api-rentacars
+        env:
+        - name: Kestrel__Certificates__Default__Password 
+          value: "Pa55word"
+        - name: Kestrel__Certificates__Default__Path
+          value: "/https/aspnetapp.pfx"
+        - name: ASPNETCORE_URLS
+          value: "http://+:80;https://+:443"
+        - name: ConnectionStrings__DefaultUserConnection
+          value: "Server=mssql-user-service,1433;Initial Catalog=UsersDb;User ID=sa;Password=Pa5555word;"
+        - name: ConnectionStrings__DefaultRentACarConnection
+          value: "Server=mssql-rentacar-service,1435;Initial Catalog=RentACarDb;User ID=sa;Password=Pa5555word;"
+        - name: ApplicationSettings__JWT_Secret
+          value: "1234567890123456"
+        ports:
+          - containerPort: 80
+            containerPort: 443
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: api-gateway-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+      - image: gateway-api:latest
+        imagePullPolicy: Never
+        name: api-gateway
+        env:
+        - name: Kestrel__Certificates__Default__Password 
+          value: "Pa55word"
+        - name: Kestrel__Certificates__Default__Path
+          value: "/https/aspnetapp.pfx"
+        - name: ASPNETCORE_URLS
+          value: "http://+:80;https://+:443"
+        ports:
+          - containerPort: 80
+            containerPort: 443

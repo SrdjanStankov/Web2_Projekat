@@ -1,0 +1,107 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mssql-user-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mssql-user
+  template:
+    metadata:
+      labels:
+        app: mssql-user
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - image: mcr.microsoft.com/mssql/server:2019-latest
+        imagePullPolicy: IfNotPresent
+        name: mssql
+        env:
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: SA_PASSWORD
+          value: "Pa5555word"
+        - name: MSSQL_PID
+          value: "Express"
+        ports:
+          - containerPort: 1433
+        volumeMounts:
+        - name: mssqluserdb
+          mountPath: /var/opt/mssql
+      volumes:
+      - name: mssqluserdb
+        persistentVolumeClaim:
+          claimName: mssql-user-data
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mssql-aviation-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mssql-aviation
+  template:
+    metadata:
+      labels:
+        app: mssql-aviation
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - image: mcr.microsoft.com/mssql/server:2019-latest
+        imagePullPolicy: IfNotPresent
+        name: mssql
+        env:
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: SA_PASSWORD
+          value: "Pa5555word"
+        - name: MSSQL_PID
+          value: "Express"
+        ports:
+          - containerPort: 1433
+        volumeMounts:
+        - name: mssqlaviationdb
+          mountPath: /var/opt/mssql
+      volumes:
+      - name: mssqlaviationdb
+        persistentVolumeClaim:
+          claimName: mssql-aviation-data
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mssql-rentacar-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mssql-rentacar
+  template:
+    metadata:
+      labels:
+        app: mssql-rentacar
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - image: mcr.microsoft.com/mssql/server:2019-latest
+        imagePullPolicy: IfNotPresent
+        name: mssql
+        env:
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: SA_PASSWORD
+          value: "Pa5555word"
+        - name: MSSQL_PID
+          value: "Express"
+        ports:
+          - containerPort: 1433
+        volumeMounts:
+        - name: mssqlrentacardb
+          mountPath: /var/opt/mssql
+      volumes:
+      - name: mssqlrentacardb
+        persistentVolumeClaim:
+          claimName: mssql-rentacar-data

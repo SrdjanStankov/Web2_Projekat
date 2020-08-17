@@ -1,0 +1,71 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: api-user-service
+spec:
+  selector:
+    app: api-users
+  type: LoadBalancer
+  ports:
+    # Port accessible inside cluster
+  - port: 8100
+    # Port to forward to inside the pod
+    targetPort: 80
+    name: http
+  - port: 8200
+    targetPort: 443
+    name: https
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: api-aviation-service
+spec:
+  selector:
+    app: api-aviations
+  type: LoadBalancer
+  ports:
+    # Port accessible inside cluster
+  - port: 8101
+    # Port to forward to inside the pod
+    targetPort: 80
+    name: http
+  - port: 8201
+    targetPort: 443
+    name: https
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: api-rentacar-service
+spec:
+  selector:
+    app: api-rentacars
+  type: LoadBalancer
+  ports:
+    # Port accessible inside cluster
+  - port: 8102
+    # Port to forward to inside the pod
+    targetPort: 80
+    name: http
+  - port: 8202
+    targetPort: 443
+    name: https
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: api-gateway-service
+spec:
+  selector:
+    app: api-gateway
+  type: LoadBalancer
+  ports:
+    # Port accessible inside cluster
+  - port: 8103
+    # Port to forward to inside the pod
+    targetPort: 80
+    name: http
+  - port: 8203
+    targetPort: 443
+    name: https
