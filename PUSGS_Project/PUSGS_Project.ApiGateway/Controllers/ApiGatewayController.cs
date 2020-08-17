@@ -83,7 +83,9 @@ namespace PUSGS_Project.ApiGateway.Controllers
 
         private (HttpClient client, string requestUri) SetupHttpClient(string restOfUrl)
         {
-            var client = new HttpClient();
+            var httpClientHandler = new HttpClientHandler();
+            httpClientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
+            var client = new HttpClient(httpClientHandler);
             var requestUri = FindRequestUrlFromRestOfUrl(restOfUrl);
             if (requestUri is null)
             {
