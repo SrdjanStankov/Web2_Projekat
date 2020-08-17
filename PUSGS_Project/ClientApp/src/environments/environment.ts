@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: "https://localhost:5007/pusgs_project/",
+  apiBaseUrl: "https://localhost:8203/pusgs_project/",
   startedByDotNet: false,
 };
 
