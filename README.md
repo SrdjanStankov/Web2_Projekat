@@ -16,51 +16,62 @@ You will need the following tools:
 - [Visual Studio 2017-2019](https://www.visualstudio.com/downloads/)
 - [.NET Core SDK 3.1](https://www.microsoft.com/net/download/dotnet-core/3.1)
 - [NPM](https://nodejs.org/en/)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
 ### Setup
 
 Follow these steps to get your development environment set up:
 
+  1. Make sure that Docker Desktop is running
+  2. Make sure that Kubernetes is running in Docker Desktop Dashboard
+  ![Docker Settings](doc/Img/docker-settings.png)
   1. Clone the repository
   1. Go to `PUSGS_Project/ClientApp` directory and run: `npm install`
   1. Build solution in Visual Studio (2017 or 2019)
-  1. Start Application with `PUSGS_Project` set as your StartUp Project
+  4. Run: `PUSGS_Project/Setup.bat`
 
 ### Configuration
 
 Due to possible security difficulties of sending email to gmail from `localhost` during development, [additional steps](https://support.google.com/accounts/answer/185833) are required to make sure you get email service working.
 
-For this reason we have added properties which you can modify in `PUSGS_Project/appsettings.json` as explained below.
+For this reason we have added properties which you can modify in `PUSGS_Project/k8s/api-deployment.yaml` as explained below.
 
-```js
-"ApplicationSettings": {
+```yaml
   /* used for jwt authorization */
-  "JWT_Secret": "...", 
+  - name: ApplicationSettings__JWT_Secret
+    value: "...", 
 
   /* used when creating redirect href link in email */
-  "Client_URL": "http://localhost:4200",
+  - name: ApplicationSettings__Client_URL
+    value: "http://localhost:4200"
 
   /* if true user can't login until he verifies email */
-  "RequireEmailVerification": true,
+  - name: ApplicationSettings__RequireEmailVerification
+    value: "true"
 
   /* your email */
-  "NetworkCredentialUsername": "...@gmail.com",
+  - name: ApplicationSettings__NetworkCredentialUsername
+    value: "...@gmail.com"
 
   /* password generated when you link gmail with local machine (2-step-verification) */
-  "NetworkCredentialPassword": "...",
+  - name: ApplicationSettings__NetworkCredentialPassword
+    value: "..."
 
   /* if true all emails will be redirected to your email (great for development) */
-  "RedirectEmailToCredentialUsername": true,
+  - name: ApplicationSettings__RedirectEmailToCredentialUsername
+    value: "true"
 
   /* client host (smtp.gmail.com for gmail) */
-  "SmtpClientHost": "smtp.gmail.com",
+  - name: ApplicationSettings__SmtpClientHost
+    value: "smtp.gmail.com"
 
   /* port for your smtp client (ex. 587 or 25) */
-  "SmtpClientPort": 587,
+  - name: ApplicationSettings__SmtpClientPort
+    value: "587"
 
   /* if true reservation invites/accept notifications will be sent via email */
-  "SendEmailNotifications": true
-}
+  - name: ApplicationSettings__SendEmailNotifications
+    value: "true"
 ```
 
 ## Doc
