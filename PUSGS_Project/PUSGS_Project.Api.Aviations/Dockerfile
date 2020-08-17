@@ -22,4 +22,5 @@ RUN dotnet publish "PUSGS_Project.Api.Aviations.csproj" -c Release -o /app/publi
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY "PUSGS_Project.Api.Aviations/certificate.pfx" "/https/aspnetapp.pfx"
 ENTRYPOINT ["dotnet", "PUSGS_Project.Api.Aviations.dll"]

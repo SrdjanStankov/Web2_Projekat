@@ -19,4 +19,5 @@ RUN dotnet publish "PUSGS_Project.ApiGateway.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY "PUSGS_Project.ApiGateway/certificate.pfx" "/https/aspnetapp.pfx"
 ENTRYPOINT ["dotnet", "PUSGS_Project.ApiGateway.dll"]
