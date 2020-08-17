@@ -28,8 +28,16 @@ namespace PUSGS_Project.Api.RentACars
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<UserDbContext>(optionsAction: (options) => options.UseSqlServer(Configuration.GetConnectionString("DefaultUserConnection"), b => b.MigrationsAssembly("Persistance.User")));
-            services.AddDbContext<RentACarDbContext>(optionsAction: (options) => options.UseSqlServer(Configuration.GetConnectionString("DefaultRentACarConnection"), b => b.MigrationsAssembly("Persistance.RentACar")));
+            services.AddDbContext<UserDbContext>(optionsAction: (options) => options.UseSqlServer(Configuration.GetConnectionString("DefaultUserConnection"), b =>
+            {
+                b.MigrationsAssembly("Persistance.User");
+                b.EnableRetryOnFailure(10, TimeSpan.FromSeconds(30), null);
+            }));
+            services.AddDbContext<RentACarDbContext>(optionsAction: (options) => options.UseSqlServer(Configuration.GetConnectionString("DefaultRentACarConnection"), b =>
+            {
+                b.MigrationsAssembly("Persistance.RentACar");
+                b.EnableRetryOnFailure(10, TimeSpan.FromSeconds(30), null);
+            }));
 
             services.AddScoped<ICarRepository, CarRepository>();
             services.AddScoped<IRentACarRepository, RentACarRepository>();

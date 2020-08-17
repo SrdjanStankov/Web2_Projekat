@@ -35,7 +35,11 @@ namespace PUSGS_Project.Api.Users
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<UserDbContext>(optionsAction: (options) => options.UseSqlServer(Configuration.GetConnectionString("DefaultUserConnection"), b => b.MigrationsAssembly("Persistance.User")));
+            services.AddDbContext<UserDbContext>(optionsAction: (options) => options.UseSqlServer(Configuration.GetConnectionString("DefaultUserConnection"), b =>
+            {
+                b.MigrationsAssembly("Persistance.User");
+                b.EnableRetryOnFailure(10, TimeSpan.FromSeconds(30), null);
+            }));
 
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
             
