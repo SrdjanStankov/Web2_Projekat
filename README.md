@@ -34,44 +34,35 @@ Follow these steps to get your development environment set up:
 
 Due to possible security difficulties of sending email to gmail from `localhost` during development, [additional steps](https://support.google.com/accounts/answer/185833) are required to make sure you get email service working.
 
-For this reason we have added properties which you can modify in `PUSGS_Project/k8s/api-deployment.yaml` as explained below.
+For this reason we have added properties which you can modify in `PUSGS_Project/k8s/api-secret.yaml` as explained below.
 
 ```yaml
   /* used for jwt authorization */
-  - name: ApplicationSettings__JWT_Secret
-    value: "...", 
+  jwt-secret: "..."
 
   /* used when creating redirect href link in email */
-  - name: ApplicationSettings__Client_URL
-    value: "http://localhost:4200"
+  client-url: "http://localhost:4200"
 
   /* if true user can't login until he verifies email */
-  - name: ApplicationSettings__RequireEmailVerification
-    value: "true"
+  require-email-verification: "true"
 
   /* your email */
-  - name: ApplicationSettings__NetworkCredentialUsername
-    value: "...@gmail.com"
+  network-credential-username: "...@gmail.com"
 
   /* password generated when you link gmail with local machine (2-step-verification) */
-  - name: ApplicationSettings__NetworkCredentialPassword
-    value: "..."
+  network-credential-password: "..."
 
   /* if true all emails will be redirected to your email (great for development) */
-  - name: ApplicationSettings__RedirectEmailToCredentialUsername
-    value: "true"
+  redirect-email-to-credential-username: "true"
 
   /* client host (smtp.gmail.com for gmail) */
-  - name: ApplicationSettings__SmtpClientHost
-    value: "smtp.gmail.com"
+  smtp-client-host: "smtp.gmail.com"
 
   /* port for your smtp client (ex. 587 or 25) */
-  - name: ApplicationSettings__SmtpClientPort
-    value: "587"
+  smtp-client-port: "587"
 
   /* if true reservation invites/accept notifications will be sent via email */
-  - name: ApplicationSettings__SendEmailNotifications
-    value: "true"
+  send-email-notifications: "true"
 ```
 
 ## Doc
