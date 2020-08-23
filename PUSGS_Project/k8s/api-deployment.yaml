@@ -18,31 +18,64 @@ spec:
         name: api-users
         env:
         - name: Kestrel__Certificates__Default__Password 
-          value: "Pa55word"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: kestrel-password
         - name: Kestrel__Certificates__Default__Path
-          value: "/https/aspnetapp.pfx"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: kestrel-path
         - name: ASPNETCORE_URLS
           value: "http://+:80;https://+:443"
         - name: ConnectionStrings__DefaultUserConnection
           value: "Server=mssql-user-service,1433;Initial Catalog=UsersDb;User ID=sa;Password=Pa5555word;"
         - name: ApplicationSettings__JWT_Secret
-          value: "1234567890123456"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: jwt-secret
         - name: ApplicationSettings__Client_URL
-          value: "http://localhost:4200"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: client-url
         - name: ApplicationSettings__RequireEmailVerification
-          value: "true"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: require-email-verification
         - name: ApplicationSettings__NetworkCredentialUsername
-          value: "srki.miki@gmail.com"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: network-credential-username
         - name: ApplicationSettings__NetworkCredentialPassword
-          value: "twshdabuaclmjkfw"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: network-credential-password
         - name: ApplicationSettings__RedirectEmailToCredentialUsername
-          value: "true"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: redirect-email-to-credential-username
         - name: ApplicationSettings__SmtpClientHost
-          value: "smtp.gmail.com"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: smtp-client-host
         - name: ApplicationSettings__SmtpClientPort
-          value: "25"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: smtp-client-port
         - name: ApplicationSettings__SendEmailNotifications
-          value: "true"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: send-email-notifications
         ports:
           - containerPort: 80
             containerPort: 443
@@ -67,9 +100,15 @@ spec:
         name: api-aviations
         env:
         - name: Kestrel__Certificates__Default__Password 
-          value: "Pa55word"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: kestrel-password
         - name: Kestrel__Certificates__Default__Path
-          value: "/https/aspnetapp.pfx"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: kestrel-path
         - name: ASPNETCORE_URLS
           value: "http://+:80;https://+:443"
         - name: ConnectionStrings__DefaultUserConnection
@@ -77,23 +116,50 @@ spec:
         - name: ConnectionStrings__DefaultAvioConnection
           value: "Server=mssql-aviation-service,1434;Initial Catalog=AviationsDb;User ID=sa;Password=Pa5555word;"
         - name: ApplicationSettings__JWT_Secret
-          value: "1234567890123456"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: jwt-secret
         - name: ApplicationSettings__Client_URL
-          value: "http://localhost:4200"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: client-url
         - name: ApplicationSettings__RequireEmailVerification
-          value: "true"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: require-email-verification
         - name: ApplicationSettings__NetworkCredentialUsername
-          value: "srki.miki@gmail.com"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: network-credential-username
         - name: ApplicationSettings__NetworkCredentialPassword
-          value: "twshdabuaclmjkfw"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: network-credential-password
         - name: ApplicationSettings__RedirectEmailToCredentialUsername
-          value: "true"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: redirect-email-to-credential-username
         - name: ApplicationSettings__SmtpClientHost
-          value: "smtp.gmail.com"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: smtp-client-host
         - name: ApplicationSettings__SmtpClientPort
-          value: "25"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: smtp-client-port
         - name: ApplicationSettings__SendEmailNotifications
-          value: "true"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: send-email-notifications
         ports:
           - containerPort: 80
             containerPort: 443
@@ -118,9 +184,15 @@ spec:
         name: api-rentacars
         env:
         - name: Kestrel__Certificates__Default__Password 
-          value: "Pa55word"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: kestrel-password
         - name: Kestrel__Certificates__Default__Path
-          value: "/https/aspnetapp.pfx"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: kestrel-path
         - name: ASPNETCORE_URLS
           value: "http://+:80;https://+:443"
         - name: ConnectionStrings__DefaultUserConnection
@@ -128,7 +200,10 @@ spec:
         - name: ConnectionStrings__DefaultRentACarConnection
           value: "Server=mssql-rentacar-service,1435;Initial Catalog=RentACarDb;User ID=sa;Password=Pa5555word;"
         - name: ApplicationSettings__JWT_Secret
-          value: "1234567890123456"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: jwt-secret
         ports:
           - containerPort: 80
             containerPort: 443
@@ -153,9 +228,15 @@ spec:
         name: api-gateway
         env:
         - name: Kestrel__Certificates__Default__Password 
-          value: "Pa55word"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: kestrel-password
         - name: Kestrel__Certificates__Default__Path
-          value: "/https/aspnetapp.pfx"
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: kestrel-path
         - name: ASPNETCORE_URLS
           value: "http://+:80;https://+:443"
         ports:
